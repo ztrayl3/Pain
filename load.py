@@ -1,6 +1,9 @@
 import mne
 import os
 
+# load standard 10-20 for use later
+montage = mne.channels.make_standard_montage('standard_1020')
+
 # Establish master data path
 path = os.path.join("Data", "Pain Dataset")
 
@@ -40,3 +43,5 @@ for i in range(1, 52):
         else:  # mark the rest as EEG channels from extended 10-20
             new_types.append("eeg")
     P[num].set_channel_types(dict(zip(P[num].ch_names, new_types)))  # apply new channel types to raw object
+    P[num].set_montage(montage, on_missing="ignore")  # add standard 10-20 montage information for channel locations
+
