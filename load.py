@@ -1,3 +1,4 @@
+import pickle
 import mne
 import os
 
@@ -45,3 +46,6 @@ for i in range(1, 52):
     P[num].set_channel_types(dict(zip(P[num].ch_names, new_types)))  # apply new channel types to raw object
     P[num].set_montage(montage, on_missing="ignore")  # add standard 10-20 montage information for channel locations
 
+data = open("data.pkl", "wb")
+pickle.dump(P, data)
+data.close()
