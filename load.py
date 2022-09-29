@@ -34,7 +34,7 @@ for i in range(1, 52):
     new_types = []  # create a new channel types array
     for j in P[num].ch_names:
         if j == "LE" or j == "RE":  # mark left and right eye channels
-            new_types.append("ecog")
+            new_types.append("eog")
         elif "GSR" in j:  # mark GSR channel (won't be used)
             new_types.append("misc")  # only dev version of MNE supports GSR as of writing
         elif j == "ECG":  # mark our ECG channel
