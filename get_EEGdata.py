@@ -1,4 +1,5 @@
 import numpy as np
+import random
 import pickle
 import mne
 mne.set_log_level(verbose="Warning")  # set all the mne verbose to warning
@@ -27,35 +28,37 @@ all_labels = []  # in case we need it later
 gender = "male"  # what gender are we analyzing?
 for subject in P.keys():  # for each subject
     if int(subject) in sex[gender]:  # if this subject is a member of our gender of interest...
+        print(subject)
         data = P[subject]  # load the subject
         events, event_dict = mne.events_from_annotations(data, event_id=mapping)  # extract their events
         data.load_data()
 
-        #######################################
-        # Pre-Processing and Artifact Removal #
-        #######################################
+        # Pre-Processing
         artifact_removal = data.copy()
-        artifact_removal.filter(l_freq=1.0, h_freq=None)  # high-pass filter at 1Hz
-        artifact_removal.notch_filter(50.0)  # notch filter at 50Hz
+        artifact_removal.filter(l_freq=1.0, h_freq=None, n_jobs=-1)  # high-pass filter at 1Hz
+        artifact_removal.notch_filter(50.0, n_jobs=-1)  # notch filter at 50Hz
 
-        # ICA artifact removal and rejection of +/-100uV
+        # ICA artifact removal
         ica = mne.preprocessing.ICA(n_components=15, random_state=97, max_iter="auto")
         ica.fit(artifact_removal)  # fit the ICA with EEG and EOG information
 
-        ica.exclude = []
-        ecg_indices, ecg_scores = ica.find_bads_ecg(artifact_removal, method='correlation', threshold='auto')  # find ECG
-        eog_indices, eog_scores = ica.find_bads_eog(artifact_removal)  # find EOG
-        ica.exclude = ica.exclude + ecg_indices + eog_indices
-        ica.plot_sources(data, block=True, title=subject)  # last chance to visually inspect ICA
+        # Visually inspect the data
+        ica.plot_sources(data, block=True, title=subject)
         ica.apply(data)  # apply ICA to data, removing the artifacts
 
-        # Re-reference to average
+        # Re-reference to average and low-pass filter for decimation (recomended by MNE)
         data.set_eeg_reference(ref_channels="average")
+        current_sfreq = data.info['sfreq']
+        desired_sfreq = 250  # Hz
+        decim = np.round(current_sfreq / desired_sfreq).astype(int)
+        obtained_sfreq = current_sfreq / decim
+        lowpass_freq = obtained_sfreq / 3.
+        data.filter(l_freq=None, h_freq=lowpass_freq, n_jobs=-1)
 
         # Epoch from -1500 to 3000ms. Should be 18 trials per stimulus intensity
         reject_criteria = dict(eeg=200e-6)  # 200 µV
         epochs = mne.Epochs(data, events, event_id=event_dict, tmin=-1.5, tmax=3.0,
-                            reject=reject_criteria, preload=True)
+                            reject=reject_criteria, preload=True, decim=decim)  # decimate signal to lower memory
 
         all_epochs.append(epochs[["Stimulus/S  1", "Stimulus/S  2", "Stimulus/S  3"]])  # record stim epochs to a list
         all_labels.append(subject)  # create identical list of subject IDs, for good measure
