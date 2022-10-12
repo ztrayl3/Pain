@@ -1,5 +1,5 @@
 import numpy as np
-import random
+import matplotlib
 import pickle
 import mne
 mne.set_log_level(verbose="Warning")  # set all the mne verbose to warning
@@ -18,9 +18,8 @@ for i in range(0, 101):  # add the verbal pain ratings in a loop, as they can be
     mapping[read] = write  # mimic the same format of {read this: change to this} for event annotations
 
 # mark male vs female subjects
-sex = {}
-sex["male"] = [2, 4, 5, 6, 9, 14, 15, 18, 19, 21, 22, 25, 27, 33, 34, 36, 38, 39, 40, 41, 42, 43, 44, 45, 48, 51]
-sex["female"] = [1, 3, 7, 8, 10, 11, 12, 13, 16, 17, 20, 23, 24, 26, 28, 29, 30, 31, 32, 35, 37, 46, 47, 49, 50]
+sex = dict(male=[2, 4, 5, 6, 9, 14, 15, 18, 19, 21, 22, 25, 27, 33, 34, 36, 38, 39, 40, 41, 42, 43, 44, 45, 48, 51],
+           female=[1, 3, 7, 8, 10, 11, 12, 13, 16, 17, 20, 23, 24, 26, 28, 29, 30, 31, 32, 35, 37, 46, 47, 49, 50])
 
 # begin processing the data!
 all_epochs = []  # lists for holding epochs and labels
@@ -34,19 +33,29 @@ for subject in P.keys():  # for each subject
         data.load_data()
 
         # Pre-Processing
+        print("Filtering...")
         artifact_removal = data.copy()
         artifact_removal.filter(l_freq=1.0, h_freq=None, n_jobs=-1)  # high-pass filter at 1Hz
         artifact_removal.notch_filter(50.0, n_jobs=-1)  # notch filter at 50Hz
 
         # ICA artifact removal
-        ica = mne.preprocessing.ICA(n_components=15, random_state=97, max_iter="auto")
+        print("Fitting ICA...")
+        ica = mne.preprocessing.ICA(n_components=0.95, random_state=97, max_iter="auto")
         ica.fit(artifact_removal)  # fit the ICA with EEG and EOG information
 
         # Visually inspect the data
-        ica.plot_sources(data, block=True, title=subject)
+        print("Visually inspecting components...")
+        for i in range(ica.n_components_):  # look at each component
+            ica.plot_properties(data, picks=[i], psd_args={"fmin": 1.0, "fmax": 60.0})
+            matplotlib.pyplot.pause(1)
+            excluded = input("Include component? (y/n)")
+            if excluded == 'n':
+                ica.exclude.append(i)
+            matplotlib.pyplot.close()
         ica.apply(data)  # apply ICA to data, removing the artifacts
 
         # Re-reference to average and low-pass filter for decimation (recomended by MNE)
+        print("Decimating and epoching...")
         data.set_eeg_reference(ref_channels="average")
         current_sfreq = data.info['sfreq']
         desired_sfreq = 250  # Hz

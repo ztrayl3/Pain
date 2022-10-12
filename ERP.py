@@ -34,23 +34,27 @@ def get_latency_amplitude(good_tmin, good_tmax, dat, ref, positive=False, title=
     print_peak_measures(ref, good_tmin, good_tmax, lat, mean_amp[0])
 
 
-# Load our database of subjects
-source = open("data.pkl", "rb")
-epochs = pickle.load(source)
-source.close()
+data = dict(male=None,
+            female=None)
 
-##################
-# ERP components #
-##################
+# Load our epochs, male and female
+for gender in data.keys():
+    source = open("epochs_{}.pkl".format(gender), "rb")
+    data[gender] = pickle.load(source)
+    source.close()
 
-epochs.filter(l_freq=1.0, h_freq=30.0, n_jobs=-1)  # 1-30Hz filter
-epochs.set_eeg_reference(ref_channels=["Fz"])  # re-reference to Fz
+    ##################
+    # ERP components #
+    ##################
+    epochs = data[gender].copy()
+    epochs.filter(l_freq=1.0, h_freq=30.0, n_jobs=-1)  # 1-30Hz filter
+    epochs.set_eeg_reference(ref_channels=["Fz"])  # re-reference to Fz
 
-# Get peak amplitude and latency of N1 (164 +/-6ms and -4uV amplitude, ideally) at electrode C4
-get_latency_amplitude(0.150, 0.180, epochs, "C4", title="N1")
+    # Get peak amplitude and latency of N1 (164 +/-6ms and -4uV amplitude, ideally) at electrode C4
+    get_latency_amplitude(1.120, 1.180, epochs, "C4", title="N1")
 
-# Get peak amplitude and latency of N2 (164 +/-6ms and -4uV amplitude, ideally) at electrode CZ
-get_latency_amplitude(0.180, 0.210, epochs, "Cz", title="N2")
+    # Get peak amplitude and latency of N2 (194 +/-7ms and -4uV amplitude, ideally) at electrode CZ
+    get_latency_amplitude(1.180, 1.210, epochs, "Cz", title="N2")
 
-# Get peak amplitude and latency of P2 (164 +/-6ms and -4uV amplitude, ideally) at electrode Cz
-get_latency_amplitude(0.290, 0.320, epochs, "Cz", positive=True, title="P2")
+    # Get peak amplitude and latency of P2 (306 +/-7ms and -4uV amplitude, ideally) at electrode Cz
+    get_latency_amplitude(1.290, 1.320, epochs, "Cz", positive=True, title="P2")
