@@ -1,5 +1,6 @@
 import pickle
 import mne
+mne.set_log_level(verbose="Warning")  # set all the mne verbose to warning
 
 
 def print_peak_measures(ch, tmin, tmax, lat, amp):
@@ -34,6 +35,7 @@ def get_latency_amplitude(good_tmin, good_tmax, dat, ref, positive=False, title=
     print_peak_measures(ref, good_tmin, good_tmax, lat, mean_amp[0])
 
 
+stims = ['Stimulus/S  1', 'Stimulus/S  2', 'Stimulus/S  3']
 data = dict(male=None,
             female=None)
 
@@ -43,18 +45,23 @@ for gender in data.keys():
     data[gender] = pickle.load(source)
     source.close()
 
-    ##################
-    # ERP components #
-    ##################
-    epochs = data[gender].copy()
-    epochs.filter(l_freq=1.0, h_freq=30.0, n_jobs=-1)  # 1-30Hz filter
-    epochs.set_eeg_reference(ref_channels=["Fz"])  # re-reference to Fz
+    print("ANALYZING GENDER: {}".format(gender))
 
-    # Get peak amplitude and latency of N1 (164 +/-6ms and -4uV amplitude, ideally) at electrode C4
-    get_latency_amplitude(1.120, 1.180, epochs, "C4", title="N1")
+    for level in stims:
+        ##################
+        # ERP components #  NOTE: FOR UNKNOWN REASONS, ERP TIMESTAMPS NEED +1s ADDED ON (ex: 150ms -> 1150ms)
+        ##################
+        epochs = data[gender][level].copy()
+        epochs.filter(l_freq=1.0, h_freq=30.0, n_jobs=-1)  # 1-30Hz filter
+        epochs.set_eeg_reference(ref_channels=["Fz"])  # re-reference to Fz
 
-    # Get peak amplitude and latency of N2 (194 +/-7ms and -4uV amplitude, ideally) at electrode CZ
-    get_latency_amplitude(1.180, 1.210, epochs, "Cz", title="N2")
+        # Get peak amplitude and latency of N1 (164 +/-6ms and -4uV amplitude, ideally) at electrode C4
+        get_latency_amplitude(1.150, 1.180, epochs, "C4", title="{} N1".format(level))
 
-    # Get peak amplitude and latency of P2 (306 +/-7ms and -4uV amplitude, ideally) at electrode Cz
-    get_latency_amplitude(1.290, 1.320, epochs, "Cz", positive=True, title="P2")
+        epochs.set_eeg_reference(ref_channels="average")  # re-reference to average
+
+        # Get peak amplitude and latency of N2 (194 +/-7ms and -4uV amplitude, ideally) at electrode CZ
+        get_latency_amplitude(1.180, 1.210, epochs, "Cz", title="{} N2".format(level))
+
+        # Get peak amplitude and latency of P2 (306 +/-7ms and -4uV amplitude, ideally) at electrode Cz
+        get_latency_amplitude(1.290, 1.320, epochs, "Cz", positive=True, title="{} P2".format(level))

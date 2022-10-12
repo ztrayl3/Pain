@@ -24,7 +24,7 @@ sex = dict(male=[2, 4, 5, 6, 9, 14, 15, 18, 19, 21, 22, 25, 27, 33, 34, 36, 38, 
 # begin processing the data!
 all_epochs = []  # lists for holding epochs and labels
 all_labels = []  # in case we need it later
-gender = "male"  # what gender are we analyzing?
+gender = "female"  # what gender are we analyzing?
 for subject in P.keys():  # for each subject
     if int(subject) in sex[gender]:  # if this subject is a member of our gender of interest...
         print(subject)

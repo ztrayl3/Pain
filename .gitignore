@@ -3,3 +3,5 @@
 /.idea/
 /data.pkl
 .Rproj.user
+/epochs_male.pkl
+/epochs_female.pkl
