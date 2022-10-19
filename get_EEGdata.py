@@ -24,7 +24,7 @@ sex = dict(male=[2, 4, 5, 6, 9, 14, 15, 18, 19, 21, 22, 25, 27, 33, 34, 36, 38, 
 # begin processing the data!
 all_epochs = []  # lists for holding epochs and labels
 all_labels = []  # in case we need it later
-gender = "female"  # what gender are we analyzing?
+gender = "male"  # what gender are we analyzing?
 for subject in P.keys():  # for each subject
     if int(subject) in sex[gender]:  # if this subject is a member of our gender of interest...
         print(subject)
@@ -48,8 +48,8 @@ for subject in P.keys():  # for each subject
         for i in range(ica.n_components_):  # look at each component
             ica.plot_properties(data, picks=[i], psd_args={"fmin": 1.0, "fmax": 60.0})
             matplotlib.pyplot.pause(1)
-            excluded = input("Include component? (y/n)")
-            if excluded == 'n':
+            included = input("Include component? (y/n)")
+            if included == 'n':
                 ica.exclude.append(i)
             matplotlib.pyplot.close()
         ica.apply(data)  # apply ICA to data, removing the artifacts
@@ -79,3 +79,10 @@ epochs_combined = mne.concatenate_epochs(all_epochs)  # create a master epoch li
 data = open("epochs_{}.pkl".format(gender), "wb")
 pickle.dump(epochs_combined, data)  # save it
 data.close()
+
+l = []
+for i in range(len(sex[gender])):  # this should == len(all_epochs)
+    l = l + [sex[gender][i]] * len(all_epochs[i])  # add label for all epochs (usually 58-60)
+labels = open("labels_{}.pkl".format(gender), "wb")
+pickle.dump(l, labels)
+labels.close()

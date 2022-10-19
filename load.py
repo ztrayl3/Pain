@@ -36,7 +36,7 @@ for i in range(1, 52):
         if j == "LE" or j == "RE":  # mark left and right eye channels
             new_types.append("eog")
         elif "GSR" in j:  # mark GSR channel (won't be used)
-            new_types.append("misc")  # only dev version of MNE supports GSR as of writing
+            new_types.append("gsr")
         elif j == "ECG":  # mark our ECG channel
             new_types.append("ecg")
         elif j == "NE" or j == "Ma" or j == "Ext":  # mark misc channels, MA ?= mastoid, Ne ?= nasion, Ext ?= events
