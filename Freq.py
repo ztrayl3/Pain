@@ -1,5 +1,3 @@
-from mne.time_frequency import psd_welch
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas
 import pickle
