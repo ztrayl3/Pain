@@ -22,7 +22,7 @@ def get_latency_amplitude(good_tmin, good_tmax, dat, ref, positive=False):
     try:
         _, lat = stim.get_peak(ch_type='eeg', tmin=good_tmin, tmax=good_tmax, mode=mode)  # gather peak latency
     except ValueError:
-        return 0, 0
+        return "NA", "NA"
 
     # Extract mean amplitude in µV over time
     stim.crop(tmin=good_tmin, tmax=good_tmax)
@@ -32,18 +32,20 @@ def get_latency_amplitude(good_tmin, good_tmax, dat, ref, positive=False):
     amp = mean_amp[0] * 1e6  # grab our mean amplitude in µV
     return lat, amp
 
-
-stims = ['Stimulus/S  1', 'Stimulus/S  2', 'Stimulus/S  3']
 data = dict(male=None,
             female=None)
+stims = ['Stimulus/S  1', 'Stimulus/S  2', 'Stimulus/S  3']
 components = ["N1_Lat", "N1_Amp",
               "N2_Lat", "N2_Amp",
               "P2_Lat", "P2_Amp"]
+sex = ["female", "male", "female", "male", "male", "male", "female", "female", "male", "female", "female", "female",
+       "female", "male", "male", "female", "female", "male", "male", "female", "male", "male", "female", "female",
+       "male", "female", "male", "female", "female", "female", "female", "female", "male", "male", "female", "male",
+       "female", "male", "male", "male", "male", "male", "male", "male", "male", "female", "female", "male",
+       "female", "female", "male"]
+header = ["ID", "Sex", "Stimulus", "Component", "Value"]
 subjects = [str(sub) for sub in range(1, 52)]
-fill = np.zeros((len(stims)*len(components), len(subjects)))
-results = pandas.DataFrame(data=fill.T, index=subjects,  # make a 3D dataframe to store results easily
-                      columns=pandas.MultiIndex.from_tuples(zip(np.repeat(stims, 6), components*3)))
-# NOTE: values = results[("Stimulus/S 1", "N1_Lat")][subject-1] as it is zero based indexing
+fill = []
 
 # Load our epochs, male and female
 for gender in data.keys():
@@ -72,19 +74,20 @@ for gender in data.keys():
 
             # Get peak amplitude and latency of N1 (164 +/-6ms and -4uV amplitude, ideally) at electrode C4
             latency, amplitude = get_latency_amplitude(0.150, 0.180, epochs, "C4")
-            results[(level, "N1_Lat")][sub - 1] = latency
-            results[(level, "N1_Amp")][sub - 1] = amplitude
+            fill.append([sub, sex[sub - 1], level[-1], "N1_Lat", latency])
+            fill.append([sub, sex[sub - 1], level[-1], "N1_Amp", amplitude])
 
             epochs.set_eeg_reference(ref_channels="average")  # re-reference to average
 
             # Get peak amplitude and latency of N2 (194 +/-7ms and -4uV amplitude, ideally) at electrode CZ
             latency, amplitude = get_latency_amplitude(0.180, 0.210, epochs, "Cz")
-            results[(level, "N2_Lat")][sub-1] = latency
-            results[(level, "N2_Amp")][sub-1] = amplitude
+            fill.append([sub, sex[sub - 1], level[-1], "N2_Lat", latency])
+            fill.append([sub, sex[sub - 1], level[-1], "N2_Amp", amplitude])
 
             # Get peak amplitude and latency of P2 (306 +/-7ms and -4uV amplitude, ideally) at electrode Cz
             latency, amplitude = get_latency_amplitude(0.290, 0.320, epochs, "Cz", positive=True)
-            results[(level, "P2_Lat")][sub-1] = latency
-            results[(level, "P2_Amp")][sub-1] = amplitude
+            fill.append([sub, sex[sub - 1], level[-1], "P2_Lat", latency])
+            fill.append([sub, sex[sub - 1], level[-1], "P2_Amp", amplitude])
 
+results = pandas.DataFrame(data=fill, columns=header)
 results.to_csv("Stats/erp.csv")
