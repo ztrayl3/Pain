@@ -1,4 +1,3 @@
-import numpy as np
 import matplotlib
 import pickle
 import mne
@@ -24,7 +23,7 @@ sex = dict(male=[2, 4, 5, 6, 9, 14, 15, 18, 19, 21, 22, 25, 27, 33, 34, 36, 38, 
 # begin processing the data!
 all_epochs = []  # lists for holding epochs and labels
 all_labels = []  # in case we need it later
-gender = "male"  # what gender are we analyzing?
+gender = "female"  # what gender are we analyzing?
 for subject in P.keys():  # for each subject
     if int(subject) in sex[gender]:  # if this subject is a member of our gender of interest...
         print(subject)
@@ -54,6 +53,7 @@ for subject in P.keys():  # for each subject
             matplotlib.pyplot.close()
         ica.apply(data)  # apply ICA to data, removing the artifacts
 
+        """
         # Re-reference to average and low-pass filter for decimation (recomended by MNE)
         print("Decimating and epoching...")
         data.set_eeg_reference(ref_channels="average")
@@ -63,11 +63,13 @@ for subject in P.keys():  # for each subject
         obtained_sfreq = current_sfreq / decim
         lowpass_freq = obtained_sfreq / 3.
         data.filter(l_freq=None, h_freq=lowpass_freq, n_jobs=-1)
+        """
 
         # Epoch from -1500 to 3000ms. Should be 18 trials per stimulus intensity
+        data.set_eeg_reference(ref_channels="average")
         reject_criteria = dict(eeg=200e-6)  # 200 µV
         epochs = mne.Epochs(data, events, event_id=event_dict, tmin=-1.5, tmax=3.0,
-                            reject=reject_criteria, preload=True, decim=decim)  # decimate signal to lower memory
+                            reject=reject_criteria, preload=True)#, decim=decim)  # decimate signal to lower memory
 
         all_epochs.append(epochs[["Stimulus/S  1", "Stimulus/S  2", "Stimulus/S  3"]])  # record stim epochs to a list
         all_labels.append(subject)  # create identical list of subject IDs, for good measure
