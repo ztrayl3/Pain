@@ -28,7 +28,7 @@ for gender in tqdm(data.keys()):
         indexes = [i for i, x in enumerate(labels) if x == sub]  # find the indices in data that contain sub's epochs
         selected = mne.concatenate_epochs([data[gender][i] for i in indexes])  # select epochs for this subject
         for level in tqdm(stims):
-            epochs = selected.copy()
+            epochs = selected[level].copy()
             epochs.filter(l_freq=1.0, h_freq=None, n_jobs=-1)  # high-pass filter at 1Hz
 
             # "moving time window with a length of 250 ms and a step size of 20 ms"
