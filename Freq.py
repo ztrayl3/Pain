@@ -15,7 +15,7 @@ results = pandas.DataFrame(data=fill.T, index=subjects,  # make a 3D dataframe t
 # NOTE: values = results["Stimulus/S 1"][subject-1] as it is zero based indexing
 
 # Load our epochs, male and female
-for gender in tqdm(data.keys()):
+for gender in data.keys():
     s1 = open("epochs_{}.pkl".format(gender), "rb")
     data[gender] = pickle.load(s1)
     s1.close()
@@ -24,10 +24,10 @@ for gender in tqdm(data.keys()):
     labels = pickle.load(s2)
     s2.close()
 
-    for sub in tqdm(set(labels)):  # for each subject in labels...
+    for sub in set(labels):  # for each subject in labels...
         indexes = [i for i, x in enumerate(labels) if x == sub]  # find the indices in data that contain sub's epochs
         selected = mne.concatenate_epochs([data[gender][i] for i in indexes])  # select epochs for this subject
-        for level in tqdm(stims):
+        for level in stims:
             epochs = selected.copy()
             epochs.filter(l_freq=1.0, h_freq=None, n_jobs=-1)  # high-pass filter at 1Hz
 
@@ -58,7 +58,7 @@ for gender in tqdm(data.keys()):
                 stop = start + size
 
             max_index = timeseries.index(max(timeseries))
-            max_time = axis[max_index] - 1  # subtract 1s because of same timestamp bug from ERP
+            max_time = axis[max_index] - 1  # subtract 1s because of same timestamp bug in ERP
             results[level][sub - 1] = max_time  # append timeseries to results
 
 results.to_csv("Stats/freq.csv")
