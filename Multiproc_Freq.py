@@ -83,7 +83,7 @@ def main():
                          data=epochs)
                 tasks.append(t)  # append each task that contains all necessary information for analysis
 
-        number_of_processes = 8
+        number_of_processes = 16
 
         # creating processes
         print("Creating {} processes".format(number_of_processes))
@@ -97,7 +97,7 @@ def main():
         while not tasks_that_are_done.empty():
             results = tasks_that_are_done.get()
             max_time = results["time"]  # grab all the values from our finished task
-            level = results["level"]
+            level = results["stimulus"]
             sub = results["subject"]
             gender = results["gender"]
             gamma = results["gamma"]
