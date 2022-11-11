@@ -18,17 +18,10 @@ def work(eeg, queue):
     size = 0.250
     step = 0.020
     length = epochs.last / 1000  # the latest (in seconds) timepoint
-    start = 1  # start from 1s not 0s because of +1s timestamp bug
+    start = 0
     stop = start + size
     timeseries = []
     axis = []
-
-    # compute gamma baseline first
-    kwargs = dict(fmin=70, fmax=90,
-                  tmin=0, tmax=1,  # "1s pre-stimulus baseline"
-                  picks=["Cz", "FCz", "C2"])
-    psds = 10 * np.log10(epochs.compute_psd(**kwargs).get_data())  # get psds as decibels
-    baseline = np.mean(np.average(np.average(psds, axis=0), axis=0))
 
     while stop < length:
         kwargs = dict(fmin=70, fmax=90,
@@ -48,18 +41,23 @@ def work(eeg, queue):
         start = start + step
         stop = start + size
 
+    # "pre-stimulus baseline of -1000 to 0ms" (so 0 to +1 in our case)
+    start_index, stop_index = axis.index(0), axis.index(1)
+    baseline = np.mean(timeseries[start_index:stop_index])
+
     # "...power estimates in a time window of 150-350 ms...", so we crop our timseries to this window
     start_index, stop_index = axis.index(1.14), axis.index(1.36)
     cropped = timeseries[start_index:stop_index]
 
     max_index = timeseries.index(max(cropped))  # take the max point in cropped, find its location in full timeseries
     max_time = int((axis[max_index] - 1.0) * 1e3)  # convert latency to ms and remove the +1s
-    amplitude = (abs(max(cropped) - baseline) / baseline) * 100.0
+    amplitude = max(cropped)
     results = dict(gender=gender,
                    subject=sub,
                    stimulus=level,
                    time=max_time,
-                   gamma=amplitude)
+                   gamma=amplitude,
+                   baseline=baseline)
     print("Completed Subject: {0}, Stimulus: {1}".format(sub, level))
 
     queue.put(results)
@@ -114,9 +112,11 @@ def main():
             sub = results["subject"]
             gender = results["gender"]
             gamma = results["gamma"]
+            baseline = results["baseline"]
 
-            fill.append([sub, gender, level, "Gamma_Lat", max_time])
-            fill.append([sub, gender, level, "Gamma_Amp", gamma])
+            fill.append([sub, gender, level[-1], "Baseline_Amp", baseline])
+            fill.append([sub, gender, level[-1], "Gamma_Lat", max_time])
+            fill.append([sub, gender, level[-1], "Gamma_Amp", gamma])
 
     header = ["ID", "Sex", "Stimulus", "Component", "Value"]
     output = pandas.DataFrame(data=fill, columns=header)

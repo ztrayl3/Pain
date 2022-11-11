@@ -1,463 +1,694 @@
 ,ID,Sex,Stimulus,Component,Value
-0,18,male,Stimulus/S  2,Gamma_Lat,139.0
-1,18,male,Stimulus/S  2,Gamma_Amp,-1.0329077145893641
-2,2,male,Stimulus/S  1,Gamma_Lat,139.0
-3,2,male,Stimulus/S  1,Gamma_Amp,-1.404661534474451
-4,21,male,Stimulus/S  2,Gamma_Lat,320.0
-5,21,male,Stimulus/S  2,Gamma_Amp,-0.10507192864680723
-6,4,male,Stimulus/S  2,Gamma_Lat,219.0
-7,4,male,Stimulus/S  2,Gamma_Amp,-2.189941684160673
-8,2,male,Stimulus/S  3,Gamma_Lat,139.0
-9,2,male,Stimulus/S  3,Gamma_Amp,-0.983931729899542
-10,6,male,Stimulus/S  2,Gamma_Lat,340.0
-11,6,male,Stimulus/S  2,Gamma_Amp,-1.8025225357112924
-12,5,male,Stimulus/S  3,Gamma_Lat,199.0
-13,5,male,Stimulus/S  3,Gamma_Amp,-1.487189077479485
-14,5,male,Stimulus/S  1,Gamma_Lat,159.0
-15,5,male,Stimulus/S  1,Gamma_Amp,-1.7134261249481937
-16,14,male,Stimulus/S  2,Gamma_Lat,139.0
-17,14,male,Stimulus/S  2,Gamma_Amp,-0.7816688694206738
-18,9,male,Stimulus/S  3,Gamma_Lat,179.0
-19,9,male,Stimulus/S  3,Gamma_Amp,-3.3960425660025635
-20,19,male,Stimulus/S  3,Gamma_Lat,240.0
-21,19,male,Stimulus/S  3,Gamma_Amp,-1.4992921437253481
-22,9,male,Stimulus/S  1,Gamma_Lat,139.0
-23,9,male,Stimulus/S  1,Gamma_Amp,-2.640877877731395
-24,15,male,Stimulus/S  1,Gamma_Lat,159.0
-25,15,male,Stimulus/S  1,Gamma_Amp,-0.5281120186917534
-26,22,male,Stimulus/S  1,Gamma_Lat,139.0
-27,22,male,Stimulus/S  1,Gamma_Amp,-1.1210179425382787
-28,15,male,Stimulus/S  3,Gamma_Lat,159.0
-29,15,male,Stimulus/S  3,Gamma_Amp,-1.1035984457157377
-30,19,male,Stimulus/S  1,Gamma_Lat,260.0
-31,19,male,Stimulus/S  1,Gamma_Amp,-1.6582630222111119
-32,18,male,Stimulus/S  3,Gamma_Lat,199.0
-33,18,male,Stimulus/S  3,Gamma_Amp,-1.3959244222454426
-34,21,male,Stimulus/S  3,Gamma_Lat,340.0
-35,21,male,Stimulus/S  3,Gamma_Amp,-0.9055323460441819
-36,2,male,Stimulus/S  2,Gamma_Lat,139.0
-37,2,male,Stimulus/S  2,Gamma_Amp,-1.237300427287467
-38,21,male,Stimulus/S  1,Gamma_Lat,280.0
-39,21,male,Stimulus/S  1,Gamma_Amp,-0.40330905794698424
-40,6,male,Stimulus/S  1,Gamma_Lat,340.0
-41,6,male,Stimulus/S  1,Gamma_Amp,-1.212479134106634
-42,14,male,Stimulus/S  3,Gamma_Lat,340.0
-43,14,male,Stimulus/S  3,Gamma_Amp,-0.845928390613071
-44,6,male,Stimulus/S  3,Gamma_Lat,340.0
-45,6,male,Stimulus/S  3,Gamma_Amp,-1.9420050689603725
-46,18,male,Stimulus/S  1,Gamma_Lat,179.0
-47,18,male,Stimulus/S  1,Gamma_Amp,-1.1342216474473656
-48,5,male,Stimulus/S  2,Gamma_Lat,179.0
-49,5,male,Stimulus/S  2,Gamma_Amp,-1.5262454683815343
-50,4,male,Stimulus/S  1,Gamma_Lat,219.0
-51,4,male,Stimulus/S  1,Gamma_Amp,-1.5445325750840153
-52,4,male,Stimulus/S  3,Gamma_Lat,199.0
-53,4,male,Stimulus/S  3,Gamma_Amp,-2.600667873386587
-54,14,male,Stimulus/S  1,Gamma_Lat,219.0
-55,14,male,Stimulus/S  1,Gamma_Amp,-0.810398173664668
-56,15,male,Stimulus/S  2,Gamma_Lat,139.0
-57,15,male,Stimulus/S  2,Gamma_Amp,-1.5947355866777813
-58,22,male,Stimulus/S  2,Gamma_Lat,139.0
-59,22,male,Stimulus/S  2,Gamma_Amp,-1.0413550030053573
-60,9,male,Stimulus/S  2,Gamma_Lat,199.0
-61,9,male,Stimulus/S  2,Gamma_Amp,-3.588428510308191
-62,19,male,Stimulus/S  2,Gamma_Lat,320.0
-63,19,male,Stimulus/S  2,Gamma_Amp,-0.4534836486032758
-64,25,male,Stimulus/S  2,Gamma_Lat,340.0
-65,25,male,Stimulus/S  2,Gamma_Amp,-0.8363963789472217
-66,22,male,Stimulus/S  3,Gamma_Lat,139.0
-67,22,male,Stimulus/S  3,Gamma_Amp,-1.1285726230652433
-68,27,male,Stimulus/S  1,Gamma_Lat,219.0
-69,27,male,Stimulus/S  1,Gamma_Amp,-1.1968698823640078
-70,27,male,Stimulus/S  3,Gamma_Lat,219.0
-71,27,male,Stimulus/S  3,Gamma_Amp,-1.2875772254030207
-72,33,male,Stimulus/S  2,Gamma_Lat,199.0
-73,33,male,Stimulus/S  2,Gamma_Amp,-0.5868753931434185
-74,34,male,Stimulus/S  3,Gamma_Lat,179.0
-75,34,male,Stimulus/S  3,Gamma_Amp,-2.0966869565628423
-76,36,male,Stimulus/S  2,Gamma_Lat,139.0
-77,36,male,Stimulus/S  2,Gamma_Amp,-2.1588811148014493
-78,34,male,Stimulus/S  1,Gamma_Lat,159.0
-79,34,male,Stimulus/S  1,Gamma_Amp,-2.138826096433332
-80,38,male,Stimulus/S  3,Gamma_Lat,139.0
-81,38,male,Stimulus/S  3,Gamma_Amp,-0.10756597160516304
-82,39,male,Stimulus/S  2,Gamma_Lat,139.0
-83,39,male,Stimulus/S  2,Gamma_Amp,-1.4822128174799423
-84,38,male,Stimulus/S  1,Gamma_Lat,159.0
-85,38,male,Stimulus/S  1,Gamma_Amp,-0.23823438754132265
-86,40,male,Stimulus/S  1,Gamma_Lat,260.0
-87,40,male,Stimulus/S  1,Gamma_Amp,-0.5153009768245645
-88,40,male,Stimulus/S  3,Gamma_Lat,179.0
-89,40,male,Stimulus/S  3,Gamma_Amp,-0.8513719851741769
-90,41,male,Stimulus/S  2,Gamma_Lat,320.0
-91,41,male,Stimulus/S  2,Gamma_Amp,-0.3309779544683542
-92,42,male,Stimulus/S  1,Gamma_Lat,199.0
-93,42,male,Stimulus/S  1,Gamma_Amp,-2.3704128493271535
-94,42,male,Stimulus/S  3,Gamma_Lat,179.0
-95,42,male,Stimulus/S  3,Gamma_Amp,-1.8888289485908978
-96,33,male,Stimulus/S  3,Gamma_Lat,179.0
-97,33,male,Stimulus/S  3,Gamma_Amp,-0.3550859047639467
-98,33,male,Stimulus/S  1,Gamma_Lat,179.0
-99,33,male,Stimulus/S  1,Gamma_Amp,-0.4635113476583982
-100,25,male,Stimulus/S  3,Gamma_Lat,340.0
-101,25,male,Stimulus/S  3,Gamma_Amp,-1.0039437801638695
-102,25,male,Stimulus/S  1,Gamma_Lat,139.0
-103,25,male,Stimulus/S  1,Gamma_Amp,-1.061451298726462
-104,27,male,Stimulus/S  2,Gamma_Lat,179.0
-105,27,male,Stimulus/S  2,Gamma_Amp,-1.0876296424811376
-106,36,male,Stimulus/S  1,Gamma_Lat,179.0
-107,36,male,Stimulus/S  1,Gamma_Amp,-2.601396058800882
-108,36,male,Stimulus/S  3,Gamma_Lat,159.0
-109,36,male,Stimulus/S  3,Gamma_Amp,-2.7010082174626078
-110,40,male,Stimulus/S  2,Gamma_Lat,199.0
-111,40,male,Stimulus/S  2,Gamma_Amp,-1.124655995068981
-112,34,male,Stimulus/S  2,Gamma_Lat,159.0
-113,34,male,Stimulus/S  2,Gamma_Amp,-1.1452321189245485
-114,39,male,Stimulus/S  1,Gamma_Lat,139.0
-115,39,male,Stimulus/S  1,Gamma_Amp,-1.2967994368333826
-116,41,male,Stimulus/S  3,Gamma_Lat,260.0
-117,41,male,Stimulus/S  3,Gamma_Amp,-0.7463613229021562
-118,38,male,Stimulus/S  2,Gamma_Lat,300.0
-119,38,male,Stimulus/S  2,Gamma_Amp,-0.4358040095600314
-120,39,male,Stimulus/S  3,Gamma_Lat,159.0
-121,39,male,Stimulus/S  3,Gamma_Amp,-1.0781034023172267
-122,41,male,Stimulus/S  1,Gamma_Lat,260.0
-123,41,male,Stimulus/S  1,Gamma_Amp,-0.6582216135913369
-124,42,male,Stimulus/S  2,Gamma_Lat,179.0
-125,42,male,Stimulus/S  2,Gamma_Amp,-2.2601033911235073
-126,43,male,Stimulus/S  1,Gamma_Lat,159.0
-127,43,male,Stimulus/S  1,Gamma_Amp,-0.9289223260955356
-128,48,male,Stimulus/S  1,Gamma_Lat,159.0
-129,48,male,Stimulus/S  1,Gamma_Amp,-1.09022623244975
-130,48,male,Stimulus/S  3,Gamma_Lat,199.0
-131,48,male,Stimulus/S  3,Gamma_Amp,-1.8783785611457111
-132,45,male,Stimulus/S  2,Gamma_Lat,300.0
-133,45,male,Stimulus/S  2,Gamma_Amp,-0.465172080447814
-134,44,male,Stimulus/S  1,Gamma_Lat,340.0
-135,44,male,Stimulus/S  1,Gamma_Amp,-0.7466663836106248
-136,43,male,Stimulus/S  2,Gamma_Lat,320.0
-137,43,male,Stimulus/S  2,Gamma_Amp,-0.08137365208900148
-138,51,male,Stimulus/S  2,Gamma_Lat,179.0
-139,51,male,Stimulus/S  2,Gamma_Amp,-1.395484221533353
-140,44,male,Stimulus/S  3,Gamma_Lat,199.0
-141,44,male,Stimulus/S  3,Gamma_Amp,-2.08039548855691
-142,48,male,Stimulus/S  2,Gamma_Lat,199.0
-143,48,male,Stimulus/S  2,Gamma_Amp,-2.4150111821937967
-144,51,male,Stimulus/S  1,Gamma_Lat,199.0
-145,51,male,Stimulus/S  1,Gamma_Amp,-1.5632431972956888
-146,45,male,Stimulus/S  3,Gamma_Lat,300.0
-147,45,male,Stimulus/S  3,Gamma_Amp,-0.16929265148079561
-148,44,male,Stimulus/S  2,Gamma_Lat,179.0
-149,44,male,Stimulus/S  2,Gamma_Amp,-1.2300471844365721
-150,51,male,Stimulus/S  3,Gamma_Lat,199.0
-151,51,male,Stimulus/S  3,Gamma_Amp,-1.92987306557672
-152,43,male,Stimulus/S  3,Gamma_Lat,159.0
-153,43,male,Stimulus/S  3,Gamma_Amp,-0.5227575629678666
-154,45,male,Stimulus/S  1,Gamma_Lat,320.0
-155,45,male,Stimulus/S  1,Gamma_Amp,-0.6380937117556823
-156,18,male,Stimulus/S  1,Gamma_Lat,179.0
-157,18,male,Stimulus/S  1,Gamma_Amp,-1.1342216474473656
-158,2,male,Stimulus/S  1,Gamma_Lat,139.0
-159,2,male,Stimulus/S  1,Gamma_Amp,-1.404661534474451
-160,6,male,Stimulus/S  1,Gamma_Lat,340.0
-161,6,male,Stimulus/S  1,Gamma_Amp,-1.212479134106634
-162,21,male,Stimulus/S  1,Gamma_Lat,280.0
-163,21,male,Stimulus/S  1,Gamma_Amp,-0.40330905794698424
-164,14,male,Stimulus/S  1,Gamma_Lat,219.0
-165,14,male,Stimulus/S  1,Gamma_Amp,-0.810398173664668
-166,4,male,Stimulus/S  1,Gamma_Lat,219.0
-167,4,male,Stimulus/S  1,Gamma_Amp,-1.5445325750840153
-168,5,male,Stimulus/S  1,Gamma_Lat,159.0
-169,5,male,Stimulus/S  1,Gamma_Amp,-1.7134261249481937
-170,9,male,Stimulus/S  1,Gamma_Lat,139.0
-171,9,male,Stimulus/S  1,Gamma_Amp,-2.640877877731395
-172,15,male,Stimulus/S  1,Gamma_Lat,159.0
-173,15,male,Stimulus/S  1,Gamma_Amp,-0.5281120186917534
-174,19,male,Stimulus/S  1,Gamma_Lat,260.0
-175,19,male,Stimulus/S  1,Gamma_Amp,-1.6582630222111119
-176,27,male,Stimulus/S  1,Gamma_Lat,219.0
-177,27,male,Stimulus/S  1,Gamma_Amp,-1.1968698823640078
-178,25,male,Stimulus/S  1,Gamma_Lat,139.0
-179,25,male,Stimulus/S  1,Gamma_Amp,-1.061451298726462
-180,22,male,Stimulus/S  1,Gamma_Lat,139.0
-181,22,male,Stimulus/S  1,Gamma_Amp,-1.1210179425382787
-182,33,male,Stimulus/S  1,Gamma_Lat,179.0
-183,33,male,Stimulus/S  1,Gamma_Amp,-0.4635113476583982
-184,36,male,Stimulus/S  1,Gamma_Lat,179.0
-185,36,male,Stimulus/S  1,Gamma_Amp,-2.601396058800882
-186,34,male,Stimulus/S  1,Gamma_Lat,159.0
-187,34,male,Stimulus/S  1,Gamma_Amp,-2.138826096433332
-188,18,male,Stimulus/S  2,Gamma_Lat,139.0
-189,18,male,Stimulus/S  2,Gamma_Amp,-1.0329077145893641
-190,21,male,Stimulus/S  2,Gamma_Lat,320.0
-191,21,male,Stimulus/S  2,Gamma_Amp,-0.10507192864680723
-192,6,male,Stimulus/S  2,Gamma_Lat,340.0
-193,6,male,Stimulus/S  2,Gamma_Amp,-1.8025225357112924
-194,2,male,Stimulus/S  2,Gamma_Lat,139.0
-195,2,male,Stimulus/S  2,Gamma_Amp,-1.237300427287467
-196,14,male,Stimulus/S  2,Gamma_Lat,139.0
-197,14,male,Stimulus/S  2,Gamma_Amp,-0.7816688694206738
-198,15,male,Stimulus/S  2,Gamma_Lat,139.0
-199,15,male,Stimulus/S  2,Gamma_Amp,-1.5947355866777813
-200,5,male,Stimulus/S  2,Gamma_Lat,179.0
-201,5,male,Stimulus/S  2,Gamma_Amp,-1.5262454683815343
-202,9,male,Stimulus/S  2,Gamma_Lat,199.0
-203,9,male,Stimulus/S  2,Gamma_Amp,-3.588428510308191
-204,4,male,Stimulus/S  2,Gamma_Lat,219.0
-205,4,male,Stimulus/S  2,Gamma_Amp,-2.189941684160673
-206,19,male,Stimulus/S  2,Gamma_Lat,320.0
-207,19,male,Stimulus/S  2,Gamma_Amp,-0.4534836486032758
-208,33,male,Stimulus/S  2,Gamma_Lat,199.0
-209,33,male,Stimulus/S  2,Gamma_Amp,-0.5868753931434185
-210,25,male,Stimulus/S  2,Gamma_Lat,340.0
-211,25,male,Stimulus/S  2,Gamma_Amp,-0.8363963789472217
-212,27,male,Stimulus/S  2,Gamma_Lat,179.0
-213,27,male,Stimulus/S  2,Gamma_Amp,-1.0876296424811376
-214,22,male,Stimulus/S  2,Gamma_Lat,139.0
-215,22,male,Stimulus/S  2,Gamma_Amp,-1.0413550030053573
-216,36,male,Stimulus/S  2,Gamma_Lat,139.0
-217,36,male,Stimulus/S  2,Gamma_Amp,-2.1588811148014493
-218,34,male,Stimulus/S  2,Gamma_Lat,159.0
-219,34,male,Stimulus/S  2,Gamma_Amp,-1.1452321189245485
-220,18,male,Stimulus/S  3,Gamma_Lat,199.0
-221,18,male,Stimulus/S  3,Gamma_Amp,-1.3959244222454426
-222,21,male,Stimulus/S  3,Gamma_Lat,340.0
-223,21,male,Stimulus/S  3,Gamma_Amp,-0.9055323460441819
-224,6,male,Stimulus/S  3,Gamma_Lat,340.0
-225,6,male,Stimulus/S  3,Gamma_Amp,-1.9420050689603725
-226,2,male,Stimulus/S  3,Gamma_Lat,139.0
-227,2,male,Stimulus/S  3,Gamma_Amp,-0.983931729899542
-228,14,male,Stimulus/S  3,Gamma_Lat,340.0
-229,14,male,Stimulus/S  3,Gamma_Amp,-0.845928390613071
-230,15,male,Stimulus/S  3,Gamma_Lat,159.0
-231,15,male,Stimulus/S  3,Gamma_Amp,-1.1035984457157377
-232,33,male,Stimulus/S  3,Gamma_Lat,179.0
-233,33,male,Stimulus/S  3,Gamma_Amp,-0.3550859047639467
-234,5,male,Stimulus/S  3,Gamma_Lat,199.0
-235,5,male,Stimulus/S  3,Gamma_Amp,-1.487189077479485
-236,9,male,Stimulus/S  3,Gamma_Lat,179.0
-237,9,male,Stimulus/S  3,Gamma_Amp,-3.3960425660025635
-238,27,male,Stimulus/S  3,Gamma_Lat,219.0
-239,27,male,Stimulus/S  3,Gamma_Amp,-1.2875772254030207
-240,4,male,Stimulus/S  3,Gamma_Lat,199.0
-241,4,male,Stimulus/S  3,Gamma_Amp,-2.600667873386587
-242,19,male,Stimulus/S  3,Gamma_Lat,240.0
-243,19,male,Stimulus/S  3,Gamma_Amp,-1.4992921437253481
-244,25,male,Stimulus/S  3,Gamma_Lat,340.0
-245,25,male,Stimulus/S  3,Gamma_Amp,-1.0039437801638695
-246,36,male,Stimulus/S  3,Gamma_Lat,159.0
-247,36,male,Stimulus/S  3,Gamma_Amp,-2.7010082174626078
-248,22,male,Stimulus/S  3,Gamma_Lat,139.0
-249,22,male,Stimulus/S  3,Gamma_Amp,-1.1285726230652433
-250,34,male,Stimulus/S  3,Gamma_Lat,179.0
-251,34,male,Stimulus/S  3,Gamma_Amp,-2.0966869565628423
-252,38,male,Stimulus/S  1,Gamma_Lat,159.0
-253,38,male,Stimulus/S  1,Gamma_Amp,-0.23823438754132265
-254,39,male,Stimulus/S  1,Gamma_Lat,139.0
-255,39,male,Stimulus/S  1,Gamma_Amp,-1.2967994368333826
-256,48,male,Stimulus/S  1,Gamma_Lat,159.0
-257,48,male,Stimulus/S  1,Gamma_Amp,-1.09022623244975
-258,40,male,Stimulus/S  1,Gamma_Lat,260.0
-259,40,male,Stimulus/S  1,Gamma_Amp,-0.5153009768245645
-260,41,male,Stimulus/S  1,Gamma_Lat,260.0
-261,41,male,Stimulus/S  1,Gamma_Amp,-0.6582216135913369
-262,42,male,Stimulus/S  1,Gamma_Lat,199.0
-263,42,male,Stimulus/S  1,Gamma_Amp,-2.3704128493271535
-264,43,male,Stimulus/S  1,Gamma_Lat,159.0
-265,43,male,Stimulus/S  1,Gamma_Amp,-0.9289223260955356
-266,44,male,Stimulus/S  1,Gamma_Lat,340.0
-267,44,male,Stimulus/S  1,Gamma_Amp,-0.7466663836106248
-268,1,female,Stimulus/S  1,Gamma_Lat,139.0
-269,1,female,Stimulus/S  1,Gamma_Amp,-0.491465514366443
-270,45,male,Stimulus/S  1,Gamma_Lat,320.0
-271,45,male,Stimulus/S  1,Gamma_Amp,-0.6380937117556823
-272,3,female,Stimulus/S  1,Gamma_Lat,300.0
-273,3,female,Stimulus/S  1,Gamma_Amp,-1.420325109164817
-274,7,female,Stimulus/S  1,Gamma_Lat,179.0
-275,7,female,Stimulus/S  1,Gamma_Amp,-1.1785323340085923
-276,10,female,Stimulus/S  1,Gamma_Lat,320.0
-277,10,female,Stimulus/S  1,Gamma_Amp,-0.35054263576861855
-278,8,female,Stimulus/S  1,Gamma_Lat,139.0
-279,8,female,Stimulus/S  1,Gamma_Amp,-0.29361734384077137
-280,51,male,Stimulus/S  1,Gamma_Lat,199.0
-281,51,male,Stimulus/S  1,Gamma_Amp,-1.5632431972956888
-282,11,female,Stimulus/S  1,Gamma_Lat,320.0
-283,11,female,Stimulus/S  1,Gamma_Amp,-0.7015123307597244
-284,48,male,Stimulus/S  2,Gamma_Lat,199.0
-285,48,male,Stimulus/S  2,Gamma_Amp,-2.4150111821937967
-286,38,male,Stimulus/S  2,Gamma_Lat,300.0
-287,38,male,Stimulus/S  2,Gamma_Amp,-0.4358040095600314
-288,40,male,Stimulus/S  2,Gamma_Lat,199.0
-289,40,male,Stimulus/S  2,Gamma_Amp,-1.124655995068981
-290,39,male,Stimulus/S  2,Gamma_Lat,139.0
-291,39,male,Stimulus/S  2,Gamma_Amp,-1.4822128174799423
-292,41,male,Stimulus/S  2,Gamma_Lat,320.0
-293,41,male,Stimulus/S  2,Gamma_Amp,-0.3309779544683542
-294,42,male,Stimulus/S  2,Gamma_Lat,179.0
-295,42,male,Stimulus/S  2,Gamma_Amp,-2.2601033911235073
-296,1,female,Stimulus/S  2,Gamma_Lat,179.0
-297,1,female,Stimulus/S  2,Gamma_Amp,-0.4436105943164317
-298,3,female,Stimulus/S  2,Gamma_Lat,320.0
-299,3,female,Stimulus/S  2,Gamma_Amp,-0.9699736029997683
-300,43,male,Stimulus/S  2,Gamma_Lat,320.0
-301,43,male,Stimulus/S  2,Gamma_Amp,-0.08137365208900148
-302,10,female,Stimulus/S  2,Gamma_Lat,159.0
-303,10,female,Stimulus/S  2,Gamma_Amp,-1.012053178843209
-304,7,female,Stimulus/S  2,Gamma_Lat,179.0
-305,7,female,Stimulus/S  2,Gamma_Amp,-0.861043767384073
-306,44,male,Stimulus/S  2,Gamma_Lat,179.0
-307,44,male,Stimulus/S  2,Gamma_Amp,-1.2300471844365721
-308,8,female,Stimulus/S  2,Gamma_Lat,139.0
-309,8,female,Stimulus/S  2,Gamma_Amp,-0.451927696538111
-310,45,male,Stimulus/S  2,Gamma_Lat,300.0
-311,45,male,Stimulus/S  2,Gamma_Amp,-0.465172080447814
-312,11,female,Stimulus/S  2,Gamma_Lat,139.0
-313,11,female,Stimulus/S  2,Gamma_Amp,-1.178715177265028
-314,51,male,Stimulus/S  2,Gamma_Lat,179.0
-315,51,male,Stimulus/S  2,Gamma_Amp,-1.395484221533353
-316,48,male,Stimulus/S  3,Gamma_Lat,199.0
-317,48,male,Stimulus/S  3,Gamma_Amp,-1.8783785611457111
-318,38,male,Stimulus/S  3,Gamma_Lat,139.0
-319,38,male,Stimulus/S  3,Gamma_Amp,-0.10756597160516304
-320,40,male,Stimulus/S  3,Gamma_Lat,179.0
-321,40,male,Stimulus/S  3,Gamma_Amp,-0.8513719851741769
-322,41,male,Stimulus/S  3,Gamma_Lat,260.0
-323,41,male,Stimulus/S  3,Gamma_Amp,-0.7463613229021562
-324,39,male,Stimulus/S  3,Gamma_Lat,159.0
-325,39,male,Stimulus/S  3,Gamma_Amp,-1.0781034023172267
-326,1,female,Stimulus/S  3,Gamma_Lat,159.0
-327,1,female,Stimulus/S  3,Gamma_Amp,-0.5008641650588893
-328,42,male,Stimulus/S  3,Gamma_Lat,179.0
-329,42,male,Stimulus/S  3,Gamma_Amp,-1.8888289485908978
-330,3,female,Stimulus/S  3,Gamma_Lat,280.0
-331,3,female,Stimulus/S  3,Gamma_Amp,-0.9390521445208211
-332,7,female,Stimulus/S  3,Gamma_Lat,179.0
-333,7,female,Stimulus/S  3,Gamma_Amp,-0.565350598911074
-334,10,female,Stimulus/S  3,Gamma_Lat,199.0
-335,10,female,Stimulus/S  3,Gamma_Amp,-0.984759008239532
-336,43,male,Stimulus/S  3,Gamma_Lat,159.0
-337,43,male,Stimulus/S  3,Gamma_Amp,-0.5227575629678666
-338,8,female,Stimulus/S  3,Gamma_Lat,280.0
-339,8,female,Stimulus/S  3,Gamma_Amp,-1.1313987703278947
-340,44,male,Stimulus/S  3,Gamma_Lat,199.0
-341,44,male,Stimulus/S  3,Gamma_Amp,-2.08039548855691
-342,45,male,Stimulus/S  3,Gamma_Lat,300.0
-343,45,male,Stimulus/S  3,Gamma_Amp,-0.16929265148079561
-344,11,female,Stimulus/S  3,Gamma_Lat,260.0
-345,11,female,Stimulus/S  3,Gamma_Amp,-0.7645237025255148
-346,51,male,Stimulus/S  3,Gamma_Lat,199.0
-347,51,male,Stimulus/S  3,Gamma_Amp,-1.92987306557672
-348,12,female,Stimulus/S  1,Gamma_Lat,300.0
-349,12,female,Stimulus/S  1,Gamma_Amp,-1.6919094850989111
-350,13,female,Stimulus/S  1,Gamma_Lat,139.0
-351,13,female,Stimulus/S  1,Gamma_Amp,-0.8392339490137003
-352,16,female,Stimulus/S  1,Gamma_Lat,340.0
-353,16,female,Stimulus/S  1,Gamma_Amp,-0.47139118698809185
-354,31,female,Stimulus/S  1,Gamma_Lat,139.0
-355,31,female,Stimulus/S  1,Gamma_Amp,-1.2966192455729284
-356,17,female,Stimulus/S  1,Gamma_Lat,139.0
-357,17,female,Stimulus/S  1,Gamma_Amp,-0.8091344328197235
-358,20,female,Stimulus/S  1,Gamma_Lat,179.0
-359,20,female,Stimulus/S  1,Gamma_Amp,-0.008600082835733474
-360,29,female,Stimulus/S  1,Gamma_Lat,219.0
-361,29,female,Stimulus/S  1,Gamma_Amp,-1.6451694637019905
-362,23,female,Stimulus/S  1,Gamma_Lat,159.0
-363,23,female,Stimulus/S  1,Gamma_Amp,-1.8222503424985987
-364,28,female,Stimulus/S  1,Gamma_Lat,320.0
-365,28,female,Stimulus/S  1,Gamma_Amp,-1.3304292163311133
-366,24,female,Stimulus/S  1,Gamma_Lat,179.0
-367,24,female,Stimulus/S  1,Gamma_Amp,-0.8746458618228579
-368,26,female,Stimulus/S  1,Gamma_Lat,280.0
-369,26,female,Stimulus/S  1,Gamma_Amp,-0.587302855735817
-370,32,female,Stimulus/S  1,Gamma_Lat,159.0
-371,32,female,Stimulus/S  1,Gamma_Amp,-0.2783435028451737
-372,37,female,Stimulus/S  1,Gamma_Lat,159.0
-373,37,female,Stimulus/S  1,Gamma_Amp,-0.5262968953483791
-374,46,female,Stimulus/S  1,Gamma_Lat,159.0
-375,46,female,Stimulus/S  1,Gamma_Amp,-1.0167544668675033
-376,30,female,Stimulus/S  1,Gamma_Lat,280.0
-377,30,female,Stimulus/S  1,Gamma_Amp,-0.5533773883394875
-378,35,female,Stimulus/S  1,Gamma_Lat,199.0
-379,35,female,Stimulus/S  1,Gamma_Amp,-0.9767108298992047
-380,12,female,Stimulus/S  2,Gamma_Lat,280.0
-381,12,female,Stimulus/S  2,Gamma_Amp,-1.9359984799171306
-382,31,female,Stimulus/S  2,Gamma_Lat,179.0
-383,31,female,Stimulus/S  2,Gamma_Amp,-1.036315110256164
-384,13,female,Stimulus/S  2,Gamma_Lat,179.0
-385,13,female,Stimulus/S  2,Gamma_Amp,-1.0417557766835073
-386,16,female,Stimulus/S  2,Gamma_Lat,280.0
-387,16,female,Stimulus/S  2,Gamma_Amp,-0.043354614678246146
-388,29,female,Stimulus/S  2,Gamma_Lat,199.0
-389,29,female,Stimulus/S  2,Gamma_Amp,-1.3664283213472193
-390,17,female,Stimulus/S  2,Gamma_Lat,179.0
-391,17,female,Stimulus/S  2,Gamma_Amp,-0.5116363766975378
-392,28,female,Stimulus/S  2,Gamma_Lat,260.0
-393,28,female,Stimulus/S  2,Gamma_Amp,-2.5438766826073813
-394,20,female,Stimulus/S  2,Gamma_Lat,179.0
-395,20,female,Stimulus/S  2,Gamma_Amp,-0.15526596546839436
-396,37,female,Stimulus/S  2,Gamma_Lat,139.0
-397,37,female,Stimulus/S  2,Gamma_Amp,-0.24625206554771298
-398,46,female,Stimulus/S  2,Gamma_Lat,179.0
-399,46,female,Stimulus/S  2,Gamma_Amp,-0.8191358353690398
-400,24,female,Stimulus/S  2,Gamma_Lat,340.0
-401,24,female,Stimulus/S  2,Gamma_Amp,-0.5097558402135846
-402,32,female,Stimulus/S  2,Gamma_Lat,159.0
-403,32,female,Stimulus/S  2,Gamma_Amp,-0.8137346783031234
-404,23,female,Stimulus/S  2,Gamma_Lat,139.0
-405,23,female,Stimulus/S  2,Gamma_Amp,-0.2405750658834179
-406,26,female,Stimulus/S  2,Gamma_Lat,159.0
-407,26,female,Stimulus/S  2,Gamma_Amp,-0.7941986008934315
-408,30,female,Stimulus/S  2,Gamma_Lat,159.0
-409,30,female,Stimulus/S  2,Gamma_Amp,-0.07045699308593062
-410,35,female,Stimulus/S  2,Gamma_Lat,139.0
-411,35,female,Stimulus/S  2,Gamma_Amp,-0.604388084862712
-412,31,female,Stimulus/S  3,Gamma_Lat,139.0
-413,31,female,Stimulus/S  3,Gamma_Amp,-1.156095249296217
-414,12,female,Stimulus/S  3,Gamma_Lat,139.0
-415,12,female,Stimulus/S  3,Gamma_Amp,-1.8273181707564583
-416,29,female,Stimulus/S  3,Gamma_Lat,219.0
-417,29,female,Stimulus/S  3,Gamma_Amp,-1.5933434836986664
-418,16,female,Stimulus/S  3,Gamma_Lat,139.0
-419,16,female,Stimulus/S  3,Gamma_Amp,-0.971801473715554
-420,28,female,Stimulus/S  3,Gamma_Lat,300.0
-421,28,female,Stimulus/S  3,Gamma_Amp,-1.8082796151770553
-422,13,female,Stimulus/S  3,Gamma_Lat,199.0
-423,13,female,Stimulus/S  3,Gamma_Amp,-0.9530947498214697
-424,46,female,Stimulus/S  3,Gamma_Lat,159.0
-425,46,female,Stimulus/S  3,Gamma_Amp,-1.7554194640198113
-426,37,female,Stimulus/S  3,Gamma_Lat,159.0
-427,37,female,Stimulus/S  3,Gamma_Amp,-0.5275578685148731
-428,32,female,Stimulus/S  3,Gamma_Lat,139.0
-429,32,female,Stimulus/S  3,Gamma_Amp,-0.006990990421008793
-430,17,female,Stimulus/S  3,Gamma_Lat,199.0
-431,17,female,Stimulus/S  3,Gamma_Amp,-0.4183967675651222
-432,20,female,Stimulus/S  3,Gamma_Lat,179.0
-433,20,female,Stimulus/S  3,Gamma_Amp,-0.9182569205872861
-434,24,female,Stimulus/S  3,Gamma_Lat,179.0
-435,24,female,Stimulus/S  3,Gamma_Amp,-0.6193550161234505
-436,23,female,Stimulus/S  3,Gamma_Lat,139.0
-437,23,female,Stimulus/S  3,Gamma_Amp,-0.40305986482842526
-438,26,female,Stimulus/S  3,Gamma_Lat,139.0
-439,26,female,Stimulus/S  3,Gamma_Amp,-1.7198745222738125
-440,30,female,Stimulus/S  3,Gamma_Lat,340.0
-441,30,female,Stimulus/S  3,Gamma_Amp,-0.1312741584761284
-442,35,female,Stimulus/S  3,Gamma_Lat,139.0
-443,35,female,Stimulus/S  3,Gamma_Amp,-1.4639713100359062
-444,49,female,Stimulus/S  1,Gamma_Lat,159.0
-445,49,female,Stimulus/S  1,Gamma_Amp,-2.729760301798074
-446,47,female,Stimulus/S  1,Gamma_Lat,240.0
-447,47,female,Stimulus/S  1,Gamma_Amp,-0.396880753087296
-448,50,female,Stimulus/S  1,Gamma_Lat,199.0
-449,50,female,Stimulus/S  1,Gamma_Amp,-0.7342208599497412
-450,49,female,Stimulus/S  2,Gamma_Lat,139.0
-451,49,female,Stimulus/S  2,Gamma_Amp,-3.507635919683507
-452,47,female,Stimulus/S  2,Gamma_Lat,179.0
-453,47,female,Stimulus/S  2,Gamma_Amp,-0.5262553300047914
-454,50,female,Stimulus/S  2,Gamma_Lat,139.0
-455,50,female,Stimulus/S  2,Gamma_Amp,-0.669041187702891
-456,49,female,Stimulus/S  3,Gamma_Lat,159.0
-457,49,female,Stimulus/S  3,Gamma_Amp,-3.737023184194362
-458,47,female,Stimulus/S  3,Gamma_Lat,179.0
-459,47,female,Stimulus/S  3,Gamma_Amp,-0.3789598111132992
-460,50,female,Stimulus/S  3,Gamma_Lat,159.0
-461,50,female,Stimulus/S  3,Gamma_Amp,-0.7044392812461218
+0,18,male,2,Baseline_Amp,-114.37561762384564
+1,18,male,2,Gamma_Lat,139.0
+2,18,male,2,Gamma_Amp,-113.65532109144704
+3,21,male,2,Baseline_Amp,-113.54268577731645
+4,21,male,2,Gamma_Lat,320.0
+5,21,male,2,Gamma_Amp,-113.88555692170931
+6,6,male,2,Baseline_Amp,-113.25976703898783
+7,6,male,2,Gamma_Lat,340.0
+8,6,male,2,Gamma_Amp,-111.72216571212047
+9,4,male,2,Baseline_Amp,-114.10977403170415
+10,4,male,2,Gamma_Lat,219.0
+11,4,male,2,Gamma_Amp,-112.28384664033283
+12,2,male,1,Baseline_Amp,-112.69037011513785
+13,2,male,1,Gamma_Lat,139.0
+14,2,male,1,Gamma_Amp,-111.67387152739312
+15,5,male,3,Baseline_Amp,-112.66885267829852
+16,5,male,3,Gamma_Lat,199.0
+17,5,male,3,Gamma_Amp,-111.39787823279157
+18,2,male,3,Baseline_Amp,-112.45278430623564
+19,2,male,3,Gamma_Lat,139.0
+20,2,male,3,Gamma_Amp,-111.95420897282413
+21,5,male,1,Baseline_Amp,-113.23135816432439
+22,5,male,1,Gamma_Lat,159.0
+23,5,male,1,Gamma_Amp,-111.64461456078757
+24,9,male,1,Baseline_Amp,-111.4316998302057
+25,9,male,1,Gamma_Lat,139.0
+26,9,male,1,Gamma_Amp,-109.13252164943796
+27,14,male,2,Baseline_Amp,-112.7444960512562
+28,14,male,2,Gamma_Lat,139.0
+29,14,male,2,Gamma_Amp,-112.60059094263693
+30,15,male,1,Baseline_Amp,-112.66549815866136
+31,15,male,1,Gamma_Lat,159.0
+32,15,male,1,Gamma_Amp,-112.92310460536578
+33,19,male,1,Baseline_Amp,-113.70623723264012
+34,19,male,1,Gamma_Lat,260.0
+35,19,male,1,Gamma_Amp,-112.2138966074428
+36,15,male,3,Baseline_Amp,-112.87625986729246
+37,15,male,3,Gamma_Lat,159.0
+38,15,male,3,Gamma_Amp,-112.51880227846956
+39,19,male,3,Baseline_Amp,-113.71426342799498
+40,19,male,3,Gamma_Lat,240.0
+41,19,male,3,Gamma_Amp,-112.53286638205255
+42,9,male,3,Baseline_Amp,-111.10355414489614
+43,9,male,3,Gamma_Lat,179.0
+44,9,male,3,Gamma_Amp,-108.11112147676917
+45,22,male,1,Baseline_Amp,-108.36580647574482
+46,22,male,1,Gamma_Lat,139.0
+47,22,male,1,Gamma_Amp,-107.41872753314183
+48,18,male,3,Baseline_Amp,-114.7090302050661
+49,18,male,3,Gamma_Lat,199.0
+50,18,male,3,Gamma_Amp,-113.65577271095052
+51,21,male,3,Baseline_Amp,-114.64088961272623
+52,21,male,3,Gamma_Lat,340.0
+53,21,male,3,Gamma_Amp,-113.88371684323693
+54,18,male,1,Baseline_Amp,-114.9592090946446
+55,18,male,1,Gamma_Lat,179.0
+56,18,male,1,Gamma_Amp,-114.04430250410618
+57,6,male,3,Baseline_Amp,-113.20281705057766
+58,6,male,3,Gamma_Lat,340.0
+59,6,male,3,Gamma_Amp,-111.59153687043047
+60,6,male,1,Baseline_Amp,-113.29084944972892
+61,6,male,1,Gamma_Lat,340.0
+62,6,male,1,Gamma_Amp,-112.45892138071659
+63,21,male,1,Baseline_Amp,-115.10315432461182
+64,21,male,1,Gamma_Lat,280.0
+65,21,male,1,Gamma_Amp,-114.76921302777423
+66,2,male,2,Baseline_Amp,-112.44712796050432
+67,2,male,2,Gamma_Lat,139.0
+68,2,male,2,Gamma_Amp,-111.44148993997317
+69,5,male,2,Baseline_Amp,-112.91925200957161
+70,5,male,2,Gamma_Lat,179.0
+71,5,male,2,Gamma_Amp,-111.7232981247757
+72,4,male,1,Baseline_Amp,-114.13466179578751
+73,4,male,1,Gamma_Lat,219.0
+74,4,male,1,Gamma_Amp,-112.7134705556766
+75,14,male,3,Baseline_Amp,-112.72098400144178
+76,14,male,3,Gamma_Lat,340.0
+77,14,male,3,Gamma_Amp,-112.35529358737412
+78,15,male,2,Baseline_Amp,-112.8237794730936
+79,15,male,2,Gamma_Lat,139.0
+80,15,male,2,Gamma_Amp,-111.69536525131006
+81,4,male,3,Baseline_Amp,-114.34652225321453
+82,4,male,3,Gamma_Lat,199.0
+83,4,male,3,Gamma_Amp,-111.851505202543
+84,19,male,2,Baseline_Amp,-113.42803513682522
+85,19,male,2,Gamma_Lat,320.0
+86,19,male,2,Gamma_Amp,-113.18996366494962
+87,9,male,2,Baseline_Amp,-111.34487311725822
+88,9,male,2,Gamma_Lat,199.0
+89,9,male,2,Gamma_Amp,-108.14972680623752
+90,14,male,1,Baseline_Amp,-113.07156672541875
+91,14,male,1,Gamma_Lat,219.0
+92,14,male,1,Gamma_Amp,-112.83879008773613
+93,22,male,2,Baseline_Amp,-108.23255691435918
+94,22,male,2,Gamma_Lat,139.0
+95,22,male,2,Gamma_Amp,-107.52410665995187
+96,25,male,2,Baseline_Amp,-114.31752559556082
+97,25,male,2,Gamma_Lat,340.0
+98,25,male,2,Gamma_Amp,-113.88904288961619
+99,22,male,3,Baseline_Amp,-107.93640268604446
+100,22,male,3,Gamma_Lat,139.0
+101,22,male,3,Gamma_Amp,-106.82814779050025
+102,27,male,1,Baseline_Amp,-110.32267464607926
+103,27,male,1,Gamma_Lat,219.0
+104,27,male,1,Gamma_Amp,-109.27941869244805
+105,33,male,2,Baseline_Amp,-112.13796532179563
+106,33,male,2,Gamma_Lat,199.0
+107,33,male,2,Gamma_Amp,-111.67763707019711
+108,27,male,3,Baseline_Amp,-110.27548862307835
+109,27,male,3,Gamma_Lat,219.0
+110,27,male,3,Gamma_Amp,-109.12910835453741
+111,36,male,2,Baseline_Amp,-113.14792813911565
+112,36,male,2,Gamma_Lat,139.0
+113,36,male,2,Gamma_Amp,-111.22181940030009
+114,40,male,3,Baseline_Amp,-112.38023390761586
+115,40,male,3,Gamma_Lat,179.0
+116,40,male,3,Gamma_Amp,-111.5826854343508
+117,34,male,3,Baseline_Amp,-111.21284290337107
+118,34,male,3,Gamma_Lat,179.0
+119,34,male,3,Gamma_Amp,-109.62520590613197
+120,34,male,1,Baseline_Amp,-111.29570926766642
+121,34,male,1,Gamma_Lat,159.0
+122,34,male,1,Gamma_Amp,-109.28249368089003
+123,41,male,2,Baseline_Amp,-115.49601898740354
+124,41,male,2,Gamma_Lat,320.0
+125,41,male,2,Gamma_Amp,-115.11358079500613
+126,38,male,1,Baseline_Amp,-115.09489968449158
+127,38,male,1,Gamma_Lat,159.0
+128,38,male,1,Gamma_Amp,-114.82570184775966
+129,38,male,3,Baseline_Amp,-115.10354000910644
+130,38,male,3,Gamma_Lat,139.0
+131,38,male,3,Gamma_Amp,-115.05167538628045
+132,39,male,2,Baseline_Amp,-113.78429274362861
+133,39,male,2,Gamma_Lat,139.0
+134,39,male,2,Gamma_Amp,-112.78178626224458
+135,40,male,1,Baseline_Amp,-112.6090931058419
+136,40,male,1,Gamma_Lat,260.0
+137,40,male,1,Gamma_Amp,-112.2155219654032
+138,42,male,1,Baseline_Amp,-110.2727639708427
+139,42,male,1,Gamma_Lat,199.0
+140,42,male,1,Gamma_Amp,-107.94237345291324
+141,42,male,3,Baseline_Amp,-109.9530620191549
+142,42,male,3,Gamma_Lat,179.0
+143,42,male,3,Gamma_Amp,-108.05129090467196
+144,25,male,3,Baseline_Amp,-114.27178544555883
+145,25,male,3,Gamma_Lat,340.0
+146,25,male,3,Gamma_Amp,-113.55822233956019
+147,33,male,1,Baseline_Amp,-111.64450462126132
+148,33,male,1,Gamma_Lat,179.0
+149,33,male,1,Gamma_Amp,-111.49397247825725
+150,27,male,2,Baseline_Amp,-110.8234837507687
+151,27,male,2,Gamma_Lat,179.0
+152,27,male,2,Gamma_Amp,-109.78095502097639
+153,33,male,3,Baseline_Amp,-111.68109629415612
+154,33,male,3,Gamma_Lat,179.0
+155,33,male,3,Gamma_Amp,-111.58642790199788
+156,25,male,1,Baseline_Amp,-114.1238733748404
+157,25,male,1,Gamma_Lat,139.0
+158,25,male,1,Gamma_Amp,-113.46049540883686
+159,41,male,1,Baseline_Amp,-115.78018735198759
+160,41,male,1,Gamma_Lat,260.0
+161,41,male,1,Gamma_Amp,-115.17809434101147
+162,34,male,2,Baseline_Amp,-111.12650541017922
+163,34,male,2,Gamma_Lat,159.0
+164,34,male,2,Gamma_Amp,-110.1403587654517
+165,36,male,3,Baseline_Amp,-113.57958440405399
+166,36,male,3,Gamma_Lat,159.0
+167,36,male,3,Gamma_Amp,-111.23581964411161
+168,36,male,1,Baseline_Amp,-113.12702610242792
+169,36,male,1,Gamma_Lat,179.0
+170,36,male,1,Gamma_Amp,-110.87094633039149
+171,41,male,3,Baseline_Amp,-115.16719772867036
+172,41,male,3,Gamma_Lat,260.0
+173,41,male,3,Gamma_Amp,-114.45126411998312
+174,38,male,2,Baseline_Amp,-115.02842455588025
+175,38,male,2,Gamma_Lat,300.0
+176,38,male,2,Gamma_Amp,-114.61264447600402
+177,40,male,2,Baseline_Amp,-112.6365241821706
+178,40,male,2,Gamma_Lat,199.0
+179,40,male,2,Gamma_Amp,-111.70805890394736
+180,39,male,3,Baseline_Amp,-113.53900168951546
+181,39,male,3,Gamma_Lat,159.0
+182,39,male,3,Gamma_Amp,-112.99701175053247
+183,39,male,1,Baseline_Amp,-113.77843945490194
+184,39,male,1,Gamma_Lat,139.0
+185,39,male,1,Gamma_Amp,-112.89106400281585
+186,42,male,2,Baseline_Amp,-110.38469064030646
+187,42,male,2,Gamma_Lat,179.0
+188,42,male,2,Gamma_Amp,-108.10484606749296
+189,43,male,1,Baseline_Amp,-109.36951080309942
+190,43,male,1,Gamma_Lat,159.0
+191,43,male,1,Gamma_Amp,-108.73173140761318
+192,48,male,3,Baseline_Amp,-112.69898395390582
+193,48,male,3,Gamma_Lat,199.0
+194,48,male,3,Gamma_Amp,-111.10782570257223
+195,48,male,1,Baseline_Amp,-112.59422527910279
+196,48,male,1,Gamma_Lat,159.0
+197,48,male,1,Gamma_Amp,-111.78234951013636
+198,43,male,2,Baseline_Amp,-109.44022954806611
+199,43,male,2,Gamma_Lat,320.0
+200,43,male,2,Gamma_Amp,-109.55758335934418
+201,44,male,1,Baseline_Amp,-113.17973210560052
+202,44,male,1,Gamma_Lat,340.0
+203,44,male,1,Gamma_Amp,-112.46322632530241
+204,44,male,3,Baseline_Amp,-113.31945708861147
+205,44,male,3,Gamma_Lat,199.0
+206,44,male,3,Gamma_Amp,-111.32222671863705
+207,45,male,2,Baseline_Amp,-113.50629398781788
+208,45,male,2,Gamma_Lat,300.0
+209,45,male,2,Gamma_Amp,-113.35447250631668
+210,51,male,2,Baseline_Amp,-113.34911670001324
+211,51,male,2,Gamma_Lat,179.0
+212,51,male,2,Gamma_Amp,-112.33411766662012
+213,48,male,2,Baseline_Amp,-113.09831167872885
+214,48,male,2,Gamma_Lat,199.0
+215,48,male,2,Gamma_Amp,-110.95591290816454
+216,51,male,1,Baseline_Amp,-113.29765388085889
+217,51,male,1,Gamma_Lat,199.0
+218,51,male,1,Gamma_Amp,-112.14269814222617
+219,43,male,3,Baseline_Amp,-109.35165819684158
+220,43,male,3,Gamma_Lat,159.0
+221,43,male,3,Gamma_Amp,-109.04582296430658
+222,44,male,2,Baseline_Amp,-113.10723675685163
+223,44,male,2,Gamma_Lat,179.0
+224,44,male,2,Gamma_Amp,-112.01017271733276
+225,45,male,3,Baseline_Amp,-113.25244211317835
+226,45,male,3,Gamma_Lat,300.0
+227,45,male,3,Gamma_Amp,-113.40671996949898
+228,45,male,1,Baseline_Amp,-113.51964564083751
+229,45,male,1,Gamma_Lat,320.0
+230,45,male,1,Gamma_Amp,-113.1334663623762
+231,51,male,3,Baseline_Amp,-113.08134613632369
+232,51,male,3,Gamma_Lat,199.0
+233,51,male,3,Gamma_Amp,-111.35222626012451
+234,2,male,1,Baseline_Amp,-112.69037011513785
+235,2,male,1,Gamma_Lat,139.0
+236,2,male,1,Gamma_Amp,-111.67387152739312
+237,5,male,1,Baseline_Amp,-113.23135816432439
+238,5,male,1,Gamma_Lat,159.0
+239,5,male,1,Gamma_Amp,-111.64461456078757
+240,4,male,1,Baseline_Amp,-114.13466179578751
+241,4,male,1,Gamma_Lat,219.0
+242,4,male,1,Gamma_Amp,-112.7134705556766
+243,6,male,1,Baseline_Amp,-113.29084944972892
+244,6,male,1,Gamma_Lat,340.0
+245,6,male,1,Gamma_Amp,-112.45892138071659
+246,9,male,1,Baseline_Amp,-111.4316998302057
+247,9,male,1,Gamma_Lat,139.0
+248,9,male,1,Gamma_Amp,-109.13252164943796
+249,21,male,1,Baseline_Amp,-115.10315432461182
+250,21,male,1,Gamma_Lat,280.0
+251,21,male,1,Gamma_Amp,-114.76921302777423
+252,18,male,1,Baseline_Amp,-114.9592090946446
+253,18,male,1,Gamma_Lat,179.0
+254,18,male,1,Gamma_Amp,-114.04430250410618
+255,15,male,1,Baseline_Amp,-112.66549815866136
+256,15,male,1,Gamma_Lat,159.0
+257,15,male,1,Gamma_Amp,-112.92310460536578
+258,14,male,1,Baseline_Amp,-113.07156672541875
+259,14,male,1,Gamma_Lat,219.0
+260,14,male,1,Gamma_Amp,-112.83879008773613
+261,33,male,1,Baseline_Amp,-111.64450462126132
+262,33,male,1,Gamma_Lat,179.0
+263,33,male,1,Gamma_Amp,-111.49397247825725
+264,25,male,1,Baseline_Amp,-114.1238733748404
+265,25,male,1,Gamma_Lat,139.0
+266,25,male,1,Gamma_Amp,-113.46049540883686
+267,34,male,1,Baseline_Amp,-111.29570926766642
+268,34,male,1,Gamma_Lat,159.0
+269,34,male,1,Gamma_Amp,-109.28249368089003
+270,19,male,1,Baseline_Amp,-113.70623723264012
+271,19,male,1,Gamma_Lat,260.0
+272,19,male,1,Gamma_Amp,-112.2138966074428
+273,27,male,1,Baseline_Amp,-110.32267464607926
+274,27,male,1,Gamma_Lat,219.0
+275,27,male,1,Gamma_Amp,-109.27941869244805
+276,22,male,1,Baseline_Amp,-108.36580647574482
+277,22,male,1,Gamma_Lat,139.0
+278,22,male,1,Gamma_Amp,-107.41872753314183
+279,36,male,1,Baseline_Amp,-113.12702610242792
+280,36,male,1,Gamma_Lat,179.0
+281,36,male,1,Gamma_Amp,-110.87094633039149
+282,21,male,2,Baseline_Amp,-113.54268577731645
+283,21,male,2,Gamma_Lat,320.0
+284,21,male,2,Gamma_Amp,-113.88555692170931
+285,2,male,2,Baseline_Amp,-112.44712796050432
+286,2,male,2,Gamma_Lat,139.0
+287,2,male,2,Gamma_Amp,-111.44148993997317
+288,5,male,2,Baseline_Amp,-112.91925200957161
+289,5,male,2,Gamma_Lat,179.0
+290,5,male,2,Gamma_Amp,-111.7232981247757
+291,18,male,2,Baseline_Amp,-114.37561762384564
+292,18,male,2,Gamma_Lat,139.0
+293,18,male,2,Gamma_Amp,-113.65532109144704
+294,4,male,2,Baseline_Amp,-114.10977403170415
+295,4,male,2,Gamma_Lat,219.0
+296,4,male,2,Gamma_Amp,-112.28384664033283
+297,6,male,2,Baseline_Amp,-113.25976703898783
+298,6,male,2,Gamma_Lat,340.0
+299,6,male,2,Gamma_Amp,-111.72216571212047
+300,9,male,2,Baseline_Amp,-111.34487311725822
+301,9,male,2,Gamma_Lat,199.0
+302,9,male,2,Gamma_Amp,-108.14972680623752
+303,14,male,2,Baseline_Amp,-112.7444960512562
+304,14,male,2,Gamma_Lat,139.0
+305,14,male,2,Gamma_Amp,-112.60059094263693
+306,33,male,2,Baseline_Amp,-112.13796532179563
+307,33,male,2,Gamma_Lat,199.0
+308,33,male,2,Gamma_Amp,-111.67763707019711
+309,15,male,2,Baseline_Amp,-112.8237794730936
+310,15,male,2,Gamma_Lat,139.0
+311,15,male,2,Gamma_Amp,-111.69536525131006
+312,25,male,2,Baseline_Amp,-114.31752559556082
+313,25,male,2,Gamma_Lat,340.0
+314,25,male,2,Gamma_Amp,-113.88904288961619
+315,27,male,2,Baseline_Amp,-110.8234837507687
+316,27,male,2,Gamma_Lat,179.0
+317,27,male,2,Gamma_Amp,-109.78095502097639
+318,34,male,2,Baseline_Amp,-111.12650541017922
+319,34,male,2,Gamma_Lat,159.0
+320,34,male,2,Gamma_Amp,-110.1403587654517
+321,19,male,2,Baseline_Amp,-113.42803513682522
+322,19,male,2,Gamma_Lat,320.0
+323,19,male,2,Gamma_Amp,-113.18996366494962
+324,22,male,2,Baseline_Amp,-108.23255691435918
+325,22,male,2,Gamma_Lat,139.0
+326,22,male,2,Gamma_Amp,-107.52410665995187
+327,36,male,2,Baseline_Amp,-113.14792813911565
+328,36,male,2,Gamma_Lat,139.0
+329,36,male,2,Gamma_Amp,-111.22181940030009
+330,21,male,3,Baseline_Amp,-114.64088961272623
+331,21,male,3,Gamma_Lat,340.0
+332,21,male,3,Gamma_Amp,-113.88371684323693
+333,18,male,3,Baseline_Amp,-114.7090302050661
+334,18,male,3,Gamma_Lat,199.0
+335,18,male,3,Gamma_Amp,-113.65577271095052
+336,2,male,3,Baseline_Amp,-112.45278430623564
+337,2,male,3,Gamma_Lat,139.0
+338,2,male,3,Gamma_Amp,-111.95420897282413
+339,5,male,3,Baseline_Amp,-112.66885267829852
+340,5,male,3,Gamma_Lat,199.0
+341,5,male,3,Gamma_Amp,-111.39787823279157
+342,4,male,3,Baseline_Amp,-114.34652225321453
+343,4,male,3,Gamma_Lat,199.0
+344,4,male,3,Gamma_Amp,-111.851505202543
+345,6,male,3,Baseline_Amp,-113.20281705057766
+346,6,male,3,Gamma_Lat,340.0
+347,6,male,3,Gamma_Amp,-111.59153687043047
+348,14,male,3,Baseline_Amp,-112.72098400144178
+349,14,male,3,Gamma_Lat,340.0
+350,14,male,3,Gamma_Amp,-112.35529358737412
+351,9,male,3,Baseline_Amp,-111.10355414489614
+352,9,male,3,Gamma_Lat,179.0
+353,9,male,3,Gamma_Amp,-108.11112147676917
+354,33,male,3,Baseline_Amp,-111.68109629415612
+355,33,male,3,Gamma_Lat,179.0
+356,33,male,3,Gamma_Amp,-111.58642790199788
+357,15,male,3,Baseline_Amp,-112.87625986729246
+358,15,male,3,Gamma_Lat,159.0
+359,15,male,3,Gamma_Amp,-112.51880227846956
+360,27,male,3,Baseline_Amp,-110.27548862307835
+361,27,male,3,Gamma_Lat,219.0
+362,27,male,3,Gamma_Amp,-109.12910835453741
+363,25,male,3,Baseline_Amp,-114.27178544555883
+364,25,male,3,Gamma_Lat,340.0
+365,25,male,3,Gamma_Amp,-113.55822233956019
+366,34,male,3,Baseline_Amp,-111.21284290337107
+367,34,male,3,Gamma_Lat,179.0
+368,34,male,3,Gamma_Amp,-109.62520590613197
+369,19,male,3,Baseline_Amp,-113.71426342799498
+370,19,male,3,Gamma_Lat,240.0
+371,19,male,3,Gamma_Amp,-112.53286638205255
+372,22,male,3,Baseline_Amp,-107.93640268604446
+373,22,male,3,Gamma_Lat,139.0
+374,22,male,3,Gamma_Amp,-106.82814779050025
+375,36,male,3,Baseline_Amp,-113.57958440405399
+376,36,male,3,Gamma_Lat,159.0
+377,36,male,3,Gamma_Amp,-111.23581964411161
+378,38,male,1,Baseline_Amp,-115.09489968449158
+379,38,male,1,Gamma_Lat,159.0
+380,38,male,1,Gamma_Amp,-114.82570184775966
+381,48,male,1,Baseline_Amp,-112.59422527910279
+382,48,male,1,Gamma_Lat,159.0
+383,48,male,1,Gamma_Amp,-111.78234951013636
+384,41,male,1,Baseline_Amp,-115.78018735198759
+385,41,male,1,Gamma_Lat,260.0
+386,41,male,1,Gamma_Amp,-115.17809434101147
+387,40,male,1,Baseline_Amp,-112.6090931058419
+388,40,male,1,Gamma_Lat,260.0
+389,40,male,1,Gamma_Amp,-112.2155219654032
+390,39,male,1,Baseline_Amp,-113.77843945490194
+391,39,male,1,Gamma_Lat,139.0
+392,39,male,1,Gamma_Amp,-112.89106400281585
+393,42,male,1,Baseline_Amp,-110.2727639708427
+394,42,male,1,Gamma_Lat,199.0
+395,42,male,1,Gamma_Amp,-107.94237345291324
+396,43,male,1,Baseline_Amp,-109.36951080309942
+397,43,male,1,Gamma_Lat,159.0
+398,43,male,1,Gamma_Amp,-108.73173140761318
+399,1,female,1,Baseline_Amp,-108.69095167186987
+400,1,female,1,Gamma_Lat,139.0
+401,1,female,1,Gamma_Amp,-108.55295954960107
+402,44,male,1,Baseline_Amp,-113.17973210560052
+403,44,male,1,Gamma_Lat,340.0
+404,44,male,1,Gamma_Amp,-112.46322632530241
+405,45,male,1,Baseline_Amp,-113.51964564083751
+406,45,male,1,Gamma_Lat,320.0
+407,45,male,1,Gamma_Amp,-113.1334663623762
+408,3,female,1,Baseline_Amp,-113.47748453147105
+409,3,female,1,Gamma_Lat,300.0
+410,3,female,1,Gamma_Amp,-112.32387829533852
+411,51,male,1,Baseline_Amp,-113.29765388085889
+412,51,male,1,Gamma_Lat,199.0
+413,51,male,1,Gamma_Amp,-112.14269814222617
+414,7,female,1,Baseline_Amp,-110.28174709633454
+415,7,female,1,Gamma_Lat,179.0
+416,7,female,1,Gamma_Amp,-109.40319488419296
+417,8,female,1,Baseline_Amp,-115.33362295948018
+418,8,female,1,Gamma_Lat,139.0
+419,8,female,1,Gamma_Amp,-115.42592067871615
+420,10,female,1,Baseline_Amp,-111.05808694599574
+421,10,female,1,Gamma_Lat,320.0
+422,10,female,1,Gamma_Amp,-111.00747755934474
+423,11,female,1,Baseline_Amp,-111.57510904724079
+424,11,female,1,Gamma_Lat,320.0
+425,11,female,1,Gamma_Amp,-111.22142651081731
+426,48,male,2,Baseline_Amp,-113.09831167872885
+427,48,male,2,Gamma_Lat,199.0
+428,48,male,2,Gamma_Amp,-110.95591290816454
+429,38,male,2,Baseline_Amp,-115.02842455588025
+430,38,male,2,Gamma_Lat,300.0
+431,38,male,2,Gamma_Amp,-114.61264447600402
+432,41,male,2,Baseline_Amp,-115.49601898740354
+433,41,male,2,Gamma_Lat,320.0
+434,41,male,2,Gamma_Amp,-115.11358079500613
+435,40,male,2,Baseline_Amp,-112.6365241821706
+436,40,male,2,Gamma_Lat,199.0
+437,40,male,2,Gamma_Amp,-111.70805890394736
+438,39,male,2,Baseline_Amp,-113.78429274362861
+439,39,male,2,Gamma_Lat,139.0
+440,39,male,2,Gamma_Amp,-112.78178626224458
+441,1,female,2,Baseline_Amp,-108.71284661507987
+442,1,female,2,Gamma_Lat,179.0
+443,1,female,2,Gamma_Amp,-108.43169368790807
+444,42,male,2,Baseline_Amp,-110.38469064030646
+445,42,male,2,Gamma_Lat,179.0
+446,42,male,2,Gamma_Amp,-108.10484606749296
+447,43,male,2,Baseline_Amp,-109.44022954806611
+448,43,male,2,Gamma_Lat,320.0
+449,43,male,2,Gamma_Amp,-109.55758335934418
+450,3,female,2,Baseline_Amp,-113.31786435582828
+451,3,female,2,Gamma_Lat,320.0
+452,3,female,2,Gamma_Amp,-112.49816026419528
+453,44,male,2,Baseline_Amp,-113.10723675685163
+454,44,male,2,Gamma_Lat,179.0
+455,44,male,2,Gamma_Amp,-112.01017271733276
+456,7,female,2,Baseline_Amp,-110.12618370054817
+457,7,female,2,Gamma_Lat,179.0
+458,7,female,2,Gamma_Amp,-109.37075612586167
+459,45,male,2,Baseline_Amp,-113.50629398781788
+460,45,male,2,Gamma_Lat,300.0
+461,45,male,2,Gamma_Amp,-113.35447250631668
+462,51,male,2,Baseline_Amp,-113.34911670001324
+463,51,male,2,Gamma_Lat,179.0
+464,51,male,2,Gamma_Amp,-112.33411766662012
+465,8,female,2,Baseline_Amp,-115.35489521999939
+466,8,female,2,Gamma_Lat,139.0
+467,8,female,2,Gamma_Amp,-115.34771028016239
+468,10,female,2,Baseline_Amp,-111.19385940787191
+469,10,female,2,Gamma_Lat,159.0
+470,10,female,2,Gamma_Amp,-110.52331371723604
+471,11,female,2,Baseline_Amp,-111.85313696488517
+472,11,female,2,Gamma_Lat,139.0
+473,11,female,2,Gamma_Amp,-111.26933519488452
+474,48,male,3,Baseline_Amp,-112.69898395390582
+475,48,male,3,Gamma_Lat,199.0
+476,48,male,3,Gamma_Amp,-111.10782570257223
+477,41,male,3,Baseline_Amp,-115.16719772867036
+478,41,male,3,Gamma_Lat,260.0
+479,41,male,3,Gamma_Amp,-114.45126411998312
+480,38,male,3,Baseline_Amp,-115.10354000910644
+481,38,male,3,Gamma_Lat,139.0
+482,38,male,3,Gamma_Amp,-115.05167538628045
+483,40,male,3,Baseline_Amp,-112.38023390761586
+484,40,male,3,Gamma_Lat,179.0
+485,40,male,3,Gamma_Amp,-111.5826854343508
+486,1,female,3,Baseline_Amp,-108.63987758522046
+487,1,female,3,Gamma_Lat,159.0
+488,1,female,3,Gamma_Amp,-108.47907225011053
+489,39,male,3,Baseline_Amp,-113.53900168951546
+490,39,male,3,Gamma_Lat,159.0
+491,39,male,3,Gamma_Amp,-112.99701175053247
+492,42,male,3,Baseline_Amp,-109.9530620191549
+493,42,male,3,Gamma_Lat,179.0
+494,42,male,3,Gamma_Amp,-108.05129090467196
+495,43,male,3,Baseline_Amp,-109.35165819684158
+496,43,male,3,Gamma_Lat,159.0
+497,43,male,3,Gamma_Amp,-109.04582296430658
+498,3,female,3,Baseline_Amp,-113.44624516087963
+499,3,female,3,Gamma_Lat,280.0
+500,3,female,3,Gamma_Amp,-112.73075010195268
+501,7,female,3,Baseline_Amp,-110.17765605152384
+502,7,female,3,Gamma_Lat,179.0
+503,7,female,3,Gamma_Amp,-109.856968172448
+504,44,male,3,Baseline_Amp,-113.31945708861147
+505,44,male,3,Gamma_Lat,199.0
+506,44,male,3,Gamma_Amp,-111.32222671863705
+507,45,male,3,Baseline_Amp,-113.25244211317835
+508,45,male,3,Gamma_Lat,300.0
+509,45,male,3,Gamma_Amp,-113.40671996949898
+510,51,male,3,Baseline_Amp,-113.08134613632369
+511,51,male,3,Gamma_Lat,199.0
+512,51,male,3,Gamma_Amp,-111.35222626012451
+513,8,female,3,Baseline_Amp,-115.52581755986702
+514,8,female,3,Gamma_Lat,280.0
+515,8,female,3,Gamma_Amp,-114.69962507254793
+516,10,female,3,Baseline_Amp,-110.84305213276257
+517,10,female,3,Gamma_Lat,199.0
+518,10,female,3,Gamma_Amp,-110.25339523860335
+519,11,female,3,Baseline_Amp,-111.74625260610225
+520,11,female,3,Gamma_Lat,260.0
+521,11,female,3,Gamma_Amp,-111.46341726807182
+522,12,female,1,Baseline_Amp,-108.89127332596385
+523,12,female,1,Gamma_Lat,300.0
+524,12,female,1,Gamma_Amp,-108.62006477943756
+525,17,female,1,Baseline_Amp,-108.89386861626558
+526,17,female,1,Gamma_Lat,139.0
+527,17,female,1,Gamma_Amp,-108.40371695934866
+528,16,female,1,Baseline_Amp,-112.77455765324666
+529,16,female,1,Gamma_Lat,340.0
+530,16,female,1,Gamma_Amp,-112.55893047780356
+531,13,female,1,Baseline_Amp,-113.10493349345037
+532,13,female,1,Gamma_Lat,139.0
+533,13,female,1,Gamma_Amp,-112.53243757271453
+534,31,female,1,Baseline_Amp,-109.05031919354612
+535,31,female,1,Gamma_Lat,139.0
+536,31,female,1,Gamma_Amp,-108.01076475951515
+537,24,female,1,Baseline_Amp,-112.01329666074766
+538,24,female,1,Gamma_Lat,179.0
+539,24,female,1,Gamma_Amp,-111.51033899784247
+540,20,female,1,Baseline_Amp,-112.51525917450904
+541,20,female,1,Gamma_Lat,179.0
+542,20,female,1,Gamma_Amp,-112.74233661894053
+543,29,female,1,Baseline_Amp,-113.04498120070673
+544,29,female,1,Gamma_Lat,219.0
+545,29,female,1,Gamma_Amp,-111.63551835564867
+546,26,female,1,Baseline_Amp,-110.5015884290322
+547,26,female,1,Gamma_Lat,280.0
+548,26,female,1,Gamma_Amp,-110.19244485313689
+549,28,female,1,Baseline_Amp,-114.31761112196935
+550,28,female,1,Gamma_Lat,320.0
+551,28,female,1,Gamma_Amp,-113.48070644502238
+552,23,female,1,Baseline_Amp,-110.35481898260046
+553,23,female,1,Gamma_Lat,159.0
+554,23,female,1,Gamma_Amp,-109.08918181746728
+555,30,female,1,Baseline_Amp,-109.58381541952163
+556,30,female,1,Gamma_Lat,280.0
+557,30,female,1,Gamma_Amp,-109.22563623619581
+558,32,female,1,Baseline_Amp,-105.9011442814259
+559,32,female,1,Gamma_Lat,159.0
+560,32,female,1,Gamma_Amp,-105.6850300821807
+561,37,female,1,Baseline_Amp,-111.22682459060523
+562,37,female,1,Gamma_Lat,159.0
+563,37,female,1,Gamma_Amp,-110.94580428043312
+564,46,female,1,Baseline_Amp,-111.5575142471839
+565,46,female,1,Gamma_Lat,159.0
+566,46,female,1,Gamma_Amp,-110.85921841622906
+567,35,female,1,Baseline_Amp,-109.86900699734477
+568,35,female,1,Gamma_Lat,199.0
+569,35,female,1,Gamma_Amp,-111.03653198333934
+570,12,female,2,Baseline_Amp,-109.11161713140517
+571,12,female,2,Gamma_Lat,280.0
+572,12,female,2,Gamma_Amp,-108.58404316727838
+573,31,female,2,Baseline_Amp,-108.85520621370593
+574,31,female,2,Gamma_Lat,179.0
+575,31,female,2,Gamma_Amp,-108.0504443957866
+576,17,female,2,Baseline_Amp,-108.6381159609158
+577,17,female,2,Gamma_Lat,179.0
+578,17,female,2,Gamma_Amp,-108.46502626755623
+579,13,female,2,Baseline_Amp,-113.13315396399462
+580,13,female,2,Gamma_Lat,179.0
+581,13,female,2,Gamma_Amp,-112.42045346066212
+582,16,female,2,Baseline_Amp,-112.36071475541038
+583,16,female,2,Gamma_Lat,280.0
+584,16,female,2,Gamma_Amp,-112.49183312817858
+585,24,female,2,Baseline_Amp,-112.48983738518739
+586,24,female,2,Gamma_Lat,340.0
+587,24,female,2,Gamma_Amp,-112.36024824288552
+588,29,female,2,Baseline_Amp,-112.79077531977646
+589,29,female,2,Gamma_Lat,199.0
+590,29,female,2,Gamma_Amp,-111.56300924568579
+591,28,female,2,Baseline_Amp,-114.7184624494385
+592,28,female,2,Gamma_Lat,260.0
+593,28,female,2,Gamma_Amp,-112.13100252384736
+594,20,female,2,Baseline_Amp,-112.02330221236436
+595,20,female,2,Gamma_Lat,179.0
+596,20,female,2,Gamma_Amp,-111.96369418328239
+597,26,female,2,Baseline_Amp,-110.54198611422204
+598,26,female,2,Gamma_Lat,159.0
+599,26,female,2,Gamma_Amp,-109.91362469556366
+600,30,female,2,Baseline_Amp,-109.87385015722104
+601,30,female,2,Gamma_Lat,159.0
+602,30,female,2,Gamma_Amp,-110.12285368022185
+603,23,female,2,Baseline_Amp,-109.71336276859556
+604,23,female,2,Gamma_Lat,139.0
+605,23,female,2,Gamma_Amp,-109.67699655287683
+606,37,female,2,Baseline_Amp,-111.01033718796765
+607,37,female,2,Gamma_Lat,139.0
+608,37,female,2,Gamma_Amp,-110.86854942554426
+609,46,female,2,Baseline_Amp,-111.3050423085882
+610,46,female,2,Gamma_Lat,179.0
+611,46,female,2,Gamma_Amp,-110.59437454533986
+612,32,female,2,Baseline_Amp,-105.60351948605008
+613,32,female,2,Gamma_Lat,159.0
+614,32,female,2,Gamma_Amp,-104.85026780311185
+615,35,female,2,Baseline_Amp,-109.69554775840503
+616,35,female,2,Gamma_Lat,139.0
+617,35,female,2,Gamma_Amp,-110.246681290534
+618,31,female,3,Baseline_Amp,-109.78447283652345
+619,31,female,3,Gamma_Lat,139.0
+620,31,female,3,Gamma_Amp,-108.98234837636696
+621,12,female,3,Baseline_Amp,-109.08823165810846
+622,12,female,3,Gamma_Lat,139.0
+623,12,female,3,Gamma_Amp,-108.99305878075077
+624,17,female,3,Baseline_Amp,-109.06388422818604
+625,17,female,3,Gamma_Lat,199.0
+626,17,female,3,Gamma_Amp,-108.91796016016501
+627,13,female,3,Baseline_Amp,-113.2987036140232
+628,13,female,3,Gamma_Lat,199.0
+629,13,female,3,Gamma_Amp,-112.59911861413175
+630,29,female,3,Baseline_Amp,-112.93877686435124
+631,29,female,3,Gamma_Lat,219.0
+632,29,female,3,Gamma_Amp,-111.79584764733303
+633,24,female,3,Baseline_Amp,-112.20783237718055
+634,24,female,3,Gamma_Lat,179.0
+635,24,female,3,Gamma_Amp,-111.83890706820344
+636,16,female,3,Baseline_Amp,-112.51566184066156
+637,16,female,3,Gamma_Lat,139.0
+638,16,female,3,Gamma_Amp,-111.87770107306449
+639,28,female,3,Baseline_Amp,-114.78022351849202
+640,28,female,3,Gamma_Lat,300.0
+641,28,female,3,Gamma_Amp,-113.00105023571435
+642,20,female,3,Baseline_Amp,-112.97915825962828
+643,20,female,3,Gamma_Lat,179.0
+644,20,female,3,Gamma_Amp,-112.21282732124328
+645,26,female,3,Baseline_Amp,-111.05091195833464
+646,26,female,3,Gamma_Lat,139.0
+647,26,female,3,Gamma_Amp,-109.74229593884245
+648,30,female,3,Baseline_Amp,-109.31107570802061
+649,30,female,3,Gamma_Lat,340.0
+650,30,female,3,Gamma_Amp,-109.3258462322852
+651,37,female,3,Baseline_Amp,-111.27149868946304
+652,37,female,3,Gamma_Lat,159.0
+653,37,female,3,Gamma_Amp,-110.82186166175606
+654,46,female,3,Baseline_Amp,-111.46767008323988
+655,46,female,3,Gamma_Lat,159.0
+656,46,female,3,Gamma_Amp,-109.9272413565672
+657,23,female,3,Baseline_Amp,-109.53442645908684
+658,23,female,3,Gamma_Lat,139.0
+659,23,female,3,Gamma_Amp,-109.36672821736848
+660,32,female,3,Baseline_Amp,-105.84857899450397
+661,32,female,3,Gamma_Lat,139.0
+662,32,female,3,Gamma_Amp,-105.82988421933517
+663,35,female,3,Baseline_Amp,-109.16685114261996
+664,35,female,3,Gamma_Lat,139.0
+665,35,female,3,Gamma_Amp,-110.13035453990426
+666,49,female,1,Baseline_Amp,-110.62124862355014
+667,49,female,1,Gamma_Lat,159.0
+668,49,female,1,Gamma_Amp,-107.95584223805955
+669,47,female,1,Baseline_Amp,-111.21931131817605
+670,47,female,1,Gamma_Lat,240.0
+671,47,female,1,Gamma_Amp,-111.01986334975905
+672,50,female,1,Baseline_Amp,-112.41550887306767
+673,50,female,1,Gamma_Lat,199.0
+674,50,female,1,Gamma_Amp,-111.96811465047638
+675,49,female,2,Baseline_Amp,-110.45350099849873
+676,49,female,2,Gamma_Lat,139.0
+677,49,female,2,Gamma_Amp,-107.28312308591157
+678,47,female,2,Baseline_Amp,-111.62656331398102
+679,47,female,2,Gamma_Lat,179.0
+680,47,female,2,Gamma_Amp,-111.14048793978547
+681,50,female,2,Baseline_Amp,-112.53045426560729
+682,50,female,2,Gamma_Lat,139.0
+683,50,female,2,Gamma_Amp,-112.37174322274193
+684,49,female,3,Baseline_Amp,-111.10378605519173
+685,49,female,3,Gamma_Lat,159.0
+686,49,female,3,Gamma_Amp,-107.60630786673978
+687,47,female,3,Baseline_Amp,-111.25770832565942
+688,47,female,3,Gamma_Lat,179.0
+689,47,female,3,Gamma_Amp,-110.96143013691668
+690,50,female,3,Baseline_Amp,-112.25385502597788
+691,50,female,3,Gamma_Lat,159.0
+692,50,female,3,Gamma_Amp,-111.95618044394163

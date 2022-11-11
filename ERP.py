@@ -5,18 +5,14 @@ import mne
 mne.set_log_level(verbose="Warning")  # set all the mne verbose to warning
 
 
-def get_latency_amplitude(good_tmin, good_tmax, dat, ref, positive=False):
-    if positive:  # if we're looking at a positive potential
-        mode = 'pos'
-    else:  # or a negative one
-        mode = 'neg'
-
+def get_latency_amplitude(good_tmin, good_tmax, dat, ref=None, mode="abs"):
     #  NOTE: FOR UNKNOWN REASONS, ERP TIMESTAMPS NEED +1s ADDED ON (ex: 150ms -> 1150ms)
     good_tmax = good_tmax + 1.0
     good_tmin = good_tmin + 1.0
 
     erp = dat.copy()
-    erp.pick([ref])  # focus on one electrode
+    if ref:  # if a reference electrode is provided
+        erp.pick([ref])  # focus on the one electrode
     stim = erp.average()
 
     try:
@@ -73,19 +69,23 @@ for gender in data.keys():
             epochs.set_eeg_reference(ref_channels=["Fz"])  # re-reference to Fz
 
             # Get peak amplitude and latency of N1 (164 +/-6ms and -4uV amplitude, ideally) at electrode C4
-            latency, amplitude = get_latency_amplitude(0.150, 0.180, epochs, "C4")
+            latency, amplitude = get_latency_amplitude(0.150, 0.180, epochs, "C4", mode="neg")
             fill.append([sub, sex[sub - 1], level[-1], "N1_Lat", latency])
             fill.append([sub, sex[sub - 1], level[-1], "N1_Amp", amplitude])
 
             epochs.set_eeg_reference(ref_channels="average")  # re-reference to average
 
+            # Get peak amplitude and latency of a baseline period
+            _, amplitude = get_latency_amplitude(-1, 0, epochs)
+            fill.append([sub, sex[sub - 1], level[-1], "Baseline_Amp", amplitude])
+
             # Get peak amplitude and latency of N2 (194 +/-7ms and -4uV amplitude, ideally) at electrode CZ
-            latency, amplitude = get_latency_amplitude(0.180, 0.210, epochs, "Cz")
+            latency, amplitude = get_latency_amplitude(0.180, 0.210, epochs, "Cz", mode="neg")
             fill.append([sub, sex[sub - 1], level[-1], "N2_Lat", latency])
             fill.append([sub, sex[sub - 1], level[-1], "N2_Amp", amplitude])
 
             # Get peak amplitude and latency of P2 (306 +/-7ms and -4uV amplitude, ideally) at electrode Cz
-            latency, amplitude = get_latency_amplitude(0.290, 0.320, epochs, "Cz", positive=True)
+            latency, amplitude = get_latency_amplitude(0.290, 0.320, epochs, "Cz", mode="pos")
             fill.append([sub, sex[sub - 1], level[-1], "P2_Lat", latency])
             fill.append([sub, sex[sub - 1], level[-1], "P2_Amp", amplitude])
 
