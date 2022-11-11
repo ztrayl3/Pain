@@ -106,8 +106,7 @@ ggboxplot(ratings, x = "Sex", y = "Pain",
           geom_point(color = "grey") +
           stat_summary(fun = mean, shape = 18)
 
-
-#### Comparison of ERP Component Attributes ####
+#### ERP Component vs Baseline ####
 
 # Load and clean data
 erp <- read_csv("erp.csv", col_types = cols(...1 = col_skip(), 
@@ -116,26 +115,52 @@ erp <- read_csv("erp.csv", col_types = cols(...1 = col_skip(),
 erp <- na.omit(erp)
 erp$Value <- abs(erp$Value)
 
+# Plot Value per Component for preliminary analysis
+ggboxplot(subset(erp, grepl("Amp", erp$Component, fixed = TRUE)),
+          x="Component", y="Value",
+          color = "Component", palette = c("#00AFBB", "#E7B800", "#A03D41", "#C130A2"),
+          ylab = "Amplitude", xlab = "Component",
+          order = c("Baseline_Amp", "N1_Amp", "N2_Amp", "P2_Amp")) +
+  geom_signif(comparisons = list(c("Baseline_Amp", "N1_Amp")),
+              map_signif_level=TRUE,
+              y_position = 18) +
+  geom_signif(comparisons = list(c("Baseline_Amp", "N2_Amp")),
+              map_signif_level=TRUE,
+              y_position = 19) +
+  geom_signif(comparisons = list(c("Baseline_Amp", "P2_Amp")),
+              map_signif_level=TRUE,
+              y_position = 20)
+
+# Do a full paired-samples T-test to be sure, ignoring any missing subjects
+difference <- function(df, title, ignore){
+  baseline <- subset(df, df$Component=="Baseline_Amp" & !(df$ID %in% ignore))
+  test <- subset(df, df$Component==title & !(df$ID %in% ignore))
+  
+  data <- rbind(baseline, test)
+  
+  # check that the difference is close enough to normal
+  d <- baseline$Value - test$Value
+  hist(d)
+  
+  t.test(Value ~ Component, data = data, paired = TRUE)
+}
+
+# N1 vs Baseline
+difference(erp, "N1_Amp", ignore=c(10, 19))  
+
+# N2 vs Baseline
+difference(erp, "N2_Amp", ignore=c(3, 19, 31, 32))
+
+# P2 vs Baseline
+difference(erp, "P2_Amp", ignore=c(5, 8, 15, 23, 43))
+
+#### Comparison of ERP Component Attributes ####
+
 # model ERP component as a factor of Sex, controlling for Stim level and with
 # Subject as a random effect (since we have subject-specific pain thresholds)
 
-# ggboxplot(subset(erp, erp$Component=="N1_Amp"), x = "Stimulus", y = "Value", 
-#           color = "Stimulus", palette = c("#00AFBB", "#E7B800", "#A03D41"),
-#           ylab = "N1 Amplitude", xlab = "Stimulus Level",
-#           order = c("1", "2", "3")) + 
-#   geom_signif(comparisons = list(c("1", "2")), 
-#               map_signif_level=TRUE,
-#               y_position = 15) + 
-#   geom_signif(comparisons = list(c("1", "3")), 
-#               map_signif_level=TRUE,
-#               y_position = 17) + 
-#   geom_signif(comparisons = list(c("3", "2")), 
-#               map_signif_level=TRUE,
-#               y_position = 16)
-
-
 model <- function(df, title) {
-  temp <- subset(erp, erp$Component==title)
+  temp <- subset(df, df$Component==title)
   erp.model <- lmer(Value ~ Sex * Stimulus + (1|ID), data = temp, REML = TRUE)
   print(anova(erp.model))
   print(rand(erp.model))
@@ -148,23 +173,35 @@ model <- function(df, title) {
             color = "Stimulus", palette = c("#00AFBB", "#E7B800", "#A3Bf39"),
             ylab = title, xlab = "Sex")
   grid.arrange(p1, p2)
-  
 }
 
 # N1 LATENCY
-model(erp, "N1_Lat")  # NO SIGNIFICANT GENDER DIFFERENCE
+model(erp, "N1_Lat")
 
 # N1 AMPLITUDE
-model(erp, "N1_Amp")  # NO SIGNIFICANT GENDER DIFFERENCE
+model(erp, "N1_Amp")
 
 # N2 LATENCY
-model(erp, "N2_Lat")  # SIGNIFICANT INTERACTION: Male-Low > Female-Low only
+model(erp, "N2_Lat")
 
 # N2 AMPLITUDE
-model(erp, "N2_Amp")  # NO SIGNIFICANT GENDER DIFFERENCE
+model(erp, "N2_Amp")
 
 # P2 LATENCY
-model(erp, "P2_Lat")  # SIGNIFICANT EFFECT OF SEX, Female-Low < Male-High
+model(erp, "P2_Lat")
 
 # P2 AMPLITUDE
-model(erp, "P2_Amp") # SIGNIFICANT INTERACTION: Only between female levels...
+model(erp, "P2_Amp")
+
+#### Gamma band analysis ####
+
+freq <- read_csv("freq.csv", col_types = cols(...1 = col_skip(), 
+                  Sex = col_factor(levels = c("male", "female")), 
+                  Stimulus = col_factor(levels = c("1", "2", "3"))))
+freq$Percent <- abs(freq$Value)
+
+# Compare to baseline
+difference(freq, "Gamma_Amp", ignore=c())
+
+# Compare across genders
+model(freq, "Gamma_Amp")
