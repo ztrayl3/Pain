@@ -1,26 +1,3 @@
-"
-Amplitudes of all analyzed responses were significant in comparison to a 1s 
-prestimulus baseline (dependent samples t-tests; p<0.01 for all comparisons).
-Moreover, amplitudes were modulated by stimulus intensity as indicated by 
-3 (intensity levels)x3 (conditions) repeated-measures ANOVAs. As expected, 
-amplitudes of all responses either increased (P2 and gamma) or decreased 
-(N1 and N2) with increasing stimulus intensity (N1: F(2, 80)=13.66, p<0.001;
-N2: F(2, 76)=6.30, p=0.003; P2: F(2, 82)=30.26, p=0.001;
-gamma: F(2, 98)=13.78, p<0.001; Greenhouse-Geisser corrected where necessary).
-In addition, amplitudes of N1 (F(2, 98)=4.89, p<0.015) and gamma
-(F(1, 66)=7.21, p=0.001) but not of N2 (F(2, 87)=1.97, p=0.15) 
-and P2 (F(2, 98)=0.12, p=0.90) responses were influenced by condition. 
-Post hoc pairwise comparisons confirmed a significantly more negative N1 
-response amplitude in the motor than in the perception (t(49)=4.37, p=0.001)
-and autonomic conditions (t(49)=−4.29, p<0.001) as well as stronger gamma 
-responses in the motor than in the autonomic condition (t(49)=3.02, p=0.01; 
-all p-values Bonferroni-corrected). Taken together, noxious stimuli elicited a 
-well-known pattern of electrophysiological responses, including N1, N2, and P2
-waves5,6, and gamma oscillations7, which were influenced by stimulus intensity 
-and in part by condition.
-"
-
-
 library(readxl)
 library(ggpubr)
 library(car)
@@ -34,6 +11,7 @@ library(emmeans)
 library(readr)
 library(ggplot2)
 require(gridExtra)
+library(ggsignif)
 
 #### ANOVA on Pain Threshold Data ####
 
@@ -90,6 +68,20 @@ ggboxplot(ratings, x = "Sex", y = "Pain",
           color = "Sex", palette = c("#00AFBB", "#E7B800"),
           ylab = "Verbal Pain Rating", xlab = "Sex")
 
+ggboxplot(ratings, x = "Stim", y = "Pain", 
+          color = "Stim", palette = c("#00AFBB", "#E7B800", "#A03D41"),
+          ylab = "Verbal Pain Rating", xlab = "Stimulus Level",
+          order = c("low", "med", "high")) + 
+          geom_signif(comparisons = list(c("low", "med")), 
+              map_signif_level=TRUE,
+              y_position = 100) + 
+          geom_signif(comparisons = list(c("low", "high")), 
+              map_signif_level=TRUE,
+              y_position = 110) + 
+          geom_signif(comparisons = list(c("high", "med")), 
+              map_signif_level=TRUE,
+              y_position = 105)
+
 # model Pain Ratings as a factor of Sex, controlling for Stim level and with
 # Subject as a random effect (since we have subject-specific pain thresholds)
 pain.model <- lmer(Pain ~ Sex * Stim + (1|Subject), data = ratings, REML = TRUE)
@@ -103,7 +95,6 @@ R = residuals(pain.model)
 qqnorm(R)
 qqline(R)
 ggqqplot(R)
-ggqqplot(ratings, "Pain", facet.by = "Sex")
 # Run Shapiro-Wilk test to check for normality (significant = non-normal)
 shapiro.test(R)
 
@@ -127,6 +118,21 @@ erp$Value <- abs(erp$Value)
 
 # model ERP component as a factor of Sex, controlling for Stim level and with
 # Subject as a random effect (since we have subject-specific pain thresholds)
+
+# ggboxplot(subset(erp, erp$Component=="N1_Amp"), x = "Stimulus", y = "Value", 
+#           color = "Stimulus", palette = c("#00AFBB", "#E7B800", "#A03D41"),
+#           ylab = "N1 Amplitude", xlab = "Stimulus Level",
+#           order = c("1", "2", "3")) + 
+#   geom_signif(comparisons = list(c("1", "2")), 
+#               map_signif_level=TRUE,
+#               y_position = 15) + 
+#   geom_signif(comparisons = list(c("1", "3")), 
+#               map_signif_level=TRUE,
+#               y_position = 17) + 
+#   geom_signif(comparisons = list(c("3", "2")), 
+#               map_signif_level=TRUE,
+#               y_position = 16)
+
 
 model <- function(df, title) {
   temp <- subset(erp, erp$Component==title)
