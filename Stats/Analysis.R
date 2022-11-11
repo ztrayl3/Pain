@@ -115,22 +115,6 @@ erp <- read_csv("erp.csv", col_types = cols(...1 = col_skip(),
 erp <- na.omit(erp)
 erp$Value <- abs(erp$Value)
 
-# Plot Value per Component for preliminary analysis
-ggboxplot(subset(erp, grepl("Amp", erp$Component, fixed = TRUE)),
-          x="Component", y="Value",
-          color = "Component", palette = c("#00AFBB", "#E7B800", "#A03D41", "#C130A2"),
-          ylab = "Amplitude", xlab = "Component",
-          order = c("Baseline_Amp", "N1_Amp", "N2_Amp", "P2_Amp")) +
-  geom_signif(comparisons = list(c("Baseline_Amp", "N1_Amp")),
-              map_signif_level=TRUE,
-              y_position = 18) +
-  geom_signif(comparisons = list(c("Baseline_Amp", "N2_Amp")),
-              map_signif_level=TRUE,
-              y_position = 19) +
-  geom_signif(comparisons = list(c("Baseline_Amp", "P2_Amp")),
-              map_signif_level=TRUE,
-              y_position = 20)
-
 # Do a full paired-samples T-test to be sure, ignoring any missing subjects
 difference <- function(df, title, ignore){
   baseline <- subset(df, df$Component=="Baseline_Amp" & !(df$ID %in% ignore))
@@ -198,10 +182,84 @@ model(erp, "P2_Amp")
 freq <- read_csv("freq.csv", col_types = cols(...1 = col_skip(), 
                   Sex = col_factor(levels = c("male", "female")), 
                   Stimulus = col_factor(levels = c("1", "2", "3"))))
-freq$Percent <- abs(freq$Value)
 
 # Compare to baseline
 difference(freq, "Gamma_Amp", ignore=c())
 
 # Compare across genders
-model(freq, "Gamma_Amp")
+
+# first, convert to % change in gamma band
+for (i in seq_len(length(unique(freq$ID)))){  # for every subject
+  for (j in seq_len(length(unique(freq$Stimulus)))){  # for every stimulus
+    temp <- subset(freq, freq$ID == i & freq$Stimulus == j)  # grab that data
+    if (length(temp$ID) > 3){
+      temp <- head(temp, -3)  # sometimes it is 6, should be 3
+    }
+    
+    g <- temp$Value[temp$Component == "Gamma_Amp"]
+    b <- temp$Value[temp$Component == "Baseline_Amp"]
+    percentage <- (abs(g - b) / b) * 100  # calculate gamma change as % of baseline
+    newRow <- data.frame(temp$ID, temp$Sex, temp$Stimulus, "Percentage", percentage)
+    names(newRow) <- names(temp)
+    if (length(newRow$ID) > 1){
+      newRow <- head(newRow, -2)  # sometimes it is 3, should be 1
+    }
+
+    freq <- rbind(freq, newRow)  # add to the original data frame
+  }
+}
+
+model(freq, "Percentage")
+
+#### Can we replicate the original paper with simpler models? ####
+
+# Amplitudes vs. Baseline (ERP)
+ggboxplot(subset(erp, grepl("Amp", erp$Component, fixed = TRUE)),
+          x="Component", y="Value",
+          color = "Component", palette = c("#00AFBB", "#E7B800", "#A03D41", "#C130A2"),
+          ylab = "Amplitude", xlab = "Component",
+          order = c("Baseline_Amp", "N1_Amp", "N2_Amp", "P2_Amp")) +
+  geom_signif(comparisons = list(c("Baseline_Amp", "N1_Amp")),
+              map_signif_level=TRUE,
+              y_position = 18) +
+  geom_signif(comparisons = list(c("Baseline_Amp", "N2_Amp")),
+              map_signif_level=TRUE,
+              y_position = 19) +
+  geom_signif(comparisons = list(c("Baseline_Amp", "P2_Amp")),
+              map_signif_level=TRUE,
+              y_position = 20)
+
+# Amplitudes vs. Baseline (Gamma)
+ggboxplot(subset(freq, grepl("Amp", freq$Component, fixed = TRUE)),
+          x="Component", y="Value",
+          color = "Component", palette = c("#00AFBB", "#E7B800"),
+          ylab = "Amplitude", xlab = "Component",
+          order = c("Baseline_Amp", "Gamma_Amp")) +
+  geom_signif(comparisons = list(c("Baseline_Amp", "Gamma_Amp")),
+              map_signif_level=TRUE,
+              y_position = -104)
+
+simple_model <- function(df, title) {
+  temp <- subset(df, df$Component==title)
+  erp.model <- aov(Value ~ Stimulus, data = temp)
+  post.hoc <- tukey_hsd(erp.model)
+  print(summary(erp.model))
+  print(post.hoc)
+  
+  ggboxplot(temp, x = "Stimulus", y = "Value",
+            color = "Stimulus", palette = c("#00AFBB", "#E7B800", "#A03D41"),
+            ylab = title, xlab = "Stimulus")
+}
+
+# N1_Amp as a factor of Stimulus intensity alone?
+simple_model(erp, "N1_Amp")
+
+# N2_Amp as a factor of Stimulus intensity alone?
+simple_model(erp, "N2_Amp")
+
+# P2_Amp as a factor of Stimulus intensity alone?
+simple_model(erp, "P2_Amp")
+
+# Gamma_Amp as a factor of Stimulus intensity alone?
+simple_model(freq, "Gamma_Amp")
+simple_model(freq, "Percentage")
