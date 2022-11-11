@@ -22,6 +22,14 @@ def work(eeg, queue):
     stop = start + size
     timeseries = []
     axis = []
+
+    # compute gamma baseline first
+    kwargs = dict(fmin=70, fmax=90,
+                  tmin=0, tmax=1,  # "1s pre-stimulus baseline"
+                  picks=["Cz", "FCz", "C2"])
+    psds = 10 * np.log10(epochs.compute_psd(**kwargs).get_data())  # get psds as decibels
+    baseline = np.mean(np.average(np.average(psds, axis=0), axis=0))
+
     while stop < length:
         kwargs = dict(fmin=70, fmax=90,
                       tmin=start, tmax=stop,
@@ -36,17 +44,22 @@ def work(eeg, queue):
         timeseries.append(gamma)
 
         # keep track of time index and slide window
-        axis.append(np.round(start, 2))  # log a time point at the start of the window
+        axis.append(np.round(start, 3))  # log a time point at the start of the window
         start = start + step
         stop = start + size
 
-    max_index = timeseries.index(max(timeseries))
+    # "...power estimates in a time window of 150-350 ms...", so we crop our timseries to this window
+    start_index, stop_index = axis.index(1.14), axis.index(1.36)
+    cropped = timeseries[start_index:stop_index]
+
+    max_index = timeseries.index(max(cropped))  # take the max point in cropped, find its location in full timeseries
     max_time = int((axis[max_index] - 1.0) * 1e3)  # convert latency to ms and remove the +1s
+    amplitude = (abs(max(cropped) - baseline) / baseline) * 100.0
     results = dict(gender=gender,
                    subject=sub,
                    stimulus=level,
                    time=max_time,
-                   gamma=max(timeseries))
+                   gamma=amplitude)
     print("Completed Subject: {0}, Stimulus: {1}".format(sub, level))
 
     queue.put(results)
