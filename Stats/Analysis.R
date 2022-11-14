@@ -115,6 +115,13 @@ erp <- read_csv("erp.csv", col_types = cols(...1 = col_skip(),
 erp <- na.omit(erp)
 erp$Value <- abs(erp$Value)
 
+# Amplitudes vs. Baseline (ERP)
+ggboxplot(subset(erp, grepl("Amp", erp$Component, fixed = TRUE)),
+          x="Component", y="Value",
+          color = "Component", palette = c("#00AFBB", "#E7B800", "#A03D41", "#C130A2"),
+          ylab = "Amplitude", xlab = "Component",
+          order = c("Baseline_Amp", "N1_Amp", "N2_Amp", "P2_Amp"))
+
 # Do a full paired-samples T-test to be sure, ignoring any missing subjects
 difference <- function(df, title, ignore){
   baseline <- subset(df, df$Component=="Baseline_Amp" & !(df$ID %in% ignore))
@@ -126,7 +133,7 @@ difference <- function(df, title, ignore){
   d <- baseline$Value - test$Value
   hist(d)
   
-  t.test(Value ~ Component, data = data, paired = TRUE)
+  pairwise_t_test(data, Value ~ Component, paired = TRUE, p.adjust.method = "bonferroni")
 }
 
 # N1 vs Baseline
@@ -138,128 +145,129 @@ difference(erp, "N2_Amp", ignore=c(3, 19, 31, 32))
 # P2 vs Baseline
 difference(erp, "P2_Amp", ignore=c(5, 8, 15, 23, 43))
 
-#### Comparison of ERP Component Attributes ####
-
-# model ERP component as a factor of Sex, controlling for Stim level and with
-# Subject as a random effect (since we have subject-specific pain thresholds)
-
-model <- function(df, title) {
-  temp <- subset(df, df$Component==title)
-  erp.model <- lmer(Value ~ Sex * Stimulus + (1|ID), data = temp, REML = TRUE)
-  print(anova(erp.model))
-  print(rand(erp.model))
-  post.hoc <- emmeans(erp.model, ~ Sex * Stimulus)
-  print(pairs(post.hoc, adjust = "tukey"))
-  
-  R = residuals(erp.model)
-  p1 <- ggqqplot(R)
-  p2 <- ggboxplot(temp, x = "Sex", y = "Value", 
-            color = "Stimulus", palette = c("#00AFBB", "#E7B800", "#A3Bf39"),
-            ylab = title, xlab = "Sex")
-  grid.arrange(p1, p2)
-}
-
-# N1 LATENCY
-model(erp, "N1_Lat")
-
-# N1 AMPLITUDE
-model(erp, "N1_Amp")
-
-# N2 LATENCY
-model(erp, "N2_Lat")
-
-# N2 AMPLITUDE
-model(erp, "N2_Amp")
-
-# P2 LATENCY
-model(erp, "P2_Lat")
-
-# P2 AMPLITUDE
-model(erp, "P2_Amp")
-
-#### Gamma band analysis ####
+#### Gamma Activity vs Baseline ####
 
 freq <- read_csv("freq.csv", col_types = cols(...1 = col_skip(), 
-                  Sex = col_factor(levels = c("male", "female")), 
-                  Stimulus = col_factor(levels = c("1", "2", "3"))))
+                                              Sex = col_factor(levels = c("male", "female")), 
+                                              Stimulus = col_factor(levels = c("1", "2", "3"))))
+freq$Value <- abs(freq$Value)
 
 # Compare to baseline
 difference(freq, "Gamma_Amp", ignore=c())
-
-# Compare across genders
-
-# first, convert to % change in gamma band
-for (i in seq_len(length(unique(freq$ID)))){  # for every subject
-  for (j in seq_len(length(unique(freq$Stimulus)))){  # for every stimulus
-    temp <- subset(freq, freq$ID == i & freq$Stimulus == j)  # grab that data
-    if (length(temp$ID) > 3){
-      temp <- head(temp, -3)  # sometimes it is 6, should be 3
-    }
-    
-    g <- temp$Value[temp$Component == "Gamma_Amp"]
-    b <- temp$Value[temp$Component == "Baseline_Amp"]
-    percentage <- (abs(g - b) / b) * 100  # calculate gamma change as % of baseline
-    newRow <- data.frame(temp$ID, temp$Sex, temp$Stimulus, "Percentage", percentage)
-    names(newRow) <- names(temp)
-    if (length(newRow$ID) > 1){
-      newRow <- head(newRow, -2)  # sometimes it is 3, should be 1
-    }
-
-    freq <- rbind(freq, newRow)  # add to the original data frame
-  }
-}
-
-model(freq, "Percentage")
-
-#### Can we replicate the original paper with simpler models? ####
-
-# Amplitudes vs. Baseline (ERP)
-ggboxplot(subset(erp, grepl("Amp", erp$Component, fixed = TRUE)),
-          x="Component", y="Value",
-          color = "Component", palette = c("#00AFBB", "#E7B800", "#A03D41", "#C130A2"),
-          ylab = "Amplitude", xlab = "Component",
-          order = c("Baseline_Amp", "N1_Amp", "N2_Amp", "P2_Amp")) +
-  geom_signif(comparisons = list(c("Baseline_Amp", "N1_Amp")),
-              map_signif_level=TRUE,
-              y_position = 18) +
-  geom_signif(comparisons = list(c("Baseline_Amp", "N2_Amp")),
-              map_signif_level=TRUE,
-              y_position = 19) +
-  geom_signif(comparisons = list(c("Baseline_Amp", "P2_Amp")),
-              map_signif_level=TRUE,
-              y_position = 20)
 
 # Amplitudes vs. Baseline (Gamma)
 ggboxplot(subset(freq, grepl("Amp", freq$Component, fixed = TRUE)),
           x="Component", y="Value",
           color = "Component", palette = c("#00AFBB", "#E7B800"),
           ylab = "Amplitude", xlab = "Component",
-          order = c("Baseline_Amp", "Gamma_Amp")) +
-  geom_signif(comparisons = list(c("Baseline_Amp", "Gamma_Amp")),
-              map_signif_level=TRUE,
-              y_position = -104)
+          order = c("Baseline_Amp", "Gamma_Amp"))
 
-simple_model <- function(df, title) {
-  temp <- subset(df, df$Component==title)
-  erp.model <- aov(Value ~ Stimulus, data = temp)
-  post.hoc <- tukey_hsd(erp.model)
-  print(summary(erp.model))
-  print(post.hoc)
+#### Can we replicate the original paper with its simpler models? ####
+
+simple_model <- function(df, title, ignore) {
+  temp <- subset(df, df$Component==title & !(df$ID %in% ignore))
+  temp <- temp[!duplicated(temp), ]  # remove any duplicated rows
+  erp.model <- anova_test(data = temp, dv = Value, wid = ID, within = Stimulus)
+  post.hoc <- pairwise_t_test(temp, Value ~ Stimulus, paired = TRUE, p.adjust.method = "bonferroni")
+  post.hoc <- add_xy_position(post.hoc, x = "Stimulus")
+  print(erp.model)
   
+  height <- max(temp$Value)
   ggboxplot(temp, x = "Stimulus", y = "Value",
             color = "Stimulus", palette = c("#00AFBB", "#E7B800", "#A03D41"),
-            ylab = title, xlab = "Stimulus")
+            ylab = title, xlab = "Stimulus") + 
+    stat_summary(fun=mean, colour="black", aes(group=1),
+                 geom="line", lwd=1, lty=1) +
+    stat_pvalue_manual(post.hoc, tip.length = 0, hide.ns = FALSE, y.position = c(height+1, height+2, height+3)) +
+    labs(
+      subtitle = get_test_label(erp.model, detailed = TRUE),
+      caption = get_pwc_label(post.hoc)
+    )
 }
 
 # N1_Amp as a factor of Stimulus intensity alone?
-simple_model(erp, "N1_Amp")
+simple_model(erp, "N1_Amp", ignore=c(10, 19))
 
 # N2_Amp as a factor of Stimulus intensity alone?
-simple_model(erp, "N2_Amp")
+simple_model(erp, "N2_Amp", ignore=c(3, 19, 31, 32))
 
 # P2_Amp as a factor of Stimulus intensity alone?
-simple_model(erp, "P2_Amp")
+simple_model(erp, "P2_Amp", ignore=c(5, 8, 15, 23, 43))
 
 # Gamma_Amp as a factor of Stimulus intensity alone?
-simple_model(freq, "Gamma_Amp")
-simple_model(freq, "Percentage")
+simple_model(freq, "Gamma_Amp", ignore=c())
+
+#### Comparison Between Genders ####
+
+# model ERP component as a factor of Sex, controlling for Stim level and with
+# Subject as a random effect (since we have subject-specific pain thresholds)
+
+substrRight <- function(x, n){
+  substr(x, nchar(x)-n+1, nchar(x))
+}
+
+signif <- function(p) {
+  val <- list()
+  for (i in seq_len(length(p))){
+    if (p[i] < 0.001) {val <- append(val, "***")}
+    else if (p[i] < 0.01) {val <- append(val, "**")}
+    else if (p[i] < 0.05) {val <- append(val, "*")}
+    else if (p[i] < 0.1) {val <- append(val, ".")}
+    else if (p[i] >= 0.1) {val <- append(val, " ")}
+  }
+  return(val)
+}
+
+model <- function(df, title) {
+  temp <- subset(df, df$Component==title)
+  erp.model <- lmer(Value ~ Sex * Stimulus + (1|ID), data = temp, REML = TRUE)
+  print(anova(erp.model))  # look for main effects/interactions
+  print(rand(erp.model))  # look at the significance of our random effect (subject)
+  
+  post.hoc <- data.frame(pairs(emmeans(erp.model, ~ Sex * Stimulus), adjust = "bonferroni"))
+  post.hoc$Signif <- signif(post.hoc$p.value)
+  print(post.hoc)
+  
+  # shape post.hoc so that we can plot it easier
+  height <- max(temp$Value)
+  columns <- c("Stimulus", "group1", "group2", "p", "y.position")
+  stats <- data.frame(matrix(nrow = 0, ncol = length(columns))) 
+  colnames(stats) = columns
+  
+  # check residuals
+  #R = residuals(erp.model)
+  #ggqqplot(R)
+  
+  # plot results
+  ggboxplot(temp, x = "Sex", y = "Value",
+            color = "Stimulus", palette = c("#028090", "#C64191", "#157F1F"),
+            ylab = title, xlab = "Sex", facet.by = "Stimulus") +
+    stat_summary(fun=mean, colour="red", aes(group=1),
+                 geom="line", lwd=1, lty=1) + 
+    stat_summary(fun=mean, colour="black", aes(group=1),
+                 geom="point", size=2)
+}
+
+# N1 LATENCY
+#model(erp, "N1_Lat")
+
+# N1 AMPLITUDE
+model(erp, "N1_Amp")
+
+# N2 LATENCY
+#model(erp, "N2_Lat")
+
+# N2 AMPLITUDE
+model(erp, "N2_Amp")
+
+# P2 LATENCY
+#model(erp, "P2_Lat")
+
+# P2 AMPLITUDE
+model(erp, "P2_Amp")
+
+# Gamma LATENCY
+#model(freq, "Gamma_Lat")
+
+# Gamma AMPLITUDE
+model(freq, "Gamma_Amp")
