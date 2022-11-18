@@ -1,6 +1,7 @@
 import pickle
 import mne
 import os
+mne.set_log_level(verbose="Error")  # set all the mne verbose to warning
 
 # load standard 10-20 for use later
 montage = mne.channels.make_standard_montage('standard_1020')
@@ -13,7 +14,7 @@ format = dict(Perception="Exp_Mediation_Paradigm1_Perception_vp",
               EDA="Exp_Mediation_Paradigm2_EDA_vp",
               Motor="Exp_Mediation_Paradigm3_Motor_vp",
               Control="Exp_Mediation_Paradigm4_Control_vp")
-condition = "Perception"  # string, either Perception, EDA, Motor, or Control
+condition = "Motor"  # string, either Perception, EDA, Motor, or Control
 
 P = {}
 for i in range(1, 52):
@@ -22,7 +23,11 @@ for i in range(1, 52):
     else:
         num = str(i)
     fname = os.path.join(path, format[condition] + num + ".vhdr")
-    P[num] = mne.io.read_raw_brainvision(fname)
+    try:
+        P[num] = mne.io.read_raw_brainvision(fname)
+    except FileNotFoundError:
+        print("SUBJECT {} NOT FOUND".format(num))
+        continue
 
     # 69 Channels total:
     # -65 scalp electrodes
