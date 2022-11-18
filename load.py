@@ -8,8 +8,12 @@ montage = mne.channels.make_standard_montage('standard_1020')
 # Establish master data path
 path = os.path.join("Data", "Pain Dataset")
 
-# Load all Perception condition files
-# Format: Exp_Mediation_Paradigm1_Perception_vpxx.vhdr
+# Format: Exp_Mediation_{}_vpxx.vhdr
+format = dict(Perception="Exp_Mediation_Paradigm1_Perception_vp",
+              EDA="Exp_Mediation_Paradigm2_EDA_vp",
+              Motor="Exp_Mediation_Paradigm3_Motor_vp",
+              Control="Exp_Mediation_Paradigm4_Control_vp")
+condition = "Perception"  # string, either Perception, EDA, Motor, or Control
 
 P = {}
 for i in range(1, 52):
@@ -17,7 +21,7 @@ for i in range(1, 52):
         num = str(0) + str(i)
     else:
         num = str(i)
-    fname = os.path.join(path, "Exp_Mediation_Paradigm1_Perception_vp" + num + ".vhdr")
+    fname = os.path.join(path, format[condition] + num + ".vhdr")
     P[num] = mne.io.read_raw_brainvision(fname)
 
     # 69 Channels total:
@@ -46,6 +50,6 @@ for i in range(1, 52):
     P[num].set_channel_types(dict(zip(P[num].ch_names, new_types)))  # apply new channel types to raw object
     P[num].set_montage(montage, on_missing="ignore")  # add standard 10-20 montage information for channel locations
 
-data = open("data.pkl", "wb")
+data = open("{}_data.pkl".format(condition), "wb")
 pickle.dump(P, data)
 data.close()

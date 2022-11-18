@@ -5,6 +5,7 @@ import pickle
 import pandas
 import mne
 mne.set_log_level(verbose="ERROR")  # set all the mne verbose to warning
+condition = "Perception"  # string, either Perception, EDA, Motor, or Control
 
 
 def work(eeg, queue):
@@ -71,14 +72,15 @@ def main():
     tasks_that_are_done = multiprocessing.Manager().Queue()
 
     fill = []
+    print("Processing {}".format(condition))
 
     for gender in data.keys():
         print("Processing {} subjects".format(gender))
-        s1 = open("epochs_{}.pkl".format(gender), "rb")
+        s1 = open("{0}_epochs_{1}.pkl".format(condition, gender), "rb")
         data[gender] = pickle.load(s1)
         s1.close()
 
-        s2 = open("labels_{}.pkl".format(gender), "rb")
+        s2 = open("{0}_labels_{1}.pkl".format(condition, gender), "rb")
         labels = pickle.load(s2)
         s2.close()
 
@@ -120,7 +122,7 @@ def main():
 
     header = ["ID", "Sex", "Stimulus", "Component", "Value"]
     output = pandas.DataFrame(data=fill, columns=header)
-    output.to_csv("Stats/freq.csv")  # save to csv
+    output.to_csv("Stats/{}_freq.csv".format(condition))  # save to csv
     return True
 
 

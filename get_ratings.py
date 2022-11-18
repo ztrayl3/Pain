@@ -3,7 +3,7 @@ import pickle
 import mne
 
 # Load our database of subjects
-source = open("data.pkl", "rb")
+source = open("Perception_data.pkl", "rb")
 P = pickle.load(source)
 source.close()
 

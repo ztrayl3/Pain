@@ -28,6 +28,7 @@ def get_latency_amplitude(good_tmin, good_tmax, dat, ref=None, mode="abs"):
     amp = mean_amp[0] * 1e6  # grab our mean amplitude in µV
     return lat, amp
 
+condition = "Perception"  # string, either Perception, EDA, Motor, or Control
 data = dict(male=None,
             female=None)
 stims = ['Stimulus/S  1', 'Stimulus/S  2', 'Stimulus/S  3']
@@ -44,12 +45,13 @@ subjects = [str(sub) for sub in range(1, 52)]
 fill = []
 
 # Load our epochs, male and female
+print("ANALYZING CONDITION: {}".format(condition))
 for gender in data.keys():
-    s1 = open("epochs_{}.pkl".format(gender), "rb")
+    s1 = open("{0}_epochs_{1}.pkl".format(condition, gender), "rb")
     data[gender] = pickle.load(s1)
     s1.close()
 
-    s2 = open("labels_{}.pkl".format(gender), "rb")
+    s2 = open("{0}_labels_{1}.pkl".format(condition, gender), "rb")
     labels = pickle.load(s2)
     s2.close()
 
@@ -90,4 +92,4 @@ for gender in data.keys():
             fill.append([sub, sex[sub - 1], level[-1], "P2_Amp", amplitude])
 
 results = pandas.DataFrame(data=fill, columns=header)
-results.to_csv("Stats/erp.csv")
+results.to_csv("Stats/{}_erp.csv".format(condition))

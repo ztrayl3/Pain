@@ -2,9 +2,10 @@ import matplotlib
 import pickle
 import mne
 mne.set_log_level(verbose="Warning")  # set all the mne verbose to warning
+condition = "Perception"  # string, either Perception, EDA, Motor, or Control
 
 # Load our database of subjects
-source = open("data.pkl", "rb")
+source = open("{}_data.pkl".format(condition), "rb")
 P = pickle.load(source)
 source.close()
 
@@ -53,23 +54,11 @@ for subject in P.keys():  # for each subject
             matplotlib.pyplot.close()
         ica.apply(data)  # apply ICA to data, removing the artifacts
 
-        """
-        # Re-reference to average and low-pass filter for decimation (recomended by MNE)
-        print("Decimating and epoching...")
-        data.set_eeg_reference(ref_channels="average")
-        current_sfreq = data.info['sfreq']
-        desired_sfreq = 250  # Hz
-        decim = np.round(current_sfreq / desired_sfreq).astype(int)
-        obtained_sfreq = current_sfreq / decim
-        lowpass_freq = obtained_sfreq / 3.
-        data.filter(l_freq=None, h_freq=lowpass_freq, n_jobs=-1)
-        """
-
         # Epoch from -1500 to 3000ms. Should be 18 trials per stimulus intensity
         data.set_eeg_reference(ref_channels="average")
         reject_criteria = dict(eeg=200e-6)  # 200 µV
         epochs = mne.Epochs(data, events, event_id=event_dict, tmin=-1.5, tmax=3.0,
-                            reject=reject_criteria, preload=True)#, decim=decim)  # decimate signal to lower memory
+                            reject=reject_criteria, preload=True)
 
         all_epochs.append(epochs[["Stimulus/S  1", "Stimulus/S  2", "Stimulus/S  3"]])  # record stim epochs to a list
         all_labels.append(subject)  # create identical list of subject IDs, for good measure
@@ -78,13 +67,13 @@ for subject in P.keys():  # for each subject
 del data, artifact_removal, epochs  # try and clear up as much memory as we can...
 epochs_combined = mne.concatenate_epochs(all_epochs)  # create a master epoch list of low/med/high stimuli
 
-data = open("epochs_{}.pkl".format(gender), "wb")
+data = open("{0}_epochs_{1}.pkl".format(condition, gender), "wb")
 pickle.dump(epochs_combined, data)  # save it
 data.close()
 
 l = []
 for i in range(len(sex[gender])):  # this should == len(all_epochs)
     l = l + [sex[gender][i]] * len(all_epochs[i])  # add label for all epochs (usually 58-60)
-labels = open("labels_{}.pkl".format(gender), "wb")
+labels = open("{0}_labels_{1}.pkl".format(condition, gender), "wb")
 pickle.dump(l, labels)
 labels.close()
