@@ -47,7 +47,7 @@ for subject in P.keys():  # for each subject
         print("Visually inspecting components...")
         for i in range(ica.n_components_):  # look at each component
             ica.plot_properties(data, picks=[i], psd_args={"fmin": 1.0, "fmax": 60.0})
-            matplotlib.pyplot.pause(1)
+            matplotlib.pyplot.pause(.5)
             included = input("Include component? (y/n)")
             if included == 'n':
                 ica.exclude.append(i)
@@ -73,7 +73,10 @@ data.close()
 
 l = []
 for i in range(len(sex[gender])):  # this should == len(all_epochs)
-    l = l + [sex[gender][i]] * len(all_epochs[i])  # add label for all epochs (usually 58-60)
+    if condition == "Motor" and sex[gender][i] == 18:
+        pass  # do not label anyone with subject 18 in the motor condition, since they aren't there
+    else:
+        l = l + [sex[gender][i]] * len(all_epochs[i])  # add label for all epochs (usually 58-60)
 labels = open("{0}_labels_{1}.pkl".format(condition, gender), "wb")
 pickle.dump(l, labels)
 labels.close()
