@@ -2,7 +2,8 @@ import matplotlib
 import pickle
 import mne
 mne.set_log_level(verbose="Warning")  # set all the mne verbose to warning
-condition = "Perception"  # string, either Perception, EDA, Motor, or Control
+condition = "Control"  # string, either Perception, EDA, Motor, or Control
+gender = "male"  # what gender are we analyzing?
 
 # Load our database of subjects
 source = open("{}_data.pkl".format(condition), "rb")
@@ -24,7 +25,6 @@ sex = dict(male=[2, 4, 5, 6, 9, 14, 15, 18, 19, 21, 22, 25, 27, 33, 34, 36, 38, 
 # begin processing the data!
 all_epochs = []  # lists for holding epochs and labels
 all_labels = []  # in case we need it later
-gender = "female"  # what gender are we analyzing?
 for subject in P.keys():  # for each subject
     if int(subject) in sex[gender]:  # if this subject is a member of our gender of interest...
         print(subject)
@@ -72,11 +72,10 @@ pickle.dump(epochs_combined, data)  # save it
 data.close()
 
 l = []
+if condition == "Motor" and gender == "male":
+    sex[gender].remove(18)  # do not label anyone with subject 18 in the motor condition, since they aren't there
 for i in range(len(sex[gender])):  # this should == len(all_epochs)
-    if condition == "Motor" and sex[gender][i] == 18:
-        pass  # do not label anyone with subject 18 in the motor condition, since they aren't there
-    else:
-        l = l + [sex[gender][i]] * len(all_epochs[i])  # add label for all epochs (usually 58-60)
+    l = l + [sex[gender][i]] * len(all_epochs[i])  # add label for all epochs (usually 58-60)
 labels = open("{0}_labels_{1}.pkl".format(condition, gender), "wb")
 pickle.dump(l, labels)
 labels.close()
