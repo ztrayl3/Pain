@@ -6,7 +6,7 @@ import pandas
 import mne
 mne.set_log_level(verbose="ERROR")  # set all the mne verbose to warning
 path = "Processed/"
-condition = "Perception"  # string, either Perception, EDA, Motor, or Control
+condition = "Control"  # string, either Perception, EDA, Motor, or Control
 
 
 def work(eeg, queue):
