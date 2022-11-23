@@ -1,9 +1,10 @@
 import numpy as np
 import pickle
 import mne
+condition = "Control"  # either Perception or Control
 
 # Load our database of subjects
-source = open("Perception_data.pkl", "rb")
+source = open("{}_data.pkl".format(condition), "rb")
 P = pickle.load(source)
 source.close()
 
@@ -47,4 +48,4 @@ for subject in P.keys():  # for each subject...
 
             output.append([subject, last, next])  # append all data to out output array
 
-np.savetxt("ratings.csv", output, delimiter=",", fmt='%s')  # save output array to a csv file
+np.savetxt("Stats/{}_ratings.csv".format(condition), output, delimiter=",", fmt='%s')  # save output array to a csv file

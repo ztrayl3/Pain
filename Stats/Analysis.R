@@ -13,6 +13,8 @@ library(ggplot2)
 require(gridExtra)
 library(ggsignif)
 
+# NOTE: EXCLUDE SUBJECT 18 FROM ALL ANALYSIS #
+
 #### ANOVA on Pain Threshold Data ####
 
 # Load Pain Threshold data

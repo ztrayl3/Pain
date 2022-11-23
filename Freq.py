@@ -5,6 +5,7 @@ import pickle
 import pandas
 import mne
 mne.set_log_level(verbose="ERROR")  # set all the mne verbose to warning
+path = "Processed/"
 condition = "Perception"  # string, either Perception, EDA, Motor, or Control
 
 
@@ -76,11 +77,11 @@ def main():
 
     for gender in data.keys():
         print("Processing {} subjects".format(gender))
-        s1 = open("{0}_epochs_{1}.pkl".format(condition, gender), "rb")
+        s1 = open(path + "{0}_epochs_{1}.pkl".format(condition, gender), "rb")
         data[gender] = pickle.load(s1)
         s1.close()
 
-        s2 = open("{0}_labels_{1}.pkl".format(condition, gender), "rb")
+        s2 = open(path + "{0}_labels_{1}.pkl".format(condition, gender), "rb")
         labels = pickle.load(s2)
         s2.close()
 

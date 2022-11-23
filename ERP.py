@@ -3,6 +3,7 @@ import pickle
 import pandas
 import mne
 mne.set_log_level(verbose="Warning")  # set all the mne verbose to warning
+path = "Processed/"
 
 
 def get_latency_amplitude(good_tmin, good_tmax, dat, ref=None, mode="abs"):
@@ -28,7 +29,8 @@ def get_latency_amplitude(good_tmin, good_tmax, dat, ref=None, mode="abs"):
     amp = mean_amp[0] * 1e6  # grab our mean amplitude in µV
     return lat, amp
 
-condition = "Perception"  # string, either Perception, EDA, Motor, or Control
+
+condition = "Control"  # string, either Perception, EDA, Motor, or Control
 data = dict(male=None,
             female=None)
 stims = ['Stimulus/S  1', 'Stimulus/S  2', 'Stimulus/S  3']
@@ -47,11 +49,11 @@ fill = []
 # Load our epochs, male and female
 print("ANALYZING CONDITION: {}".format(condition))
 for gender in data.keys():
-    s1 = open("{0}_epochs_{1}.pkl".format(condition, gender), "rb")
+    s1 = open(path + "{0}_epochs_{1}.pkl".format(condition, gender), "rb")
     data[gender] = pickle.load(s1)
     s1.close()
 
-    s2 = open("{0}_labels_{1}.pkl".format(condition, gender), "rb")
+    s2 = open(path + "{0}_labels_{1}.pkl".format(condition, gender), "rb")
     labels = pickle.load(s2)
     s2.close()
 
