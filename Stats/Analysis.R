@@ -207,10 +207,6 @@ simple_model(freq, "Gamma_Amp", ignore=c())
 # model ERP component as a factor of Sex, controlling for Stim level and with
 # Subject as a random effect (since we have subject-specific pain thresholds)
 
-substrRight <- function(x, n){
-  substr(x, nchar(x)-n+1, nchar(x))
-}
-
 signif <- function(p) {
   val <- list()
   for (i in seq_len(length(p))){

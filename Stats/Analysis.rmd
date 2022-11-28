@@ -1,5 +1,5 @@
 ---
-title: "Pain Differences Between Genders"
+title: "Pain Differences Between Sexes"
 output: 
   html_document:
     code_folding: hide
@@ -30,6 +30,7 @@ library(readr)
 library(ggplot2)
 require(gridExtra)
 library(ggsignif)
+options(width = 115)
 ```
 
 ***
@@ -50,7 +51,7 @@ During the study, each subject participated in 4 conditions: Perception, EDA, Mo
 
 4. **Control**: Subjects completed all of the previous 3 tasks at once. First, they would press the button as fast as possible, then verbally report their perceived pain. During this, GSR was collected.
 
-This data was chosen for analysis due to the focus on pain-related evoked potentials (PREPs) high quality of the documentation, large sample size, and lack of investigation towards gender differences included in the original publication.
+This data was chosen for analysis due to the focus on pain-related evoked potentials (PREPs) high quality of the documentation, large sample size, and lack of investigation towards sex differences included in the original publication.
 
 ***
 
@@ -180,7 +181,7 @@ ggscatter(ratings, x = "Stim_Num", y = "Pain",
 
 As processing EEG data is a difficult thing, it is important to document your steps thoroughly and facilitate reproduction of your work. The original publication did very well in this endeavor, making their dataset publicly available and detailing their analysis steps, however perfect replication of their processing steps was impossible. Due to use of proprietary software and an (albeit understandable) undescribed process of "visually inspecting ICA components", the process was reproduced to the best of our ability.
 
-EEG data was analyzed entirely within the Python library MNE. First, the Brain Vision files were loaded and the channels (2 EOG, 1 GSR, 1 ECG, and 65 EEG) were labelled. Following this, ICA artifact rejection was performed. Here, a copy of the data was high-pass filtered at 1 Hz and notch filtered at 50 Hz. ICA was then fit to the filtered data, generating as many components as necessary to explain 95% of the variance in the data. Components were then visually inspected, one subject at a time, and marked for rejection if they contained no EEG data beyond a reasonable doubt. In most cases, rejected components contained eye blink, eye movement, or muscle movement artifacts. Bad components were then removed from the original, unfiltered data. Finally, the data was re-referenced to average and epoched with a time window of -1500ms to 3000ms. Epochs with a peak-to-peak amplitude of >200µV were automatically rejected during epoching.
+EEG data was analyzed entirely within the Python library MNE. First, the Brain Vision files were loaded and the channels (2 EOG, 1 GSR, 1 ECG, and 65 EEG) were labelled. Following this, ICA artifact rejection was performed. Here, a copy of the data was high-pass filtered at 1 Hz and notch filtered at 50 Hz. ICA was then fit to the filtered data, generating as many components as necessary to explain 95% of the variance in the data. Components were then visually inspected, one subject at a time, and marked for rejection if they contained no EEG data beyond a reasonable doubt. In most cases, rejected components contained eye blink, eye movement, or muscle movement artifacts. Bad components were then removed from the original, unfiltered data. Finally, the data was re-referenced to average and epoched with a time window of -1500ms to 3000ms. Epochs with a peak-to-peak amplitude of >200µV were automatically rejected during epoching. This process resulted in an average of 19/20 epochs retained for each stimulus level, a slightly more conservative rejection approach than the original paper that reported ~18/20 epochs retained.
 
 For the time-domain (ERP) analysis, epochs were band-pass filtered from 1-30 Hz. Analyzing each of the three ERP components required processing in the following ways:
 
@@ -313,46 +314,112 @@ Though the difference for the frequency analysis is less visually apparent, it i
 
 The original paper reported a significant effect of stimulus intensity on all amplitudes (ERP and Gamma) and a significant effect of condition on N1 and Gamma amplitude. We are not interested in the component, but will still check if stimulus intensity significantly modulated amplitudes via the same repeated measures ANOVA.
 ```{r}
+signif <- function(p) {
+  val <- list()
+  for (i in seq_len(length(p))){
+    if (p[i] < 0.001) {val <- append(val, "***")}
+    else if (p[i] < 0.01) {val <- append(val, "**")}
+    else if (p[i] < 0.05) {val <- append(val, "*")}
+    else if (p[i] < 0.1) {val <- append(val, ".")}
+    else if (p[i] >= 0.1) {val <- append(val, " ")}
+  }
+  return(val)
+}
+
 simple_model <- function(df, title) {
   temp <- subset(df, df$Component==title)
   temp <- temp[!duplicated(temp), ]  # remove any duplicated rows
   erp.model <- lmer(Value ~ Stimulus + (1|ID), data = temp, REML = TRUE)  # don't include Sex
   post.hoc <- emmeans(erp.model, ~ Stimulus)
-  
-  print(anova(erp.model))
-  print(pairs(post.hoc, adjust = "bonferroni"))
 
-  return(pwpp(post.hoc))  
-  # return(ggboxplot(temp, x = "Stimulus", y = "Value",
-  #          color = "Stimulus", palette = c("#00AFBB", "#E7B800", "#A03D41"),
-  #          ylab = title, xlab = "Stimulus")
-  #        )
+  post.hoc <- data.frame(pairs(emmeans(erp.model, ~ Stimulus), adjust = "tukey"))
+  post.hoc$Signif <- signif(post.hoc$p.value)
+    
+  print(anova(erp.model))
+  print(post.hoc)
+
+  return(pwpp(emmeans(erp.model, ~ Stimulus)))
 }
 
 ```
 
-**N1**
+**N1 variance explained by Stimulus**
 ```{r}
 p1 <- simple_model(erp, "N1_Amp")
 ```
 
-**N2**
+**N2 variance explained by Stimulus**
 ```{r}
 p2 <- simple_model(erp, "N2_Amp")
 ```
 
-**P2**
+**P2 variance explained by Stimulus**
 ```{r}
 p3 <- simple_model(erp, "P2_Amp")
 ```
 
-**Gamma**
+**Gamma variance explained by Stimulus**
 ```{r}
 p4 <- simple_model(freq, "Gamma_Amp")
 ```
 
-Plotting them all together, we can see that we *almost* replicate the original findings.
+Plotting them all together, we can see that we *somewhat* replicate the original findings.
 ```{r}
 plot_list <- list(p1, p2, p3, p4)
 do.call("grid.arrange", c(plot_list, ncol = 1))
+```
+
+This discrepancy can likely be attributed to difficulties in exactly replicating the original data processing. Small differences in EEG data pre-processing, such as the aforementioned more conservative ICA/epoching approach. The main conclusions of this paper do not hinge on replicating the original work though, so no further analysis will be put into this direction; no assurance of the ANOVA assumptions being met is included either for the same reason.
+
+***
+
+## Comparison Between Sexes
+
+Finally, we take the previously loaded ERP and Gamma data and perform our main analysis. In order to analyze the effect of Sex on physiological markers of pain, we perform a repeated measures ANCOVA with Stimulus Intensity as a controlled covariate.
+```{r}
+model <- function(df, title) {
+  temp <- subset(df, df$Component==title)
+  erp.model <- lmer(Value ~ Sex * Stimulus + (1|ID), data = temp, REML = TRUE)
+  print(anova(erp.model))  # look for main effects/interactions
+  print(rand(erp.model))  # look at the significance of our random effect (subject)
+  
+  post.hoc <- data.frame(pairs(emmeans(erp.model, ~ Sex * Stimulus), adjust = "bonferroni"))
+  post.hoc$Signif <- signif(post.hoc$p.value)
+  print(post.hoc)
+  
+  # shape post.hoc so that we can plot it easier
+  height <- max(temp$Value)
+  columns <- c("Stimulus", "group1", "group2", "p", "y.position")
+  stats <- data.frame(matrix(nrow = 0, ncol = length(columns))) 
+  colnames(stats) = columns
+  
+  # plot results
+  ggboxplot(temp, x = "Sex", y = "Value",
+            color = "Stimulus", palette = c("#028090", "#C64191", "#157F1F"),
+            ylab = title, xlab = "Sex", facet.by = "Stimulus") +
+    stat_summary(fun=mean, colour="red", aes(group=1),
+                 geom="line", lwd=1, lty=1) + 
+    stat_summary(fun=mean, colour="black", aes(group=1),
+                 geom="point", size=2)
+}
+```
+
+**N1 variance explained by Sex**
+```{r}
+model(erp, "N1_Amp")
+```
+
+**N2 variance explained by Sex**
+```{r}
+model(erp, "N2_Amp")
+```
+
+**P2 variance explained by Sex**
+```{r}
+model(erp, "P2_Amp")
+```
+
+**Gamma variance explained by Sex**
+```{r}
+model(freq, "Gamma_Amp")
 ```
