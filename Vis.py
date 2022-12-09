@@ -22,6 +22,7 @@ def pretty_plot(EEG, title, ref, picks, ylim):
 mne.set_log_level(verbose="Error")  # set all the mne verbose to warning
 path = "Processed/"
 conditions = ["Control", "Perception", "EDA", "Motor"]
+stims = ['Stimulus/S  1', 'Stimulus/S  2', 'Stimulus/S  3']
 data = dict(male=None,
             female=None)
 colors = dict(male=dict(low="#2DE1FC",
@@ -68,38 +69,40 @@ if GAMMA:
             epochs.filter(l_freq=1.0, h_freq=None)  # high-pass filter at 1Hz
             combined.append(epochs)
 
-        epochs = mne.concatenate_epochs(combined)
-        # "moving time window with a length of 250 ms and a step size of 20 ms"
-        size = 0.250
-        step = 0.020
-        length = epochs.last / 1000  # the latest (in seconds) timepoint
-        start = epochs.first / 1000  # the earliest (in seconds) timepoint
-        stop = start + size
-        timeseries = []
-        axis = []
-
-        while stop < length:
-            kwargs = dict(fmin=70, fmax=90,
-                          tmin=start, tmax=stop,
-                          picks=["Cz", "FCz", "C2"])
-            psds, freqs = epochs.compute_psd(**kwargs).get_data(return_freqs=True)
-
-            # Convert power to dB scale.
-            psds = 10 * np.log10(psds)
-
-            # average across epochs, channels, and frequency bands for a single max gamma amplitude value
-            gamma = np.mean(np.average(np.average(psds, axis=0), axis=0))
-            timeseries.append(gamma)
-
-            # keep track of time index and slide window
-            axis.append(np.round(start, 3))  # log a time point at the start of the window
-            start = start + step
+        all_epochs = mne.concatenate_epochs(combined)
+        for stim in stims:
+            epochs = all_epochs[stim]  # select one stimulus level
+            # "moving time window with a length of 250 ms and a step size of 20 ms"
+            size = 0.250
+            step = 0.020
+            length = epochs.last / 1000  # the latest (in seconds) timepoint
+            start = epochs.first / 1000  # the earliest (in seconds) timepoint
             stop = start + size
+            timeseries = []
+            axis = []
 
-        # "pre-stimulus baseline of -1000 to 0ms" (so 0 to +1 in our case)
-        start_index, stop_index = axis.index(-1), axis.index(0)
-        baseline = np.mean(timeseries[start_index:stop_index])
+            while stop < length:
+                kwargs = dict(fmin=70, fmax=90,
+                              tmin=start, tmax=stop,
+                              picks=["Cz", "FCz", "C2"])
+                psds, freqs = epochs.compute_psd(**kwargs).get_data(return_freqs=True)
 
-        timeseries = np.array(timeseries) - baseline  # save baseline-corrected gamma power timseries
-        pd.DataFrame({"Time": axis,
-                      "Gamma": timeseries}).to_csv("Figures/{}GammaTS.csv".format(gender))  # to a csv file for use in R
+                # Convert power to dB scale.
+                psds = 10 * np.log10(psds)
+
+                # average across epochs, channels, and frequency bands for a single max gamma amplitude value
+                gamma = np.mean(np.average(np.average(psds, axis=0), axis=0))
+                timeseries.append(gamma)
+
+                # keep track of time index and slide window
+                axis.append(np.round(start, 3))  # log a time point at the start of the window
+                start = start + step
+                stop = start + size
+
+            # "pre-stimulus baseline of -1000 to 0ms" (so 0 to +1 in our case)
+            start_index, stop_index = axis.index(-1), axis.index(0)
+            baseline = np.mean(timeseries[start_index:stop_index])
+
+            timeseries = np.array(timeseries) - baseline  # save baseline-corrected gamma power timseries
+            pd.DataFrame({"Time": axis,  # to a csv file for use in R
+                          "Gamma": timeseries}).to_csv("Figures/{0}GammaTS_{1}.csv".format(gender, stim[-1:]))
