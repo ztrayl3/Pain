@@ -149,7 +149,6 @@ Since we have a significant main effect, we will also conduct post-hoc t-tests w
 ```{r}
 #post.hoc <- emmeans(pain.model, Pain ~ Sex * Stim)
 #pairs(post.hoc, adjust = "bonferroni")
-
 ```
 
 The results suggest that there is no significant effect of sex, only a significant effect of stimulus level and subject. The possibly significant interaction (Sex:Stimulus) does not yield anything in post-hoc testing. To ensure validity, we will also check the assumptions for an ANCOVA.
@@ -215,9 +214,39 @@ For the time-frequency (Gamma) analysis, a sliding window of 250ms long with a s
 Note that all of the above was performed for every subject (N=51) in every condition (Perception, EDA, Motor, and Control), however in the Motor condition subject 18's data was removed by the original authors. Subject 18 is removed from all further analyses for the sake of statistical consistency, balancing the groups to 25 male and 25 female subjects.
 
 # Figures of ERP and Gamma Activity
-```{r, echo=FALSE,out.width="49%", out.height="20%", fig.cap="caption", fig.show='hold', fig.align='center'}
-knitr::include_graphics(c("../Figures/femaleN1.png","../Figures/femaleN2.png"))
+```{r, echo=FALSE, out.width="49%", out.height="40%", fig.cap="Female ERPs", fig.show='hold', fig.align='center'}
+knitr::include_graphics(c("../Figures/femaleN1.png", "../Figures/femaleN2 - P2.png"))
 ```
+
+```{r, echo=FALSE, out.width="49%", out.height="40%", fig.cap="Male ERPs", fig.show='hold', fig.align='center'}
+knitr::include_graphics(c("../Figures/maleN1.png", "../Figures/maleN2 - P2.png"))
+```
+
+```{r, message=FALSE, warning=FALSE, out.width="49%", out.height="40%", fig.cap="Female vs Male Gamma Power", fig.show='hold', fig.align='center'}
+maleGammaTS <- read_csv("../Figures/maleGammaTS.csv", 
+    col_types = cols(...1 = col_skip()))
+femaleGammaTS <- read_csv("../Figures/femaleGammaTS.csv", 
+    col_types = cols(...1 = col_skip()))
+
+maleGammaTS$Time <- maleGammaTS$Time + 0.125
+femaleGammaTS$Time <- femaleGammaTS$Time + 0.125
+
+ggplot(femaleGammaTS, aes(x=Time, y=Gamma)) +
+  geom_line(color="#CE7DA5", linewidth=1) +
+  geom_vline(xintercept = 0, linetype="dashed") + 
+  geom_hline(yintercept = 0, linetype="solid") + 
+  scale_x_continuous(name = "Time (s)", limits = c(-0.2, 1), breaks = seq(-0.2, 1, 0.1)) +
+  ylab("Gamma Power (dB, relative to Baseline)") +
+  ggtitle("Female")
+ggplot(maleGammaTS, aes(x=Time, y=Gamma)) +
+  geom_line(color="#2274A5", linewidth=1) +
+  geom_vline(xintercept = 0, linetype="dashed") + 
+  geom_hline(yintercept = 0, linetype="solid") + 
+  scale_x_continuous(name = "Time (s)", limits = c(-0.2, 1), breaks = seq(-0.2, 1, 0.1)) +
+  ylab("") +  # hide the y label, since it's already next to another chart
+  ggtitle("Male")
+```
+
 
 ### ERP and Gamma Activity Relative to Baseline
 
