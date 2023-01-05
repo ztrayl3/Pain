@@ -4,6 +4,7 @@ output:
   html_document:
     code_folding: hide
     toc: true
+    toc_float: true
     theme:
       bg: "#202123"
       fg: "#B8BCC2"
@@ -33,6 +34,8 @@ require(gridExtra)
 library(ggsignif)
 library(png)
 library(reshape2)
+library(phia)
+library(permuco)
 options(width = 115)
 ```
 
@@ -40,7 +43,7 @@ options(width = 115)
 
 ## The Dataset
 
-[*Distinct patterns of brain activity mediate perceptual and motor and autonomic responses to noxious stimuli*](https://www.nature.com/articles/s41467-018-06875-x) by Tiemann et al. (2018) collected physiological and behavioral recordings from subjects exposed to noxious stimulus. Participants (N=51, 26 male), all between the age of 20-27 years, were recruited from local universities in Germany. Subejcts had no history of neurological and psychiatric diseases, including current or recurrent pain as well as no regular use of medication.
+[*Distinct patterns of brain activity mediate perceptual and motor and autonomic responses to noxious stimuli*](https://www.nature.com/articles/s41467-018-06875-x) by Tiemann et al. (2018) collected physiological and behavioral recordings from subjects exposed to noxious stimulus. Participants (N=51, 26 male), all between the age of 20-37 years, were recruited from local universities in Germany. Subejcts had no history of neurological and psychiatric diseases, including current or recurrent pain as well as no regular use of medication.
 
 Subjects had painful stimulus applied to the dorsum of their left hand via cutaneous laser stimulation. A pain threshold was determined at the start of the experience, and stimulus that was rated 30, 50, and 70 (out of 100) were used for the low-, medium-, and high-intensity stimulation levels, respectively.
 
@@ -56,7 +59,11 @@ During the study, each subject participated in 4 conditions: Perception, EDA, Mo
 
 This data was chosen for analysis due to the focus on pain-related evoked potentials (PREPs) high quality of the documentation, large sample size, and lack of investigation towards sex differences included in the original publication.
 
+$~$
+
 ------------------------------------------------------------------------
+
+$~$
 
 ## One-Way ANOVA on Pain Threshold Data
 
@@ -71,7 +78,7 @@ Visualize the distributions via their box plots. Also, analyze normality visuall
 
 ```{r warning=FALSE}
 ggboxplot(threshold, x = "Sex", y = "Threshold", 
-          color = "Sex", palette = c("#00AFBB", "#E7B800"),
+          color = "Sex", palette = c("#2274A5", "#CE7DA5"),
           ylab = "Pain Threshold (mJ)", xlab = "Sex")
 ggqqplot(threshold, "Threshold", facet.by = "Sex")
 ```
@@ -97,9 +104,11 @@ leveneTest(Threshold ~ Sex, data = threshold)
 shapiro.test(x = residuals(object = thresh.aov))
 ```
 
-In conclusion, a one-way ANOVA reveals that there is *no significant difference* in pain threshold between men and women **(F(1, 48) = 0.11, p = 0.741)**.
+$~$
 
 ------------------------------------------------------------------------
+
+$~$
 
 ## Within Subjects ANCOVA on Verbal Pain Rating Data
 
@@ -110,11 +119,18 @@ R1 <- read_csv("Perception_ratings.csv", col_types = cols(Sex = col_factor(
                                                           levels = c("male", "female")),
                                                           Stim = col_factor(
                                                           levels = c("low", "med", "high"))))
+R1$Condition <- "Perception"
 R2 <- read_csv("Control_ratings.csv", col_types = cols(Sex = col_factor(
                                                        levels = c("male", "female")),
                                                        Stim = col_factor(
                                                        levels = c("low", "med", "high"))))
+R2$Condition <- "Control"
+
 ratings <- rbind(R1, R2)
+ratings <- subset(ratings, ratings$Subject!=18)  # exclude subject 18 (DNF motor)
+
+print("Sample Size")
+print(length(ratings$Pain))
 ```
 
 This results in over 6000 observations, which is actually too much for several R functions, so we change our limits and down sample the data to 5000 observations. Furthermore, a numerical version of the Stimulus factor is introduced, converting "high", "med", and "low" to 3, 2, and 1 respectively. Lastly, NAs introduced by subjects failing to report the pain in a timely manner are omitted. Note that the down sampling actually occurs last to ensure that we get as much data as we can.
@@ -122,7 +138,7 @@ This results in over 6000 observations, which is actually too much for several R
 ```{r}
 emm_options(pbkrtest.limit = 5000)
 ratings <- na.omit(ratings)
-ratings$Stim_Num <- as.numeric(ratings$Stim)
+
 ratings <- ratings[sample(nrow(ratings), 5000), ]
 ```
 
@@ -130,8 +146,11 @@ Now we visualize the data, first just Sex differences overall and then Stimulus 
 
 ```{r warning=FALSE}
 ggboxplot(ratings, x = "Sex", y = "Pain", 
-          color = "Sex", palette = c("#00AFBB", "#E7B800"),
-          ylab = "Verbal Pain Rating", xlab = "Sex")
+          color = "Sex", palette = c("#2274A5", "#CE7DA5"),
+          ylab = "Verbal Pain Rating", xlab = "Sex") +
+  facet_grid(. ~ Stim) +
+  theme(legend.position="none") +
+  ggtitle("", subtitle = "Stimulus Intensity")
 
 ggboxplot(ratings, x = "Stim", y = "Pain", 
           color = "Stim", palette = c("#00AFBB", "#E7B800", "#A03D41"),
@@ -142,57 +161,47 @@ ggboxplot(ratings, x = "Stim", y = "Pain",
 To know if there is a statistical difference, we must model pain ratings as a factor of sex, but control for the effects of stimulus. Furthermore, we must include a random effect for the between subject variance, as each subject has their own pain thresholds to account for.
 
 ```{r}
-pain.model <- lmer(Pain ~ Sex * Stim + (1|Subject), data = ratings, REML = TRUE)
+pain.model <- lmer(Pain ~ Sex * Stim * Condition + (1|Subject), data = ratings, REML = TRUE)
 anova(pain.model)
 rand(pain.model)
 ```
 
-Since we have a significant main effect, we will also conduct post-hoc t-tests with a Bonferroni correction.
+Since we have a significant interaction, we will only analyze the interaction effect.
 
-```{r}
-#post.hoc <- emmeans(pain.model, Pain ~ Sex * Stim)
-#pairs(post.hoc, adjust = "bonferroni")
+```{r, warning=FALSE}
+testInteractions(pain.model)
 ```
 
-The results suggest that there is no significant effect of sex, only a significant effect of stimulus level and subject. The possibly significant interaction (Sex:Stimulus) does not yield anything in post-hoc testing. To ensure validity, we will also check the assumptions for an ANCOVA.
+The results suggest that there is no significant effect of sex, only a significant effect of stimulus level and subject. The significant interaction (Sex:Stimulus) is revealed to be significant only with the lowest stimulus in females vs the highest stimulus in men (i.e. the most extremes). To ensure validity, we will also check the assumptions for an ANCOVA.
 
-1.  Normality (Shapiro-Wilk test): the data is non-normal, but the ANCOVA is robust to non-normality at such a high sample size (5000 samples)
+1.  Normality (Shapiro-Wilk test), p < 0.05 is non normal, but visualization is a safer way to confirm
 
 ```{r, indent = "     "}
 R = residuals(pain.model)
 shapiro.test(R)
+qqPlot(R)
+hist(R)
 ```
 
-2.  Homogeneity of Variance (Levene's test): the data is not homogeneous, but there is no group imbalance (between male/female *or* between high/med/low stimulus) so this is acceptable.
+2.  Homogeneity of Variance (Levene's test), p < 0.05 is non-homogeneous, but if there is little to no group imbalance (between male/female *or* between high/med/low stimulus) this is acceptable.
 
 ```{r, indent = "     "}
 leveneTest(R ~ ratings$Sex * ratings$Stim)
+table(ratings$Sex)
+table(ratings$Stim)
 ```
 
-3.  Homogeneity of Regression Slopes: there is no significant interaction, so this assumption is met.
+3.  Sphericity: a significant interaction would indicate a violation.
 
 ```{r, indent = "     "}
-Anova(aov(Pain ~ Sex * Stim, data = ratings), type = 3)
+mauchly.test(pain.model, x = ~ Sex * Stim * Condition + (1|Subject))
 ```
 
-4.  Assumption of linearity: relationship between pain level and stimulus intensity for each sex is linear, so this assumption is met.
-
-```{r, indent = "     "}
-ggplot(ratings, aes(Stim_Num, Pain, colour = Sex)) + geom_point(size = 3) + 
-  geom_smooth(formula = y ~ x, method = "lm", aes(fill = Sex), alpha = 0.1) +
-  theme(legend.position="top")
-```
-
-Since the ANCOVA assumptions are either explained or met, we can conclude the following. A repeated measures ANCOVA was run to investigate the effect of sex on verbal pain ratings while controlling for stimulus intensity *and* within-subject differences. The results indicate that sex has no significant effect on verbal pain ratings **(F(1, 49) = 1.36, p = 0.25)** when controlling for stimulus intensity, and the variation in verbal pain ratings is largely due to stimulus intensity (p \< 0.001) and subject-specific pain tolerance (p \< 0.001). The covariate effect of stimiulus intensity on verbal pain ratings can be seen through a simple correlation as well, though this effect was confirmed in the original publication as well.
-
-```{r message=FALSE}
-ggscatter(ratings, x = "Stim_Num", y = "Pain", 
-          add = "reg.line", conf.int = TRUE, 
-          cor.coef = TRUE, cor.method = "pearson",
-          xlab = "Stimulus Intensity", ylab = "Verbal Pain Rating")
-```
+$~$
 
 ------------------------------------------------------------------------
+
+$~$
 
 ## Confirmation of Legitimacy: *Did we collect data properly?*
 
@@ -288,16 +297,23 @@ First, all four conditions' data is loaded.
 erp1 <- read_csv("Perception_erp.csv", col_types = cols(...1 = col_skip(), 
                 Sex = col_factor(levels = c("male", "female")), 
                 Stimulus = col_factor(levels = c("1", "2", "3"))))
+erp1$Condition <- "Perception"
 erp2 <- read_csv("EDA_erp.csv", col_types = cols(...1 = col_skip(), 
                 Sex = col_factor(levels = c("male", "female")), 
                 Stimulus = col_factor(levels = c("1", "2", "3"))))
+erp2$Condition <- "EDA"
 erp3 <- read_csv("Motor_erp.csv", col_types = cols(...1 = col_skip(), 
                 Sex = col_factor(levels = c("male", "female")), 
                 Stimulus = col_factor(levels = c("1", "2", "3"))))
+erp3$Condition <- "Motor"
 erp4 <- read_csv("Control_erp.csv", col_types = cols(...1 = col_skip(), 
                 Sex = col_factor(levels = c("male", "female")), 
                 Stimulus = col_factor(levels = c("1", "2", "3"))))
+erp4$Condition <- "Control"
 erp <- do.call("rbind", list(erp1, erp2, erp3, erp4))
+
+erp <- erp[!duplicated(erp), ]  # remove duplicate rows
+erp <- subset(erp, erp$ID!=18)  # exclude subject 18 (DNF motor)
 ```
 
 Then, the data is cleaned. Any missing data is removed (NAs here indicate that no negative/positive peak was found in the given time window) and the **amplitudes of all ERP components are represented as an absolute value** (rather than N1/N2 being negative). This was chosen to facilitate understanding the data later.
@@ -356,22 +372,30 @@ difference(erp, "P2_Amp", ignore=c(5, 8, 15, 23, 43))
 
 \*Note: certain subjects were ignored from these tests as their data included NAs and was thus impossible to compute a full pairwise t-test on. Also, histograms are included to demonstrate that the distribution is positively skewed from normal, however the sample size is robust enough to accommodate this.
 
-Next, the same steps are take for the gamma band power. Here, it is not neccesary to omit NAs, as they are impossible.
+Next, the same steps are take for the gamma band power. Here, it is not necessary to omit NAs, as they are impossible.
 
 ```{r message=FALSE}
 freq1 <- read_csv("Perception_freq.csv", col_types = cols(...1 = col_skip(), 
                                               Sex = col_factor(levels = c("male", "female")), 
                                               Stimulus = col_factor(levels = c("1", "2", "3"))))
+freq1$Condition <- "Perception"
 freq2 <- read_csv("EDA_freq.csv", col_types = cols(...1 = col_skip(), 
                                               Sex = col_factor(levels = c("male", "female")), 
                                               Stimulus = col_factor(levels = c("1", "2", "3"))))
+freq2$Condition <- "EDA"
 freq3 <- read_csv("Motor_freq.csv", col_types = cols(...1 = col_skip(), 
                                               Sex = col_factor(levels = c("male", "female")), 
                                               Stimulus = col_factor(levels = c("1", "2", "3"))))
+freq3$Condition <- "Motor"
 freq4 <- read_csv("Control_freq.csv", col_types = cols(...1 = col_skip(), 
                                               Sex = col_factor(levels = c("male", "female")), 
                                               Stimulus = col_factor(levels = c("1", "2", "3"))))
+freq4$Condition <- "Control"
 freq <- do.call("rbind", list(freq1, freq2, freq3, freq4))
+
+freq <- freq[!duplicated(freq), ]  # remove duplicate rows
+freq <- subset(freq, freq$ID!=18)  # exclude subject 18 (DNF motor)
+
 freq$Value <- abs(freq$Value)
 
 ggboxplot(subset(freq, grepl("Amp", freq$Component, fixed = TRUE)),
@@ -382,20 +406,6 @@ ggboxplot(subset(freq, grepl("Amp", freq$Component, fixed = TRUE)),
 
 difference(freq, "Gamma_Amp", ignore=c())
 ```
-
-Though the difference for the frequency analysis is less visually apparent, it is statistically clear that the noxious stimuli suppresses gamma activity significantly below baseline. For all EEG analyses in this section, the results are as follows:
-
-1.  **N1**: A paired samples t-test indicates that N1 Amplitude is significantly higher than baseline EEG activity\
-    **t(577) = -29.0, p \< 0.001**
-
-2.  **N2**: A paired samples t-test indicates that N2 Amplitude is significantly higher than baseline EEG activity\
-    **t(557) = -28.6, p \< 0.001**
-
-3.  **P2**: A paired samples t-test indicates that P2 Amplitude is significantly higher than baseline EEG activity\
-    **t(536) = -30.0, p \< 0.001**
-
-4.  **Gamma**: A paired samples t-test indicates that Gamma Amplitude post-stimulus is significantly lower than baseline Gamma Amplitude\
-    **t(917) = 10, p \< 0.001**
 
 ### Replicating the Findings of the Original Paper
 
@@ -417,10 +427,11 @@ signif <- function(p) {
 simple_model <- function(df, title) {
   temp <- subset(df, df$Component==title)
   temp <- temp[!duplicated(temp), ]  # remove any duplicated rows
-  erp.model <- lmer(Value ~ Stimulus + (1|ID), data = temp, REML = TRUE)  # don't include Sex
+  
+  erp.model <- lmer(Value ~ Stimulus * Condition + (1|ID), data = temp, REML = TRUE)  # don't include Sex
   post.hoc <- emmeans(erp.model, ~ Stimulus)
 
-  post.hoc <- data.frame(pairs(emmeans(erp.model, ~ Stimulus), adjust = "tukey"))
+  post.hoc <- data.frame(pairs(emmeans(erp.model, ~ Stimulus * Condition), adjust = "tukey"))
   post.hoc$Signif <- signif(post.hoc$p.value)
     
   print(anova(erp.model))
@@ -455,72 +466,120 @@ p3 <- simple_model(erp, "P2_Amp")
 p4 <- simple_model(freq, "Gamma_Amp")
 ```
 
-Plotting them all together, we can see that we *somewhat* replicate the original findings.
-
-```{r}
-plot_list <- list(p1, p2, p3, p4)
-do.call("grid.arrange", c(plot_list, ncol = 1))
-```
-
-This discrepancy can likely be attributed to difficulties in exactly replicating the original data processing. Small differences in EEG data pre-processing, such as the aforementioned more conservative ICA/epoching approach. The main conclusions of this paper do not hinge on replicating the original work though, so no further analysis will be put into this direction; no assurance of the ANOVA assumptions being met is included either for the same reason.
+$~$
 
 ------------------------------------------------------------------------
+
+$~$
 
 ## Comparison Between Sexes
 
 Finally, we take the previously loaded ERP and Gamma data and perform our main analysis. In order to analyze the effect of Sex on physiological markers of pain, we perform a repeated measures ANCOVA with Stimulus Intensity as a controlled covariate. Note that the formula "(1|ID)" is asking "for each Subject (ID), What is their intercept's deviation from the global intercept?"
 
 ```{r}
-model <- function(df, title) {
+model <- function(df, title, interact) {
   temp <- subset(df, df$Component==title)
-  erp.model <- lmer(Value ~ Sex * Stimulus + (1|ID), data = temp, REML = TRUE)
+  erp.model <- lmer(Value ~ Sex * Stimulus * Condition + (1|ID), data = temp, REML = TRUE)
   print(anova(erp.model))  # look for main effects/interactions
   print(rand(erp.model))  # look at the significance of our random effect (subject)
   
-  post.hoc <- data.frame(pairs(emmeans(erp.model, ~ Sex * Stimulus), adjust = "bonferroni"))
-  post.hoc$Signif <- signif(post.hoc$p.value)
+  if (interact) {
+    post.hoc <- testInteractions(erp.model, pairwise = "Sex", across = "Condition")
+  } 
+  else{
+    post.hoc <- data.frame(pairs(emmeans(erp.model, ~ Sex), adjust = "bonferroni"))
+    post.hoc$Signif <- signif(post.hoc$p.value)
+  }
+  print("Post-Hoc testing (if needed)")
   print(post.hoc)
   
-  # shape post.hoc so that we can plot it easier
-  height <- max(temp$Value)
-  columns <- c("Stimulus", "group1", "group2", "p", "y.position")
-  stats <- data.frame(matrix(nrow = 0, ncol = length(columns))) 
-  colnames(stats) = columns
+  # assumption testing
+  print("Sample size:")
+  print(length(temp$Value))
+  
+  # 1.  Normality (Shapiro-Wilk test)
+  R = residuals(erp.model)
+  qqPlot(R)
+  hist(R)
+  print("Normality (Shapiro-Wilk test), p of < 0.05 is a violation")
+  print(shapiro.test(R))
+  
+  # 2.  Homogeneity of Variance (Levene's test)
+  print("Homogeneity of Variance (Levene's test), p of < 0.05 is a violation")
+  print(leveneTest(R ~ temp$Sex * temp$Stimulus))
+  
+  # 3.  Homogeneity of Regression Slopes
+  print("Homogeneity of Regression Slopes (significant interactions indicate a violation)")
+  print(Anova(aov(Value ~ Sex * Stimulus, data = temp), type = 3))
+  
+  # 4.  Assumption of linearity
+  print("Assumption of linearity, relationship between pain level and stimulus intensity for each sex must be     linear")
+  print("LINEAR")
+  # ggplot(temp, aes(as.numeric(Stimulus), Value, colour = Sex)) +
+  # scale_color_manual(values = c("#2274A5", "#CE7DA5")) + geom_point(size = 3) + 
+  # geom_smooth(formula = y ~ x, method = "lm", aes(fill = Sex), se = FALSE, alpha = 0.1) +
+  # theme(legend.position="top")
   
   # plot results
+  y_label <- paste(gsub('_Amp', '', title), "Amplitude (μV)", sep=" ")
+  facet_labels <- c(`1` = "Low",
+                    `2` = "Medium",
+                    `3` = "High")
   ggboxplot(temp, x = "Sex", y = "Value",
-            color = "Stimulus", palette = c("#028090", "#C64191", "#157F1F"),
-            ylab = title, xlab = "Sex", facet.by = "Stimulus") +
-    stat_summary(fun=mean, colour="red", aes(group=1),
-                 geom="line", lwd=1, lty=1) + 
-    stat_summary(fun=mean, colour="black", aes(group=1),
-                 geom="point", size=2)
+            color = "Sex", palette = c("#2274A5", "#CE7DA5"),
+            ylab = y_label, xlab = "Sex") +
+    facet_grid(. ~ Stimulus, labeller = as_labeller(facet_labels)) +
+    theme(legend.position="none") +
+    ggtitle("", subtitle = "Stimulus Intensity")
 }
 ```
+
+$~$
 
 **N1 variance explained by Sex**
 
 ```{r}
-model(erp, "N1_Amp")
+model(erp, "N1_Amp", interact=FALSE)
 ```
+
+$~$
 
 **N2 variance explained by Sex**
 
 ```{r}
-model(erp, "N2_Amp")
+model(erp, "N2_Amp", interact=TRUE)
 ```
+
+$~$
 
 **P2 variance explained by Sex**
 
 ```{r}
-model(erp, "P2_Amp")
+model(erp, "P2_Amp", interact=TRUE)
 ```
+
+$~$
 
 **Gamma variance explained by Sex**
 
 ```{r}
-model(freq, "Gamma_Amp")
+model(freq, "Gamma_Amp", interact=FALSE)
 ```
 
+$~$
+
+**Baseline ERP amplitude explained by Sex**
+
+```{r}
+model(erp, "Baseline_Amp", interact=TRUE)
+```
+
+$~$
+
+**Baseline Gamma amplitude explained by Sex**
+
+```{r}
+model(freq, "Baseline_Amp", interact=FALSE)
+```
 
 ------------------------------------------------------------------------
