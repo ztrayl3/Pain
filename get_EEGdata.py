@@ -58,7 +58,7 @@ for subject in P.keys():  # for each subject
         data.set_eeg_reference(ref_channels="average")
         reject_criteria = dict(eeg=200e-6)  # 200 µV
         epochs = mne.Epochs(data, events, event_id=event_dict, tmin=-1.5, tmax=3.0,
-                            reject=reject_criteria, preload=True)
+                            reject=reject_criteria, preload=True, baseline=None)
 
         all_epochs.append(epochs[["Stimulus/S  1", "Stimulus/S  2", "Stimulus/S  3"]])  # record stim epochs to a list
         all_labels.append(subject)  # create identical list of subject IDs, for good measure

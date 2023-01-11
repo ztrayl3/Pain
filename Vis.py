@@ -31,8 +31,8 @@ colors = dict(male=dict(low="#2DE1FC",
               female=dict(low="#FA7DEB",
                           med="#CE7DA5",
                           high="#563440",))
-ERP = False
-GAMMA = True
+ERP = True
+GAMMA = False
 
 # ERP Figures
 if ERP:
@@ -50,6 +50,9 @@ if ERP:
             combined.append(epochs)
 
         epochs = mne.concatenate_epochs(combined)  # mush all 4 conditions together
+
+        raise EOFError
+
         # N1
         pretty_plot(epochs, "N1", ["Fz"], ["C4"], [-4, 4])
         # N2/P2 combined
