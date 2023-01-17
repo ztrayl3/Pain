@@ -28,7 +28,7 @@ def work(eeg, queue):
     while stop < length:
         kwargs = dict(fmin=8, fmax=13,  # Alpha band frequencies
                       tmin=start, tmax=stop,
-                      picks=["Cz", "FCz", "C2"])
+                      picks=["FCz", "Cz", "CPz", "C1", "C2", "CP1", "CP2", "FC1", "FC2"])
         psds, freqs = epochs.compute_psd(**kwargs).get_data(return_freqs=True)
 
         # Convert power to dB scale.
@@ -47,8 +47,8 @@ def work(eeg, queue):
     start_index, stop_index = axis.index(0), axis.index(1)
     baseline = np.mean(timeseries[start_index:stop_index])
 
-    # "...power estimates in a time window of 150-350 ms...", so we crop our timseries to this window
-    start_index, stop_index = axis.index(1.14), axis.index(1.36)
+    # "alpha (8-13 Hz, 500-1000 milliseconds)", so we crop our timseries to this window, expanded some for testing
+    start_index, stop_index = axis.index(1.14), axis.index(2.00)  # 140-1000ms
     cropped = timeseries[start_index:stop_index]
 
     max_index = timeseries.index(max(cropped))  # take the max point in cropped, find its location in full timeseries
