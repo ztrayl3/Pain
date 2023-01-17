@@ -51,10 +51,8 @@ if ERP:
 
         epochs = mne.concatenate_epochs(combined)  # mush all 4 conditions together
 
-        raise EOFError
-
         # N1
-        pretty_plot(epochs, "N1", ["Fz"], ["C4"], [-4, 4])
+        pretty_plot(epochs, "N1", ["Fz"], ["C4"], [-6, 6])
         # N2/P2 combined
         pretty_plot(epochs, "N2 - P2", "average", ["Cz"], [-6, 6])
 

@@ -2,8 +2,8 @@ import matplotlib
 import pickle
 import mne
 mne.set_log_level(verbose="Warning")  # set all the mne verbose to warning
-condition = "Control"  # string, either Perception, EDA, Motor, or Control
-gender = "male"  # what gender are we analyzing?
+condition = "Motor"  # string, either Perception, EDA, Motor, or Control
+gender = "female"  # what gender are we analyzing?
 
 # Load our database of subjects
 source = open("{}_data.pkl".format(condition), "rb")
@@ -69,6 +69,7 @@ epochs_combined = mne.concatenate_epochs(all_epochs)  # create a master epoch li
 
 data = open("{0}_epochs_{1}.pkl".format(condition, gender), "wb")
 pickle.dump(epochs_combined, data)  # save it
+print("Saved file: {0}_epochs_{1}.pkl".format(condition, gender))
 data.close()
 
 l = []
@@ -78,4 +79,5 @@ for i in range(len(sex[gender])):  # this should == len(all_epochs)
     l = l + [sex[gender][i]] * len(all_epochs[i])  # add label for all epochs (usually 58-60)
 labels = open("{0}_labels_{1}.pkl".format(condition, gender), "wb")
 pickle.dump(l, labels)
+print("Saved file: {0}_labels_{1}.pkl".format(condition, gender))
 labels.close()

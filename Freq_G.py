@@ -26,7 +26,7 @@ def work(eeg, queue):
     axis = []
 
     while stop < length:
-        kwargs = dict(fmin=70, fmax=90,
+        kwargs = dict(fmin=70, fmax=90,  # High-Gamma band frequencies
                       tmin=start, tmax=stop,
                       picks=["Cz", "FCz", "C2"])
         psds, freqs = epochs.compute_psd(**kwargs).get_data(return_freqs=True)
@@ -123,7 +123,7 @@ def main():
 
     header = ["ID", "Sex", "Stimulus", "Component", "Value"]
     output = pandas.DataFrame(data=fill, columns=header)
-    output.to_csv("Stats/{}_freq.csv".format(condition))  # save to csv
+    output.to_csv("Stats/{}_freq_G.csv".format(condition))  # save to csv
     return True
 
 
