@@ -1,0 +1,60 @@
+---
+title: "Pain Differences Between Sexes"
+output: 
+  html_document:
+    code_folding: hide
+    toc: false
+    theme:
+      bg: "#202123"
+      fg: "#B8BCC2"
+      primary: "#EA80FC"
+      secondary: "#00DAC6"
+      base_font:
+        google: Prompt
+      heading_font:
+        google: Proza Libre
+---
+
+------------------------------------------------------------------------
+
+## The Dataset
+
+[*Distinct patterns of brain activity mediate perceptual and motor and autonomic responses to noxious stimuli*](https://www.nature.com/articles/s41467-018-06875-x) by Tiemann et al. (2018) collected physiological and behavioral recordings from subjects exposed to noxious stimulus. Participants (N=51, 26 male), all between the age of 20-37 years, were recruited from local universities in Germany. Subjects had no history of neurological and psychiatric diseases, including current or recurrent pain as well as no regular use of medication.
+
+Subjects had painful stimulus applied to the dorsum of their left hand via cutaneous laser stimulation. A pain threshold was determined at the start of the experience, and stimulus that was rated 30, 50, and 70 (out of 100) were used for the low-, medium-, and high-intensity stimulation levels, respectively.
+
+During the study, each subject participated in 4 conditions: Perception, EDA, Motor, and Control. In each condition, they were exposed to 20 stimulations of each level (low, med, and high) for 60 stimulations per condition. Each condition had its own behavioral task detailed below:
+
+1.  **Perception**: Subjects were instructed to verbally rate the perceived level of pain from 0-100, with 100 being the worst pain. Verbal responses were encoded.
+
+2.  **EDA**: Subjects were instructed to do nothing but focus on the stimulus. GSR data was collected on their left index and middle finger.
+
+3.  **Motor**: Subjects were instructed to press a button with their right hand as fast as possible after the painful stimulus. Reaction times (in ms) were encoded
+
+4.  **Control**: Subjects completed all of the previous 3 tasks at once. First, they would press the button as fast as possible, then verbally report their perceived pain. During this, GSR was collected.
+
+This data was chosen for analysis due to the focus on pain-related evoked potentials (PREPs) high quality of the documentation, large sample size, and lack of investigation towards sex differences included in the original publication.
+
+$~$
+
+------------------------------------------------------------------------
+
+$~$
+
+## This Document
+
+This document organizes all of the methodology and statistical analyses of the paper in a way that is easy to read, edit, and reproduce. Firstly, all processing steps are documented (if any, for behavioral data does not require the effort EEG data does). Then, the behavioral analysis is run, analyzing *Pain Thresholds* and *Verbal Pain Ratings* between men and women. Next, a preliminary analysis is run to see if we can replicate the findings of the original paper regarding the effect of Condition and Stimulus Intensity on our dependent variables. Lastly, the neurological analysis is conducted, analyzing *PREP Amplitudes/Latencies*, *High-Gamma band Amplitudes/Latencies*, *Alpha band Amplitudes/Latencies*, and *Beta band Amplitudes/Latencies* between men and women in response to painful stimulus. These documents are linked to below:
+
+1. [Data Processing and Figures](figures.html)
+2. [Behavioral Analysis](behavioral.html)
+3. [Replication of Source Study](replication.html)
+4. Sexual Differences: [PREP Amplitudes and Latencies](erp.html)
+5. Sexual Differences: [High-Gamma band Amplitudes and Latencies](gamma.html)
+6. Sexual Differences: [Alpha band Amplitudes and Latencies](alpha.html)
+7. Sexual Differences: [Beta band Amplitudes and Latencies](beta.html)
+
+$~$
+
+------------------------------------------------------------------------
+
+$~$
