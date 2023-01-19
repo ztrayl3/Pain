@@ -1,0 +1,191 @@
+---
+title: "Data Processing and Figures"
+output: 
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_float: true
+    theme:
+      bg: "#202123"
+      fg: "#B8BCC2"
+      primary: "#EA80FC"
+      secondary: "#00DAC6"
+      base_font:
+        google: Prompt
+      heading_font:
+        google: Proza Libre
+---
+
+### Zachary Traylor's Master's Thesis
+
+```{r setup, include=FALSE}
+library(readr)
+library(ggplot2)
+library(png)
+```
+
+Note that these figures are averaged across all 4 conditions (Perception, EDA, Motor, and Control), aggregated only by Sex and Stimulus.
+
+------------------------------------------------------------------------
+
+### Figures of ERP Activity
+```{r, echo=FALSE, out.width="49%", out.height="40%", fig.cap="Female ERPs", fig.show='hold', fig.align='center'}
+knitr::include_graphics(c("../Figures/femaleN1 v2.png", "../Figures/femaleN2 - P2.png"))
+```
+
+```{r, echo=FALSE, out.width="49%", out.height="40%", fig.cap="Male ERPs", fig.show='hold', fig.align='center'}
+knitr::include_graphics(c("../Figures/maleN1.png", "../Figures/maleN2 - P2.png"))
+```
+
+### Figures of Gamma activity
+```{r, message=FALSE, warning=FALSE, out.width="49%", out.height="40%", fig.cap="Female vs Male Gamma Power", fig.show='hold', fig.align='center'}
+maleGammaTS_1 <- read_csv("../Figures/maleGammaTS_1.csv", 
+    col_types = cols(...1 = col_skip()))
+maleGammaTS_2 <- read_csv("../Figures/maleGammaTS_2.csv", 
+    col_types = cols(...1 = col_skip()))
+maleGammaTS_3 <- read_csv("../Figures/maleGammaTS_3.csv", 
+    col_types = cols(...1 = col_skip()))
+
+femaleGammaTS_1 <- read_csv("../Figures/femaleGammaTS_1.csv", 
+    col_types = cols(...1 = col_skip()))
+femaleGammaTS_2 <- read_csv("../Figures/femaleGammaTS_2.csv", 
+    col_types = cols(...1 = col_skip()))
+femaleGammaTS_3 <- read_csv("../Figures/femaleGammaTS_3.csv", 
+    col_types = cols(...1 = col_skip()))
+
+# since we used a 250 ms time window but marked with the start of it, we correct the time stamps to be the center of the window
+maleGammaTS_1$Time <- maleGammaTS_1$Time + 0.125
+maleGammaTS_2$Time <- maleGammaTS_2$Time + 0.125
+maleGammaTS_3$Time <- maleGammaTS_3$Time + 0.125
+femaleGammaTS_1$Time <- femaleGammaTS_1$Time + 0.125
+femaleGammaTS_2$Time <- femaleGammaTS_2$Time + 0.125
+femaleGammaTS_3$Time <- femaleGammaTS_3$Time + 0.125
+
+Mlegend <- readPNG('../Figures/maleLegend.png')
+Flegend <- readPNG('../Figures/femaleLegend.png')
+
+ggplot() +
+  geom_line(data = femaleGammaTS_1, aes(x = Time, y = Gamma), color = "#FA7DEB", linewidth = 1) +
+  geom_line(data = femaleGammaTS_2, aes(x = Time, y = Gamma), color = "#CE7DA5", linewidth = 1) +
+  geom_line(data = femaleGammaTS_3, aes(x = Time, y = Gamma), color = "#563440", linewidth = 1) +
+  annotation_raster(Flegend, ymin = 0.77, ymax= 1, xmin = 0.8, xmax = 1) +
+  geom_vline(xintercept = 0, linetype="dashed") + 
+  geom_hline(yintercept = 0, linetype="solid") + 
+  scale_x_continuous(name = "Time (s)", limits = c(-0.2, 1), breaks = seq(-0.2, 1, 0.1)) +
+  ylab("Gamma Power (dB, relative to Baseline)") +
+  ylim(-0.15, 1) +
+  ggtitle("Female")
+ggplot() +
+  geom_line(data = maleGammaTS_1, aes(x = Time, y = Gamma), color = "#2DE1FC", linewidth = 1) +
+  geom_line(data = maleGammaTS_2, aes(x = Time, y = Gamma), color = "#2274A5", linewidth = 1) +
+  geom_line(data = maleGammaTS_3, aes(x = Time, y = Gamma), color = "#090C9B", linewidth = 1) +
+  annotation_raster(Mlegend, ymin = 0.77, ymax= 1, xmin = 0.8, xmax = 1) +
+  geom_vline(xintercept = 0, linetype="dashed") + 
+  geom_hline(yintercept = 0, linetype="solid") + 
+  scale_x_continuous(name = "Time (s)", limits = c(-0.2, 1), breaks = seq(-0.2, 1, 0.1)) +
+  ylab("") +  # hide the y label, since it's already next to another chart
+  ylim(-0.15, 1) +
+  ggtitle("Male")
+```
+
+### Figures of Alpha activity
+```{r, message=FALSE, warning=FALSE, out.width="49%", out.height="40%", fig.cap="Female vs Male Alpha Power", fig.show='hold', fig.align='center'}
+maleAlphaTS_1 <- read_csv("../Figures/maleAlphaTS_1.csv", 
+    col_types = cols(...1 = col_skip()))
+maleAlphaTS_2 <- read_csv("../Figures/maleAlphaTS_2.csv", 
+    col_types = cols(...1 = col_skip()))
+maleAlphaTS_3 <- read_csv("../Figures/maleAlphaTS_3.csv", 
+    col_types = cols(...1 = col_skip()))
+
+femaleAlphaTS_1 <- read_csv("../Figures/femaleAlphaTS_1.csv", 
+    col_types = cols(...1 = col_skip()))
+femaleAlphaTS_2 <- read_csv("../Figures/femaleAlphaTS_2.csv", 
+    col_types = cols(...1 = col_skip()))
+femaleAlphaTS_3 <- read_csv("../Figures/femaleAlphaTS_3.csv", 
+    col_types = cols(...1 = col_skip()))
+
+# since we used a 250 ms time window but marked with the start of it, we correct the time stamps to be the center of the window
+maleAlphaTS_1$Time <- maleAlphaTS_1$Time + 0.125
+maleAlphaTS_2$Time <- maleAlphaTS_2$Time + 0.125
+maleAlphaTS_3$Time <- maleAlphaTS_3$Time + 0.125
+femaleAlphaTS_1$Time <- femaleAlphaTS_1$Time + 0.125
+femaleAlphaTS_2$Time <- femaleAlphaTS_2$Time + 0.125
+femaleAlphaTS_3$Time <- femaleAlphaTS_3$Time + 0.125
+
+Mlegend <- readPNG('../Figures/maleLegend.png')
+Flegend <- readPNG('../Figures/femaleLegend.png')
+
+ggplot() +
+  geom_line(data = femaleAlphaTS_1, aes(x = Time, y = Alpha), color = "#FA7DEB", linewidth = 1) +
+  geom_line(data = femaleAlphaTS_2, aes(x = Time, y = Alpha), color = "#CE7DA5", linewidth = 1) +
+  geom_line(data = femaleAlphaTS_3, aes(x = Time, y = Alpha), color = "#563440", linewidth = 1) +
+  annotation_raster(Flegend, ymin = 0.77, ymax= 1, xmin = 0.8, xmax = 1) +
+  geom_vline(xintercept = 0, linetype="dashed") + 
+  geom_hline(yintercept = 0, linetype="solid") + 
+  scale_x_continuous(name = "Time (s)", limits = c(-0.2, 1), breaks = seq(-0.2, 1, 0.1)) +
+  ylab("Alpha Power (dB, relative to Baseline)") +
+  ylim(-0.15, 1) +
+  ggtitle("Female")
+ggplot() +
+  geom_line(data = maleAlphaTS_1, aes(x = Time, y = Alpha), color = "#2DE1FC", linewidth = 1) +
+  geom_line(data = maleAlphaTS_2, aes(x = Time, y = Alpha), color = "#2274A5", linewidth = 1) +
+  geom_line(data = maleAlphaTS_3, aes(x = Time, y = Alpha), color = "#090C9B", linewidth = 1) +
+  annotation_raster(Mlegend, ymin = 0.77, ymax= 1, xmin = 0.8, xmax = 1) +
+  geom_vline(xintercept = 0, linetype="dashed") + 
+  geom_hline(yintercept = 0, linetype="solid") + 
+  scale_x_continuous(name = "Time (s)", limits = c(-0.2, 1), breaks = seq(-0.2, 1, 0.1)) +
+  ylab("") +  # hide the y label, since it's already next to another chart
+  ylim(-0.15, 1) +
+  ggtitle("Male")
+```
+
+### Figures of Beta activity
+```{r, message=FALSE, warning=FALSE, out.width="49%", out.height="40%", fig.cap="Female vs Male Beta Power", fig.show='hold', fig.align='center'}
+maleBetaTS_1 <- read_csv("../Figures/maleBetaTS_1.csv", 
+    col_types = cols(...1 = col_skip()))
+maleBetaTS_2 <- read_csv("../Figures/maleBetaTS_2.csv", 
+    col_types = cols(...1 = col_skip()))
+maleBetaTS_3 <- read_csv("../Figures/maleBetaTS_3.csv", 
+    col_types = cols(...1 = col_skip()))
+
+femaleBetaTS_1 <- read_csv("../Figures/femaleBetaTS_1.csv", 
+    col_types = cols(...1 = col_skip()))
+femaleBetaTS_2 <- read_csv("../Figures/femaleBetaTS_2.csv", 
+    col_types = cols(...1 = col_skip()))
+femaleBetaTS_3 <- read_csv("../Figures/femaleBetaTS_3.csv", 
+    col_types = cols(...1 = col_skip()))
+
+# since we used a 250 ms time window but marked with the start of it, we correct the time stamps to be the center of the window
+maleBetaTS_1$Time <- maleBetaTS_1$Time + 0.125
+maleBetaTS_2$Time <- maleBetaTS_2$Time + 0.125
+maleBetaTS_3$Time <- maleBetaTS_3$Time + 0.125
+femaleBetaTS_1$Time <- femaleBetaTS_1$Time + 0.125
+femaleBetaTS_2$Time <- femaleBetaTS_2$Time + 0.125
+femaleBetaTS_3$Time <- femaleBetaTS_3$Time + 0.125
+
+Mlegend <- readPNG('../Figures/maleLegend.png')
+Flegend <- readPNG('../Figures/femaleLegend.png')
+
+ggplot() +
+  geom_line(data = femaleBetaTS_1, aes(x = Time, y = Beta), color = "#FA7DEB", linewidth = 1) +
+  geom_line(data = femaleBetaTS_2, aes(x = Time, y = Beta), color = "#CE7DA5", linewidth = 1) +
+  geom_line(data = femaleBetaTS_3, aes(x = Time, y = Beta), color = "#563440", linewidth = 1) +
+  annotation_raster(Flegend, ymin = 0.77, ymax= 1, xmin = 0.8, xmax = 1) +
+  geom_vline(xintercept = 0, linetype="dashed") + 
+  geom_hline(yintercept = 0, linetype="solid") + 
+  scale_x_continuous(name = "Time (s)", limits = c(-0.2, 1), breaks = seq(-0.2, 1, 0.1)) +
+  ylab("Beta Power (dB, relative to Baseline)") +
+  ylim(-0.15, 1) +
+  ggtitle("Female")
+ggplot() +
+  geom_line(data = maleBetaTS_1, aes(x = Time, y = Beta), color = "#2DE1FC", linewidth = 1) +
+  geom_line(data = maleBetaTS_2, aes(x = Time, y = Beta), color = "#2274A5", linewidth = 1) +
+  geom_line(data = maleBetaTS_3, aes(x = Time, y = Beta), color = "#090C9B", linewidth = 1) +
+  annotation_raster(Mlegend, ymin = 0.77, ymax= 1, xmin = 0.8, xmax = 1) +
+  geom_vline(xintercept = 0, linetype="dashed") + 
+  geom_hline(yintercept = 0, linetype="solid") + 
+  scale_x_continuous(name = "Time (s)", limits = c(-0.2, 1), breaks = seq(-0.2, 1, 0.1)) +
+  ylab("") +  # hide the y label, since it's already next to another chart
+  ylim(-0.15, 1) +
+  ggtitle("Male")
+```

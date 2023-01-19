@@ -1,0 +1,41 @@
+---
+title: "Pain Differences Between Sexes"
+output: 
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_float: true
+    theme:
+      bg: "#202123"
+      fg: "#B8BCC2"
+      primary: "#EA80FC"
+      secondary: "#00DAC6"
+      base_font:
+        google: Prompt
+      heading_font:
+        google: Proza Libre
+---
+
+### Zachary Traylor's Master's Thesis
+
+```{r setup, include=FALSE}
+library(ggpubr)
+library(car)
+library(lme4)
+library(multcomp)
+library(tidyverse)
+library(rstatix)
+library(lmerTest)
+library(rcompanion)
+library(emmeans)
+library(readr)
+library(ggplot2)
+require(gridExtra)
+library(ggsignif)
+library(png)
+library(reshape2)
+library(afex)
+options(width = 115)
+```
+
+------------------------------------------------------------------------

@@ -1,0 +1,179 @@
+---
+title: "Behavioral Analysis"
+output: 
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_float: true
+    theme:
+      bg: "#202123"
+      fg: "#B8BCC2"
+      primary: "#EA80FC"
+      secondary: "#00DAC6"
+      base_font:
+        google: Prompt
+      heading_font:
+        google: Proza Libre
+---
+
+### Zachary Traylor's Master's Thesis
+
+```{r setup, include=FALSE}
+library(emmeans)
+library(readr)
+library(afex)
+```
+
+------------------------------------------------------------------------
+
+## One-Way ANOVA on Pain Threshold Data
+
+Load the Pain Threshold data. This is the level of laser stimulation (in mJ) that the subject reported as painful. Data is grouped by male and female.
+
+```{r}
+threshold <- read_csv("Data/Thresholds.csv", col_types = cols(Sex = col_factor(
+                                                       levels = c("male", "female"))))
+```
+
+Visualize the distributions via their box plots. Also, analyze normality visually.
+
+```{r warning=FALSE}
+ggboxplot(threshold, x = "Sex", y = "Threshold", 
+          color = "Sex", palette = c("#2274A5", "#CE7DA5"),
+          ylab = "Pain Threshold (mJ)", xlab = "Sex")
+ggqqplot(threshold, "Threshold", facet.by = "Sex")
+
+print(c("Male average: ", mean(subset(threshold, threshold$Sex=="male")$Threshold)))
+print(c("Male variance: ", sd(subset(threshold, threshold$Sex=="male")$Threshold)))
+print(c("Female average: ", mean(subset(threshold, threshold$Sex=="female")$Threshold)))
+print(c("Female variance: ", sd(subset(threshold, threshold$Sex=="female")$Threshold)))
+```
+
+One outlier can be seen, subject #33. Removing them does not heavily affect the ANOVA output.
+
+```{r warning=FALSE}
+threshold <- subset(threshold, threshold$Subject != 33)
+ggqqplot(threshold, "Threshold", facet.by = "Sex")
+```
+
+Computing the ANOVA, we see no significant difference between men and women's pain threshold. This lack of significance persists when an addition term is added to capture between subject variance, by the way.
+
+```{r}
+thresh.aov <- aov(Threshold ~ Sex, data = threshold)
+summary(thresh.aov)
+```
+
+Now we check that all ANOVA assumptions are met. First, independence of observations is met because each subject is either male or female, never both. Second, homogeneity of variance is tested with Levene's test (note that a significant result indicates non-homogeneity and thus a violation of the assumption). Lastly, the Shapiro-Wilk test to gauge normality of the dataset (again, a significant result would indicate non-normality and a violation of the assumption of normality). For both of these tests, α = 0.05.
+
+```{r}
+leveneTest(Threshold ~ Sex, data = threshold)
+shapiro.test(x = residuals(object = thresh.aov))
+```
+
+$~$
+
+------------------------------------------------------------------------
+
+$~$
+
+## ANOVA on Verbal Pain Rating Data
+
+Load in the Pain Rating data. This is sourced from two conditions, Perception and Control, as these were the only two conditions of the original study that collected verbal pain ratings (from 0-100, 100 being most intense pain).
+
+```{r}
+R1 <- read_csv("Data/Perception_ratings.csv", col_types = cols(Sex = col_factor(
+                                                          levels = c("male", "female")),
+                                                          Stim = col_factor(
+                                                          levels = c("low", "med", "high"))))
+R1$Condition <- "Perception"
+R2 <- read_csv("Data/Control_ratings.csv", col_types = cols(Sex = col_factor(
+                                                       levels = c("male", "female")),
+                                                       Stim = col_factor(
+                                                       levels = c("low", "med", "high"))))
+R2$Condition <- "Control"
+
+ratings <- rbind(R1, R2)
+ratings <- subset(ratings, ratings$Subject!=18)  # exclude subject 18 (DNF motor)
+ratings <- ratings[!(ratings$Pain %in% boxplot(ratings$Pain)$out),]  # remove rows with outliers
+
+print("Sample Size")
+print(length(ratings$Pain))
+```
+
+This results in over 6000 observations, which is actually too much for several R functions, so we change our limits and down sample the data to 5000 observations. Furthermore, a numerical version of the Stimulus factor is introduced, converting "high", "med", and "low" to 3, 2, and 1 respectively. Lastly, NAs introduced by subjects failing to report the pain in a timely manner are omitted. Note that the down sampling actually occurs last to ensure that we get as much data as we can.
+
+```{r}
+emm_options(pbkrtest.limit = 5000)
+ratings <- na.omit(ratings)
+ratings <- ratings[sample(nrow(ratings), 5000), ]
+```
+
+Now we visualize the data, first just Sex differences overall and then Stimulus differences overall. Note that there is a difference in pain ratings at each stimulus level, with increasing stimulus intensity producing increasing pain, while there is almost no difference between men and women. This is merely a visual assessment however.
+
+```{r warning=FALSE}
+ggboxplot(ratings, x = "Stim", y = "Pain", 
+          color = "Stim", palette = c("#00AFBB", "#E7B800", "#A03D41"),
+          ylab = "Verbal Pain Rating", xlab = "Stimulus Level",
+          order = c("low", "med", "high"))
+
+for (i in c("male", "female")) {
+  print(table(ratings$Sex))
+  for (j in c("low", "med", "high")){
+    print(table(ratings$Stim))
+    for (k in c("Perception", "Control")){
+      print(table(ratings$Condition))
+      m <- mean(subset(ratings, ratings$Sex==i & ratings$Stim==j & ratings$Condition==k)$Pain, na.rm = TRUE)
+      s <- sd(subset(ratings, ratings$Sex==i & ratings$Stim==j & ratings$Condition==k)$Pain, na.rm = TRUE)
+      print(sprintf("%s %s %s - %s (%s)", i, j, k, round(m, digits = 1), round(s, digits = 1)))
+    }
+  }
+}
+```
+
+To know if there is a statistical difference, we must model pain ratings as a factor of sex, but control for the effects of stimulus and Condition. Furthermore, we introduce a repeated-measures aspect to account for individual variances in subject pain perception.
+
+```{r}
+pain.model <- aov_ez(id = "Subject", 
+                     dv = "Pain", 
+                     data = ratings, 
+                     between = "Sex", 
+                     within = c("Stim", "Condition"),
+                     fun_aggregate = mean)
+knitr::kable(nice(pain.model))
+
+post.hoc <- emmeans(pain.model, ~ Stim)  # significant main effect of Stimulus
+print(summary(as.glht(pairs(post.hoc)), test=adjusted("bonferroni")))
+```
+
+1.  Visualization is a safer way to confirm normality for such a high sample size
+
+```{r, indent = "     "}
+R = residuals(pain.model)
+qqPlot(R)
+hist(R)
+```
+
+2.  Homogeneity of Variance (Levene's test), p < 0.05 is non-homogeneous, but if there is little to no group imbalance (*ex* between male/female) this is acceptable.
+
+```{r, indent = "     "}
+leveneTest(Pain ~ Sex * Stim * Condition, data = ratings)
+table(ratings$Sex)
+table(ratings$Stim)
+table(ratings$Condition)
+```
+
+3.  Sphericity is corrected for with a Greenhouse-Geisser correction when needed.
+
+Plot our results
+```{r}
+afex_plot(pain.model, x = "Stim", trace = "Sex", 
+          panel = "Condition", error = "none", 
+          mapping = c("color", "fill"), 
+          data_geom = geom_boxplot, data_arg = list(width = 0.7), 
+          point_arg = list(size = 1.5), line_arg = list(size = 1),
+          dodge = 0.8) +
+  ylab("Verbal Pain Ratings") +
+  xlab("Stimulus Level") +
+  scale_fill_manual(values = c("#2274A5", "#CE7DA5")) + 
+  scale_color_manual(values = c("#2274A5", "#CE7DA5"))
+```

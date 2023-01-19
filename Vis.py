@@ -31,8 +31,9 @@ colors = dict(male=dict(low="#2DE1FC",
               female=dict(low="#FA7DEB",
                           med="#CE7DA5",
                           high="#563440",))
-ERP = True
-GAMMA = False
+ERP = False
+FREQ = True
+Band = "beta"
 
 # ERP Figures
 if ERP:
@@ -56,8 +57,8 @@ if ERP:
         # N2/P2 combined
         pretty_plot(epochs, "N2 - P2", "average", ["Cz"], [-6, 6])
 
-# Gamma Band Figures
-if GAMMA:
+# Band Power Figures
+if FREQ:
     for gender in data.keys():
         combined = []
         for condition in conditions:
@@ -83,17 +84,26 @@ if GAMMA:
             axis = []
 
             while stop < length:
-                kwargs = dict(fmin=70, fmax=90,
-                              tmin=start, tmax=stop,
-                              picks=["Cz", "FCz", "C2"])
+                if Band == "gamma":
+                    kwargs = dict(fmin=70, fmax=90,
+                                  tmin=start, tmax=stop,
+                                  picks=["Cz", "FCz", "C2"])
+                elif Band == "alpha":
+                    kwargs = dict(fmin=8, fmax=13,  # Alpha band frequencies
+                                  tmin=start, tmax=stop,
+                                  picks=["FCz", "Cz", "CPz", "C1", "C2", "CP1", "CP2", "FC1", "FC2"])
+                elif Band == "beta":
+                    kwargs = dict(fmin=14, fmax=30,  # Beta band frequencies
+                                  tmin=start, tmax=stop,
+                                  picks=["FCz", "Cz", "CPz", "C1", "C2", "CP1", "CP2", "FC1", "FC2"])
                 psds, freqs = epochs.compute_psd(**kwargs).get_data(return_freqs=True)
 
                 # Convert power to dB scale.
                 psds = 10 * np.log10(psds)
 
-                # average across epochs, channels, and frequency bands for a single max gamma amplitude value
-                gamma = np.mean(np.average(np.average(psds, axis=0), axis=0))
-                timeseries.append(gamma)
+                # average across epochs, channels, and frequency bands for a single max amplitude value
+                power = np.mean(np.average(np.average(psds, axis=0), axis=0))
+                timeseries.append(power)
 
                 # keep track of time index and slide window
                 axis.append(np.round(start, 3))  # log a time point at the start of the window
@@ -104,6 +114,13 @@ if GAMMA:
             start_index, stop_index = axis.index(-1), axis.index(0)
             baseline = np.mean(timeseries[start_index:stop_index])
 
-            timeseries = np.array(timeseries) - baseline  # save baseline-corrected gamma power timseries
-            pd.DataFrame({"Time": axis,  # to a csv file for use in R
-                          "Gamma": timeseries}).to_csv("Figures/{0}GammaTS_{1}.csv".format(gender, stim[-1:]))
+            timeseries = np.array(timeseries) - baseline  # save baseline-corrected power timseries
+            if Band == "gamma":
+                pd.DataFrame({"Time": axis,  # to a csv file for use in R
+                              "Gamma": timeseries}).to_csv("Figures/{0}GammaTS_{1}.csv".format(gender, stim[-1:]))
+            elif Band == "alpha":
+                pd.DataFrame({"Time": axis,  # to a csv file for use in R
+                              "Alpha": timeseries}).to_csv("Figures/{0}AlphaTS_{1}.csv".format(gender, stim[-1:]))
+            elif Band == "beta":
+                pd.DataFrame({"Time": axis,  # to a csv file for use in R
+                              "Beta": timeseries}).to_csv("Figures/{0}BetaTS_{1}.csv".format(gender, stim[-1:]))
