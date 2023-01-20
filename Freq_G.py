@@ -6,7 +6,7 @@ import pandas
 import mne
 mne.set_log_level(verbose="ERROR")  # set all the mne verbose to warning
 path = "Processed/"
-condition = "Control"  # string, either Perception, EDA, Motor, or Control
+condition = "Motor"  # string, either Perception, EDA, Motor, or Control
 
 
 def work(eeg, queue):
@@ -51,13 +51,13 @@ def work(eeg, queue):
     start_index, stop_index = axis.index(1.14), axis.index(1.36)
     cropped = timeseries[start_index:stop_index]
 
-    max_index = timeseries.index(max(cropped))  # take the max point in cropped, find its location in full timeseries
-    max_time = int((axis[max_index] - 1.0) * 1e3)  # convert latency to ms and remove the +1s
-    amplitude = max(cropped)
+    min_index = timeseries.index(min(cropped))  # take the min point in cropped, find its location in full timeseries
+    min_time = int((axis[min_index] - 1.0) * 1e3)  # convert latency to ms and remove the +1s
+    amplitude = min(cropped)
     results = dict(gender=gender,
                    subject=sub,
                    stimulus=level,
-                   time=max_time,
+                   time=min_time,
                    gamma=amplitude,
                    baseline=baseline)
     print("Completed Subject: {0}, Stimulus: {1}".format(sub, level))

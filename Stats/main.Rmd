@@ -48,10 +48,10 @@ This document organizes all of the methodology and statistical analyses of the p
 1. [Data Processing and Figures](figures.html)
 2. [Behavioral Analysis](behavioral.html)
 3. [Replication of Source Study](replication.html)
-4. Sexual Differences: [PREP Amplitudes and Latencies](erp.html)
-5. Sexual Differences: [High-Gamma band Amplitudes and Latencies](gamma.html)
-6. Sexual Differences: [Alpha band Amplitudes and Latencies](alpha.html)
-7. Sexual Differences: [Beta band Amplitudes and Latencies](beta.html)
+4. Sexual Differences: [PREP Amplitudes](erp.html)
+5. Sexual Differences: [High-Gamma band Amplitudes](gamma.html)
+6. Sexual Differences: [Alpha band Amplitudes](alpha.html)
+7. Sexual Differences: [Beta band Amplitudes](beta.html)
 
 $~$
 

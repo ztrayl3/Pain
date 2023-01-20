@@ -17,6 +17,7 @@ output:
 ---
 
 ### Zachary Traylor's Master's Thesis
+[Return to Main Page](main.html)
 
 ```{r setup, include=FALSE}
 library(readr)
@@ -68,23 +69,23 @@ ggplot() +
   geom_line(data = femaleGammaTS_1, aes(x = Time, y = Gamma), color = "#FA7DEB", linewidth = 1) +
   geom_line(data = femaleGammaTS_2, aes(x = Time, y = Gamma), color = "#CE7DA5", linewidth = 1) +
   geom_line(data = femaleGammaTS_3, aes(x = Time, y = Gamma), color = "#563440", linewidth = 1) +
-  annotation_raster(Flegend, ymin = 0.77, ymax= 1, xmin = 0.8, xmax = 1) +
+  annotation_raster(Flegend, ymin = 0.85, ymax= 1.1, xmin = 0.8, xmax = 1) +
   geom_vline(xintercept = 0, linetype="dashed") + 
   geom_hline(yintercept = 0, linetype="solid") + 
   scale_x_continuous(name = "Time (s)", limits = c(-0.2, 1), breaks = seq(-0.2, 1, 0.1)) +
   ylab("Gamma Power (dB, relative to Baseline)") +
-  ylim(-0.15, 1) +
+  ylim(-0.15, 1.1) +
   ggtitle("Female")
 ggplot() +
   geom_line(data = maleGammaTS_1, aes(x = Time, y = Gamma), color = "#2DE1FC", linewidth = 1) +
   geom_line(data = maleGammaTS_2, aes(x = Time, y = Gamma), color = "#2274A5", linewidth = 1) +
   geom_line(data = maleGammaTS_3, aes(x = Time, y = Gamma), color = "#090C9B", linewidth = 1) +
-  annotation_raster(Mlegend, ymin = 0.77, ymax= 1, xmin = 0.8, xmax = 1) +
+  annotation_raster(Mlegend, ymin = 0.85, ymax= 1.1, xmin = 0.8, xmax = 1) +
   geom_vline(xintercept = 0, linetype="dashed") + 
   geom_hline(yintercept = 0, linetype="solid") + 
   scale_x_continuous(name = "Time (s)", limits = c(-0.2, 1), breaks = seq(-0.2, 1, 0.1)) +
   ylab("") +  # hide the y label, since it's already next to another chart
-  ylim(-0.15, 1) +
+  ylim(-0.15, 1.1) +
   ggtitle("Male")
 ```
 
@@ -119,23 +120,23 @@ ggplot() +
   geom_line(data = femaleAlphaTS_1, aes(x = Time, y = Alpha), color = "#FA7DEB", linewidth = 1) +
   geom_line(data = femaleAlphaTS_2, aes(x = Time, y = Alpha), color = "#CE7DA5", linewidth = 1) +
   geom_line(data = femaleAlphaTS_3, aes(x = Time, y = Alpha), color = "#563440", linewidth = 1) +
-  annotation_raster(Flegend, ymin = 0.77, ymax= 1, xmin = 0.8, xmax = 1) +
+  annotation_raster(Flegend, ymin = 2.53, ymax= 3.5, xmin = 0.8, xmax = 1) +
   geom_vline(xintercept = 0, linetype="dashed") + 
   geom_hline(yintercept = 0, linetype="solid") + 
   scale_x_continuous(name = "Time (s)", limits = c(-0.2, 1), breaks = seq(-0.2, 1, 0.1)) +
   ylab("Alpha Power (dB, relative to Baseline)") +
-  ylim(-0.15, 1) +
+  ylim(-1.25, 3.5) +
   ggtitle("Female")
 ggplot() +
   geom_line(data = maleAlphaTS_1, aes(x = Time, y = Alpha), color = "#2DE1FC", linewidth = 1) +
   geom_line(data = maleAlphaTS_2, aes(x = Time, y = Alpha), color = "#2274A5", linewidth = 1) +
   geom_line(data = maleAlphaTS_3, aes(x = Time, y = Alpha), color = "#090C9B", linewidth = 1) +
-  annotation_raster(Mlegend, ymin = 0.77, ymax= 1, xmin = 0.8, xmax = 1) +
+  annotation_raster(Mlegend, ymin = 2.53, ymax= 3.5, xmin = 0.8, xmax = 1) +
   geom_vline(xintercept = 0, linetype="dashed") + 
   geom_hline(yintercept = 0, linetype="solid") + 
   scale_x_continuous(name = "Time (s)", limits = c(-0.2, 1), breaks = seq(-0.2, 1, 0.1)) +
   ylab("") +  # hide the y label, since it's already next to another chart
-  ylim(-0.15, 1) +
+  ylim(-1.25, 3.5) +
   ggtitle("Male")
 ```
 
@@ -170,22 +171,22 @@ ggplot() +
   geom_line(data = femaleBetaTS_1, aes(x = Time, y = Beta), color = "#FA7DEB", linewidth = 1) +
   geom_line(data = femaleBetaTS_2, aes(x = Time, y = Beta), color = "#CE7DA5", linewidth = 1) +
   geom_line(data = femaleBetaTS_3, aes(x = Time, y = Beta), color = "#563440", linewidth = 1) +
-  annotation_raster(Flegend, ymin = 0.77, ymax= 1, xmin = 0.8, xmax = 1) +
+  annotation_raster(Flegend, ymin = 0.93, ymax= 1.5, xmin = 0.8, xmax = 1) +
   geom_vline(xintercept = 0, linetype="dashed") + 
   geom_hline(yintercept = 0, linetype="solid") + 
   scale_x_continuous(name = "Time (s)", limits = c(-0.2, 1), breaks = seq(-0.2, 1, 0.1)) +
   ylab("Beta Power (dB, relative to Baseline)") +
-  ylim(-0.15, 1) +
+  ylim(-1.25, 1.5) +
   ggtitle("Female")
 ggplot() +
   geom_line(data = maleBetaTS_1, aes(x = Time, y = Beta), color = "#2DE1FC", linewidth = 1) +
   geom_line(data = maleBetaTS_2, aes(x = Time, y = Beta), color = "#2274A5", linewidth = 1) +
   geom_line(data = maleBetaTS_3, aes(x = Time, y = Beta), color = "#090C9B", linewidth = 1) +
-  annotation_raster(Mlegend, ymin = 0.77, ymax= 1, xmin = 0.8, xmax = 1) +
+  annotation_raster(Mlegend, ymin = 0.93, ymax= 1.5, xmin = 0.8, xmax = 1) +
   geom_vline(xintercept = 0, linetype="dashed") + 
   geom_hline(yintercept = 0, linetype="solid") + 
   scale_x_continuous(name = "Time (s)", limits = c(-0.2, 1), breaks = seq(-0.2, 1, 0.1)) +
   ylab("") +  # hide the y label, since it's already next to another chart
-  ylim(-0.15, 1) +
+  ylim(-1.25, 1.5) +
   ggtitle("Male")
 ```

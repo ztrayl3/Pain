@@ -17,11 +17,15 @@ output:
 ---
 
 ### Zachary Traylor's Master's Thesis
+[Return to Main Page](main.html)
 
 ```{r setup, include=FALSE}
+library(ggpubr)
 library(emmeans)
 library(readr)
 library(afex)
+library(car)
+library(multcomp)
 ```
 
 ------------------------------------------------------------------------
@@ -55,6 +59,8 @@ One outlier can be seen, subject #33. Removing them does not heavily affect the 
 threshold <- subset(threshold, threshold$Subject != 33)
 ggqqplot(threshold, "Threshold", facet.by = "Sex")
 ```
+
+### Results
 
 Computing the ANOVA, we see no significant difference between men and women's pain threshold. This lack of significance persists when an addition term is added to capture between subject variance, by the way.
 
@@ -129,6 +135,8 @@ for (i in c("male", "female")) {
   }
 }
 ```
+
+### Results
 
 To know if there is a statistical difference, we must model pain ratings as a factor of sex, but control for the effects of stimulus and Condition. Furthermore, we introduce a repeated-measures aspect to account for individual variances in subject pain perception.
 
