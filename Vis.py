@@ -98,9 +98,6 @@ if FREQ:
                                   picks=["FCz", "Cz", "CPz", "C1", "C2", "CP1", "CP2", "FC1", "FC2"])
                 psds, freqs = epochs.compute_psd(**kwargs).get_data(return_freqs=True)
 
-                # Convert power to dB scale.
-                psds = 10 * np.log10(psds)
-
                 # average across epochs, channels, and frequency bands for a single max amplitude value
                 power = np.mean(np.average(np.average(psds, axis=0), axis=0))
                 timeseries.append(power)
@@ -114,7 +111,7 @@ if FREQ:
             start_index, stop_index = axis.index(-1), axis.index(0)
             baseline = np.mean(timeseries[start_index:stop_index])
 
-            timeseries = np.array(timeseries) - baseline  # save baseline-corrected power timseries
+            timeseries = ((np.array(timeseries) - baseline) / baseline) * 100  # save timseries as % change from baseline
             if Band == "gamma":
                 pd.DataFrame({"Time": axis,  # to a csv file for use in R
                               "Gamma": timeseries}).to_csv("Figures/{0}GammaTS_{1}.csv".format(gender, stim[-1:]))

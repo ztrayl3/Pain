@@ -15,6 +15,7 @@ def work(eeg, queue):
     level = eeg["stimulus"]
     sub = eeg["subject"]
     epochs.filter(l_freq=1.0, h_freq=None)  # high-pass filter at 1Hz
+    epochs.shift_time(-1, relative=True)  # correct for time shift
 
     # "moving time window with a length of 250 ms and a step size of 20 ms"
     size = 0.250
@@ -31,9 +32,6 @@ def work(eeg, queue):
                       picks=["Cz", "FCz", "C2"])
         psds, freqs = epochs.compute_psd(**kwargs).get_data(return_freqs=True)
 
-        # Convert power to dB scale.
-        psds = 10 * np.log10(psds)
-
         # average across epochs, channels, and frequency bands for a single max gamma amplitude value
         gamma = np.mean(np.average(np.average(psds, axis=0), axis=0))
         timeseries.append(gamma)
@@ -43,21 +41,21 @@ def work(eeg, queue):
         start = start + step
         stop = start + size
 
-    # "pre-stimulus baseline of -1000 to 0ms" (so 0 to +1 in our case)
-    start_index, stop_index = axis.index(0), axis.index(1)
+    # "pre-stimulus baseline of -1000 to 0ms"
+    start_index, stop_index = axis.index(-1), axis.index(0)
     baseline = np.mean(timeseries[start_index:stop_index])
 
     # "...power estimates in a time window of 150-350 ms...", so we crop our timseries to this window
-    start_index, stop_index = axis.index(1.14), axis.index(1.36)
+    start_index, stop_index = axis.index(0.14), axis.index(0.36)
     cropped = timeseries[start_index:stop_index]
 
-    min_index = timeseries.index(min(cropped))  # take the min point in cropped, find its location in full timeseries
-    min_time = int((axis[min_index] - 1.0) * 1e3)  # convert latency to ms and remove the +1s
-    amplitude = min(cropped)
+    max_index = timeseries.index(max(cropped))  # take the max point in cropped, find its location in full timeseries
+    max_time = int(axis[max_index] * 1e3)  # take the latency of the signal, in ms
+    amplitude = max(cropped)  # take the max power in the given time window and frequency band
     results = dict(gender=gender,
                    subject=sub,
                    stimulus=level,
-                   time=min_time,
+                   time=max_time,
                    gamma=amplitude,
                    baseline=baseline)
     print("Completed Subject: {0}, Stimulus: {1}".format(sub, level))
