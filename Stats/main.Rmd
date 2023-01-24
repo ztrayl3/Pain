@@ -50,8 +50,6 @@ This document organizes all of the methodology and statistical analyses of the p
 3. [Replication of Source Study](replication.html)
 4. Sexual Differences: [PREP Amplitudes](erp.html)
 5. Sexual Differences: [High-Gamma band Amplitudes](gamma.html)
-6. Sexual Differences: [Alpha band Amplitudes](alpha.html)
-7. Sexual Differences: [Beta band Amplitudes](beta.html)
 
 $~$
 

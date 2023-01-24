@@ -9,50 +9,6 @@ library(readr)
 library(ggplot2)
 library(afex)
 
-model <- function(df, title, post=FALSE, inter=FALSE) {
-  temp <- subset(df, df$Component==title)
-  temp <- temp[!(temp$Value %in% boxplot(temp$Value)$out),]  # remove rows with outliers
-  
-  full.model <- aov_ez(id = "ID", 
-                       dv = "Value", 
-                       data = temp, 
-                       between = "Sex", 
-                       within = c("Stimulus", "Condition"),
-                       fun_aggregate = mean)
-  
-  if (post) {  # if we are running post-hoc...
-    post.hoc <- emmeans(full.model, ~ Sex)
-    print(summary(as.glht(pairs(post.hoc)), test=adjusted("bonferroni")))
-  }
-  if (inter) {  # if we have an interaction
-    post.hoc <- emmeans(full.model, ~ Sex|Stimulus)
-    print(summary(as.glht(pairs(post.hoc)), test=adjusted("bonferroni")))
-  }
-  
-  # assumption testing
-  print("Sample size:")
-  print(length(temp$Value))
-  print(table(temp$Sex))
-  
-  # 1.  Normality
-  print("NORMALITY: Visually inspect for non-normal data")
-  R = residuals(full.model)
-  qqPlot(R)
-  hist(R)
-  
-  # 2.  Homogeneity of Variance (Levene's test)
-  print("HOMOGENEITY OF VARIANCE: For Levene's test, p of < 0.05 is a violation, but if there is little to no group imbalance (ex: between male/female) this is acceptable")
-  print(leveneTest(Value ~ Sex * Stimulus * Condition, data = temp))
-  print(table(temp$Sex))
-  print(table(temp$Stimulus))
-  print(table(temp$Condition))
-  
-  # 3. Sphericity
-  print("Violations of sphericity have been Greenhouse-Geisser corrected")
-  
-  return(full.model)
-}
-
 gamma1 <- read_csv("Data/Perception_freq_G.csv", col_types = cols(...1 = col_skip(), 
                                                                   Sex = col_factor(levels = c("male", "female")), 
                                                                   Stimulus = col_factor(levels = c("1", "2", "3"))))
@@ -78,45 +34,26 @@ gamma <- subset(gamma, gamma$ID!=18)  # exclude subject 18 (DNF motor)
 new <- data.frame(ID=NA,
                   Sex=NA,
                   Stimulus=NA,
-                  Component=NA,
-                  Value=NA,
-                  Condition=NA)
+                  Condition=NA,
+                  Gamma=NA)
 for (subject in unique(gamma$ID)) {  # for each subject
   for (stimulus in unique(gamma$Stimulus)) {  # for each stimulus level
     for (condition in unique(gamma$Condition)) {  # for each condition
       selection <- subset(gamma, (gamma$ID==subject & gamma$Stimulus==stimulus & gamma$Condition==condition))
-      baseline <- subset(selection, selection$Component=="Baseline_Amp")$Value  # grab baseline amplitude
-      selection$Value <- selection$Value - baseline  # subtract baseline from all values
-      # NOTE: this also subtracts baseline from itself AND the latency value!
       
-      new <- rbind(new, selection)
+      B <- subset(selection, selection$Component=="Baseline_Amp")$Value
+      G <- subset(selection, selection$Component=="Gamma_Amp")$Value
+      P <- ((G - B) / B) * 100  # convert gamma power to % change from baseline
+      
+      row <- data.frame(ID=subject,
+                        Sex=selection$Sex,
+                        Stimulus=stimulus,
+                        Condition=condition,
+                        Gamma=P)
+      
+      new <- rbind(new, row)
     }
   }
 }
 new <- na.omit(new)  # remove extra NA row at the top
-gamma <- new  # replace ERP with baseline corrected values
-
-m <- model(gamma, "Gamma_Amp", post=TRUE)
-knitr::kable(nice(m))
-afex_plot(m, x = "Stimulus", trace = "Sex", 
-          panel = "Condition", error = "none", 
-          mapping = c("color", "fill"), 
-          data_geom = geom_boxplot, data_arg = list(width = 0.7), 
-          point_arg = list(size = 1.5), line_arg = list(size = 1),
-          dodge = 0.8) +
-  ylab("Gamma Amplitude (dB)") +
-  scale_fill_manual(values = c("#2274A5", "#CE7DA5")) + 
-  scale_color_manual(values = c("#2274A5", "#CE7DA5")) +
-  scale_x_discrete(name = "Stimulus Level", labels = c("Low", "Med", "High"))
-
-for (i in c("male", "female")) {
-  for (j in c("1", "2", "3")){
-    for (k in c("Perception", "EDA", "Motor", "Control")){
-      m <- mean(subset(gamma, gamma$Component=="Gamma_Amp" & gamma$Sex==i & gamma$Stimulus==j & gamma$Condition==k)$Value,
-                na.rm = TRUE)
-      s <- sd(subset(gamma, gamma$Component=="Gamma_Amp" & gamma$Sex==i & gamma$Stimulus==j & gamma$Condition==k)$Value,
-              na.rm = TRUE)
-      print(sprintf("%s %s %s - %s (%s)", i, j, k, round(m, digits = 1), round(s, digits = 1)))
-    }
-  }
-}
+gamma <- new  # replace ERP with baseline % values

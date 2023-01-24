@@ -4,7 +4,7 @@ output:
   html_document:
     code_folding: hide
     toc: true
-    toc_float: true
+    toc_float: false
     theme:
       bg: "#202123"
       fg: "#B8BCC2"
@@ -20,6 +20,7 @@ output:
 [Return to Main Page](main.html)
 
 ```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 library(readr)
 library(ggplot2)
 library(png)
@@ -30,7 +31,7 @@ Note that these figures are averaged across all 4 conditions (Perception, EDA, M
 ------------------------------------------------------------------------
 
 ### Figures of ERP Activity
-```{r, echo=FALSE, out.width="49%", out.height="40%", fig.cap="Female ERPs", fig.show='hold', fig.align='center'}
+```{r echo=FALSE, fig.align='center', fig.cap="Female ERPs", fig.show='hold', message=FALSE, warning=FALSE, out.height="40%", out.width="49%"}
 knitr::include_graphics(c("../Figures/femaleN1 v2.png", "../Figures/femaleN2 - P2.png"))
 ```
 
@@ -39,7 +40,7 @@ knitr::include_graphics(c("../Figures/maleN1.png", "../Figures/maleN2 - P2.png")
 ```
 
 ### Figures of Gamma activity
-```{r, message=FALSE, warning=FALSE, out.width="49%", out.height="40%", fig.cap="Female vs Male Gamma Power", fig.show='hold', fig.align='center'}
+```{r fig.align='center', fig.cap="Female vs Male Gamma Power", fig.show='hold', message=FALSE, warning=FALSE, out.height="40%", out.width="49%"}
 maleGammaTS_1 <- read_csv("../Figures/maleGammaTS_1.csv", 
     col_types = cols(...1 = col_skip()))
 maleGammaTS_2 <- read_csv("../Figures/maleGammaTS_2.csv", 
@@ -62,6 +63,15 @@ femaleGammaTS_1$Time <- femaleGammaTS_1$Time + 0.125
 femaleGammaTS_2$Time <- femaleGammaTS_2$Time + 0.125
 femaleGammaTS_3$Time <- femaleGammaTS_3$Time + 0.125
 
+# scale the data to better match the values when baseline isn't averaged
+# NOTE: these scalars are not made up, but calculated from the ACTUAL values in testing.R
+maleGammaTS_1$Gamma <- maleGammaTS_1$Gamma * 1.29
+maleGammaTS_2$Gamma <- maleGammaTS_2$Gamma * 1.34
+maleGammaTS_3$Gamma <- maleGammaTS_3$Gamma * 1.22
+femaleGammaTS_1$Gamma <- femaleGammaTS_1$Gamma * 2.39
+femaleGammaTS_2$Gamma <- femaleGammaTS_2$Gamma * 1.95
+femaleGammaTS_3$Gamma <- femaleGammaTS_3$Gamma * 1.81
+
 Mlegend <- readPNG('../Figures/maleLegend.png')
 Flegend <- readPNG('../Figures/femaleLegend.png')
 
@@ -69,30 +79,30 @@ ggplot() +
   geom_line(data = femaleGammaTS_1, aes(x = Time, y = Gamma), color = "#FA7DEB", linewidth = 1) +
   geom_line(data = femaleGammaTS_2, aes(x = Time, y = Gamma), color = "#CE7DA5", linewidth = 1) +
   geom_line(data = femaleGammaTS_3, aes(x = Time, y = Gamma), color = "#563440", linewidth = 1) +
-  annotation_raster(Flegend, ymin = 30, ymax= 39, xmin = 0.8, xmax = 1) +
+  annotation_raster(Flegend, ymin = 35, ymax= 45, xmin = 0.8, xmax = 1) +
   geom_vline(xintercept = 0, linetype="dashed") + 
   geom_hline(yintercept = 0, linetype="solid") + 
   scale_x_continuous(name = "Time (s)", limits = c(-0.2, 1), breaks = seq(-0.2, 1, 0.1)) +
   ylab("Gamma Power (% change from Baseline)") +
-  ylim(-4, 40) +
+  ylim(-4, 45) +
   ggtitle("Female") + 
   theme_light()
 ggplot() +
   geom_line(data = maleGammaTS_1, aes(x = Time, y = Gamma), color = "#2DE1FC", linewidth = 1) +
   geom_line(data = maleGammaTS_2, aes(x = Time, y = Gamma), color = "#2274A5", linewidth = 1) +
   geom_line(data = maleGammaTS_3, aes(x = Time, y = Gamma), color = "#090C9B", linewidth = 1) +
-  annotation_raster(Mlegend, ymin = 30, ymax= 39, xmin = 0.8, xmax = 1) +
+  annotation_raster(Mlegend, ymin = 35, ymax= 45, xmin = 0.8, xmax = 1) +
   geom_vline(xintercept = 0, linetype="dashed") + 
   geom_hline(yintercept = 0, linetype="solid") + 
   scale_x_continuous(name = "Time (s)", limits = c(-0.2, 1), breaks = seq(-0.2, 1, 0.1)) +
   ylab("") +  # hide the y label, since it's already next to another chart
-  ylim(-4, 40) +
+  ylim(-4, 45) +
   ggtitle("Male") + 
   theme_light()
 ```
 
-### Figures of Alpha activity
-```{r, message=FALSE, warning=FALSE, out.width="49%", out.height="40%", fig.cap="Female vs Male Alpha Power", fig.show='hold', fig.align='center'}
+### Figures of Alpha activity (included for Dr. Nam)
+```{r fig.align='center', fig.cap="Female vs Male Alpha Power", fig.show='hold', message=FALSE, warning=FALSE, out.height="40%", out.width="49%"}
 maleAlphaTS_1 <- read_csv("../Figures/maleAlphaTS_1.csv", 
     col_types = cols(...1 = col_skip()))
 maleAlphaTS_2 <- read_csv("../Figures/maleAlphaTS_2.csv", 
@@ -142,8 +152,8 @@ ggplot() +
   theme_light()
 ```
 
-### Figures of Beta activity
-```{r, message=FALSE, warning=FALSE, out.width="49%", out.height="40%", fig.cap="Female vs Male Beta Power", fig.show='hold', fig.align='center'}
+### Figures of Beta activity (included for Dr. Nam)
+```{r fig.align='center', fig.cap="Female vs Male Beta Power", fig.show='hold', message=FALSE, warning=FALSE, out.height="40%", out.width="49%"}
 maleBetaTS_1 <- read_csv("../Figures/maleBetaTS_1.csv", 
     col_types = cols(...1 = col_skip()))
 maleBetaTS_2 <- read_csv("../Figures/maleBetaTS_2.csv", 

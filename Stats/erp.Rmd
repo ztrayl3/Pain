@@ -4,7 +4,7 @@ output:
   html_document:
     code_folding: hide
     toc: true
-    toc_float: true
+    toc_float: false
     theme:
       bg: "#202123"
       fg: "#B8BCC2"
@@ -20,6 +20,7 @@ output:
 [Return to Main Page](main.html)
 
 ```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 library(ggpubr)
 library(car)
 library(multcomp)
@@ -36,7 +37,7 @@ library(afex)
 
 NOTE: At the request of Dr. He, the ERP values **are** baseline corrected for this analysis. The baseline period of -1000-0ms was chosen as this aligned with the baseline used in the permutation test (see [Replication of Source Study](replication.html)). While this is a rather long time window, the baseline was calculated as the average amplitude throughout this window, and did not differ significantly from a smaller baseline of -200-0ms, so the larger window was chosen for the sake of consistency.
 
-```{r message=FALSE}
+```{r message=FALSE, warning=FALSE}
 erp1 <- read_csv("Data/Perception_erp.csv", col_types = cols(...1 = col_skip(), 
                 Sex = col_factor(levels = c("male", "female")), 
                 Stimulus = col_factor(levels = c("1", "2", "3"))))
@@ -86,7 +87,7 @@ erp <- new  # replace ERP with baseline corrected values
 
 Finally, we take the previously loaded ERPdata and perform our main analysis. In order to analyze the effect of Sex on PREP amplitudes and latencies, we perform a mixed-effects ANOVA with Stimulus Intensity and Condition introduced as within-subject factors and sex as a between-subject factor.
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 model <- function(df, title, post=FALSE, inter=FALSE) {
   temp <- subset(df, df$Component==title)
   temp <- temp[!(temp$Value %in% boxplot(temp$Value)$out),]  # remove rows with outliers
@@ -136,7 +137,7 @@ $~$
 
 ### N1 variance explained by Sex
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 m <- model(erp, "N1_Amp", inter=TRUE)
 knitr::kable(nice(m))
 afex_plot(m, x = "Stimulus", trace = "Sex", 
@@ -168,7 +169,7 @@ $~$
 
 ### N2 variance explained by Sex
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 m <- model(erp, "N2_Amp")
 knitr::kable(nice(m))
 afex_plot(m, x = "Stimulus", trace = "Sex", 
@@ -200,7 +201,7 @@ $~$
 
 ### P2 variance explained by Sex
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 m <- model(erp, "P2_Amp")
 knitr::kable(nice(m))
 afex_plot(m, x = "Stimulus", trace = "Sex", 

@@ -4,7 +4,7 @@ output:
   html_document:
     code_folding: hide
     toc: true
-    toc_float: true
+    toc_float: false
     theme:
       bg: "#202123"
       fg: "#B8BCC2"
@@ -20,6 +20,7 @@ output:
 [Return to Main Page](main.html)
 
 ```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 library(ggpubr)
 library(car)
 library(multcomp)
@@ -38,7 +39,7 @@ library(afex)
 
 Finally, we take the previously loaded ERP and Gamma data and perform our main analysis. In order to analyze the effect of Sex on high-gamma band power post noxious stimulus, we perform a mixed-effects ANOVA with Stimulus Intensity and Condition introduced as within-subject factors and sex as a between-subject factor.
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 model <- function(df, title, post=FALSE, inter=FALSE) {
   temp <- subset(df, df$Component==title)
   temp <- temp[!(temp$Value %in% boxplot(temp$Value)$out),]  # remove rows with outliers
@@ -131,8 +132,8 @@ $~$
 
 ### Gamma variance explained by Sex
 
-```{r}
-m <- model(gamma, "Gamma_Amp", post=TRUE)
+```{r message=FALSE, warning=FALSE}
+m <- model(gamma, "Gamma_Amp")
 knitr::kable(nice(m))
 afex_plot(m, x = "Stimulus", trace = "Sex", 
           panel = "Condition", error = "none", 
@@ -152,7 +153,7 @@ for (i in c("male", "female")) {
                 na.rm = TRUE)
       s <- sd(subset(gamma, gamma$Component=="Gamma_Amp" & gamma$Sex==i & gamma$Stimulus==j & gamma$Condition==k)$Value,
               na.rm = TRUE)
-      print(sprintf("%s %s %s - %s (%s)", i, j, k, round(m, digits = 1), round(s, digits = 1)))
+      print(sprintf("%s %s %s - %s (%s)", i, j, k, m, s))
     }
   }
 }

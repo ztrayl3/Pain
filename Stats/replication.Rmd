@@ -4,7 +4,7 @@ output:
   html_document:
     code_folding: hide
     toc: true
-    toc_float: true
+    toc_float: false
     theme:
       bg: "#202123"
       fg: "#B8BCC2"
@@ -20,6 +20,7 @@ output:
 [Return to Main Page](main.html)
 
 ```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 library(ggpubr)
 library(car)
 library(multcomp)
@@ -40,7 +41,7 @@ As our processing steps differed slightly from the original publication, a compa
 
 First, all four conditions' data is loaded.
 
-```{r message=FALSE}
+```{r message=FALSE, warning=FALSE}
 erp1 <- read_csv("Data/Perception_erp.csv", col_types = cols(...1 = col_skip(), 
                 Sex = col_factor(levels = c("male", "female")), 
                 Stimulus = col_factor(levels = c("1", "2", "3"))))
@@ -65,13 +66,13 @@ erp <- subset(erp, erp$ID!=18)  # exclude subject 18 (DNF motor)
 
 Then, the data is cleaned. Any missing data is removed (NAs here indicate that no negative/positive peak was found in the given time window).
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 erp <- na.omit(erp)
 ```
 
 We can then visually inspect the ERP components relative to their baseline
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 ggboxplot(subset(erp, grepl("Amp", erp$Component, fixed = TRUE)),
           x="Component", y="Value",
           color = "Component", palette = c("#00AFBB", "#E7B800", "#A03D41", "#C130A2"),
@@ -81,7 +82,7 @@ ggboxplot(subset(erp, grepl("Amp", erp$Component, fixed = TRUE)),
 
 To confirm our visual inspection, we also run pairwise t-tests to compare ERP amplitudes to baseline.
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 difference <- function(df, title, ignore){
   baseline <- subset(df, df$Component=="Baseline_Amp" & !(df$ID %in% ignore))
   test <- subset(df, df$Component==title & !(df$ID %in% ignore))
@@ -100,19 +101,19 @@ difference <- function(df, title, ignore){
 
 **N1 vs Baseline**
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 difference(erp, "N1_Amp", ignore=c(10, 19))  
 ```
 
 **N2 vs Baseline**
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 difference(erp, "N2_Amp", ignore=c(3, 19, 31, 32))
 ```
 
 **P2 vs Baseline**
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 difference(erp, "P2_Amp", ignore=c(5, 8, 15, 23, 43))
 ```
 
@@ -120,7 +121,7 @@ difference(erp, "P2_Amp", ignore=c(5, 8, 15, 23, 43))
 
 Next, the same steps are take for the gamma band power. Here, it is not necessary to omit NAs, as they are impossible.
 
-```{r message=FALSE}
+```{r message=FALSE, warning=FALSE}
 gamma1 <- read_csv("Data/Perception_freq_G.csv", col_types = cols(...1 = col_skip(), 
                                               Sex = col_factor(levels = c("male", "female")), 
                                               Stimulus = col_factor(levels = c("1", "2", "3"))))
@@ -151,77 +152,11 @@ ggboxplot(subset(gamma, grepl("Amp", gamma$Component, fixed = TRUE)),
 difference(gamma, "Gamma_Amp", ignore=c())
 ```
 
-Next, alpha band power.
-
-```{r message=FALSE}
-alpha1 <- read_csv("Data/Perception_freq_A.csv", col_types = cols(...1 = col_skip(), 
-                                              Sex = col_factor(levels = c("male", "female")), 
-                                              Stimulus = col_factor(levels = c("1", "2", "3"))))
-alpha1$Condition <- "Perception"
-alpha2 <- read_csv("Data/EDA_freq_A.csv", col_types = cols(...1 = col_skip(), 
-                                              Sex = col_factor(levels = c("male", "female")), 
-                                              Stimulus = col_factor(levels = c("1", "2", "3"))))
-alpha2$Condition <- "EDA"
-alpha3 <- read_csv("Data/Motor_freq_A.csv", col_types = cols(...1 = col_skip(), 
-                                              Sex = col_factor(levels = c("male", "female")), 
-                                              Stimulus = col_factor(levels = c("1", "2", "3"))))
-alpha3$Condition <- "Motor"
-alpha4 <- read_csv("Data/Control_freq_A.csv", col_types = cols(...1 = col_skip(), 
-                                              Sex = col_factor(levels = c("male", "female")), 
-                                              Stimulus = col_factor(levels = c("1", "2", "3"))))
-alpha4$Condition <- "Control"
-alpha <- do.call("rbind", list(alpha1, alpha2, alpha3, alpha4))
-
-alpha <- alpha[!duplicated(alpha), ]  # remove duplicate rows
-alpha <- subset(alpha, alpha$ID!=18)  # exclude subject 18 (DNF motor)
-
-ggboxplot(subset(alpha, grepl("Amp", alpha$Component, fixed = TRUE)),
-          x="Component", y="Value",
-          color = "Component", palette = c("#00AFBB", "#E7B800"),
-          ylab = "Amplitude", xlab = "Component",
-          order = c("Baseline_Amp", "Alpha_Amp"))
-
-difference(alpha, "Alpha_Amp", ignore=c())
-```
-
-Last, beta band power.
-
-```{r message=FALSE}
-beta1 <- read_csv("Data/Perception_freq_B.csv", col_types = cols(...1 = col_skip(), 
-                                              Sex = col_factor(levels = c("male", "female")), 
-                                              Stimulus = col_factor(levels = c("1", "2", "3"))))
-beta1$Condition <- "Perception"
-beta2 <- read_csv("Data/EDA_freq_B.csv", col_types = cols(...1 = col_skip(), 
-                                              Sex = col_factor(levels = c("male", "female")), 
-                                              Stimulus = col_factor(levels = c("1", "2", "3"))))
-beta2$Condition <- "EDA"
-beta3 <- read_csv("Data/Motor_freq_B.csv", col_types = cols(...1 = col_skip(), 
-                                              Sex = col_factor(levels = c("male", "female")), 
-                                              Stimulus = col_factor(levels = c("1", "2", "3"))))
-beta3$Condition <- "Motor"
-beta4 <- read_csv("Data/Control_freq_B.csv", col_types = cols(...1 = col_skip(), 
-                                              Sex = col_factor(levels = c("male", "female")), 
-                                              Stimulus = col_factor(levels = c("1", "2", "3"))))
-beta4$Condition <- "Control"
-beta <- do.call("rbind", list(beta1, beta2, beta3, beta4))
-
-beta <- beta[!duplicated(beta), ]  # remove duplicate rows
-beta <- subset(beta, beta$ID!=18)  # exclude subject 18 (DNF motor)
-
-ggboxplot(subset(beta, grepl("Amp", beta$Component, fixed = TRUE)),
-          x="Component", y="Value",
-          color = "Component", palette = c("#00AFBB", "#E7B800"),
-          ylab = "Amplitude", xlab = "Component",
-          order = c("Baseline_Amp", "Beta_Amp"))
-
-difference(beta, "Beta_Amp", ignore=c())
-```
-
 ### Replicating the Findings of the Original Paper
 
 The original paper reported a significant effect of stimulus intensity on all amplitudes (ERP and Gamma) and a significant effect of condition on N1 and Gamma amplitude. We are not interested in this component, but will still check if stimulus intensity significantly modulated amplitudes via the same repeated measures ANOVA.
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 signif <- function(p) {
   val <- list()
   for (i in seq_len(length(p))){
@@ -250,7 +185,7 @@ simple_model <- function(df, title) {
 
 **N1 variance explained by Stimulus**
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 simple_model(erp, "N1_Amp")
 ```
 
@@ -258,7 +193,7 @@ $~$
 
 **N2 variance explained by Stimulus**
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 simple_model(erp, "N2_Amp")
 ```
 
@@ -266,7 +201,7 @@ $~$
 
 **P2 variance explained by Stimulus**
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 simple_model(erp, "P2_Amp")
 ```
 
@@ -274,22 +209,6 @@ $~$
 
 **Gamma variance explained by Stimulus**
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 simple_model(gamma, "Gamma_Amp")
-```
-
-$~$
-
-**Alpha variance explained by Stimulus**
-
-```{r}
-simple_model(alpha, "Alpha_Amp")
-```
-
-$~$
-
-**Beta variance explained by Stimulus**
-
-```{r}
-simple_model(beta, "Beta_Amp")
 ```
